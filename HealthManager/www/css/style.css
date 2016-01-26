@@ -1,1 +1,21 @@
 /* Empty. Add your own CSS if you like */
+
+.to_register {
+	float: right;
+	margin-right: 30px;
+	color: gray; 
+}	
+
+.to_login {
+	float: left;
+	margin-left: 20px;
+	color: gray;
+}
+
+a {
+	text-decoration: none;
+}
+
+.to_register a:visited, .to_login a:visited {
+	color: #68EE68;
+}
