@@ -33,3 +33,5 @@ captures/
 # python virtual environment
 venv/
 *.pyc
+
+*.project
