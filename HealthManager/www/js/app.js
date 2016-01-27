@@ -27,13 +27,41 @@ angular.module('starter', ['ionic', 'starter.controllers', 'starter.services'])
 
   $stateProvider
 
-  // set up abstract state for user
-  .state('user', {
-    url: '/user',
-    templateUrl: 'templates/user.html',
-    controller: 'UserCtrl'
+  .state('tabs', {
+        url: "/tab",
+        abstract: true,
+        templateUrl: "templates/tabs.html"
   })
 
+  .state('tabs.home', {
+    url: "/home",
+    views: {
+      'home-tab': {
+        templateUrl: "templates/home.html",
+        controller: 'HomeTabCtrl'
+      }
+    }
+  })
+
+  .state('tabs.remind', {
+    url: "/remind",
+    views: {
+      'remind-tab': {
+        templateUrl: "templates/remind.html"
+      }
+    }
+  })
+
+  .state('tabs.family', {
+    url: "/family",
+    views: {
+      'family-tab': {
+        templateUrl: "templates/family.html"
+      }
+    }
+  })
+
+  // set up abstract state for user
   .state('login', {
     url: '/user/login',
     templateUrl: 'templates/login.html',
@@ -46,7 +74,7 @@ angular.module('starter', ['ionic', 'starter.controllers', 'starter.services'])
     controller: 'RegisterCtrl'
   });
 
-  $urlRouterProvider.otherwise('/user');
+  $urlRouterProvider.otherwise('/tab/home');
 
 
 });

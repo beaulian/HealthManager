@@ -1,23 +1,27 @@
-<ion-header-bar class="bar-balanced">
-      <h1 class="title">登录</h1>
-</ion-header-bar>
-<ion-content>
-<form action="">
-	<div class="list list-inset">
-        <label class="item item-input">
-          <i class="icon ion-person placeholder-icon"></i>
-          <input type="text" name="username" placeholder="请输入您的用户名" required="required">
-        </label>
-        <label class="item item-input">
-          <i class="icon ion-locked placeholder-icon"></i>
-          <input type="password" name="password" placeholder="请输入您的密码" required="required">
-        </label>
-        <div class="padding">
-            <input type="submit" class="button button-block button-balanced" value="登录" />
-        </div>
-     </div>
-</form>
-<div class="to_register">
-    还未注册?&nbsp;<a href="/#/user/register">点击注册</a>
-</div>
-</ion-content>
+<ion-view title="登录">
+    <ion-nav-buttons>
+          <button class="button button-icon" menu-toggle="left" ng-click="toggleProjects()">
+            <i class="icon ion-navicon"></i>
+          </button>
+        </ion-nav-buttons>
+  <ion-content>
+  <form action="" method="post">
+  	<div class="list list-inset">
+          <label class="item item-input">
+            <i class="icon ion-person placeholder-icon"></i>
+            <input type="text" name="username" placeholder="请输入您的用户名" required="required">
+          </label>
+          <label class="item item-input">
+            <i class="icon ion-locked placeholder-icon"></i>
+            <input type="password" name="password" placeholder="请输入您的密码" required="required">
+          </label>
+          <div class="padding">
+              <input type="submit" class="button button-block button-balanced" value="登录" />
+          </div>
+       </div>
+  </form>
+  <div class="to_register">
+      还未注册?&nbsp;<a href="#/user/register" menu-close>点击注册</a>
+  </div>
+  </ion-content>
+</ion-view>
