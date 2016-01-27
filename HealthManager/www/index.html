@@ -9,61 +9,20 @@
 
   <script src="lib/ionic/js/ionic.bundle.js"></script>
 
-  <!-- 在使用 Cordova/PhoneGap 创建的 APP 中包含的文件，由 Cordova/PhoneGap 提供，(开发过程中显示 404) -->
   <script src="js/app.js"></script>
   <script src="cordova.js"></script>
 </head>
-<body ng-controller="MyCtrl">
+
+<body>
 <ion-side-menus>
 
-  <!-- 中心内容 -->
-  <ion-side-menu-content>
-    <ion-header-bar class="bar-light item-input-inset">
-          <button class="button button-icon" menu-toggle="left" ng-click="toggleProjects()">
-            <i class="icon ion-navicon"></i>
-          </button>
-      <label class="item-input-wrapper">
-        <i class="icon ion-ios-search" data-tags="find,seek,look,magnifying glass"></i>
-        <input type="search" placeholder="Search">
-      </label>
-    </ion-header-bar>
-    <ion-content>
-        <div class="list card">
-
-          <a href="#" class="item item-icon-left">
-            <i class="icon ion-home"></i>
-            身边的医院药店
-          </a>
-
-          <a href="#" class="item item-icon-left">
-            <i class="icon ion-ios-telephone"></i>
-            健康咨询
-          </a>
-
-          <a href="#" class="item item-icon-left">
-            <i class="icon ion-alert"></i>
-            急救手册
-          </a>
-
-
-        </div><br/>
-      <!-- The list directive is great, but be sure to also checkout the collection repeat directive when scrolling through large lists -->
-
-      <ion-list>
-
-        <ion-item ng-repeat="item in items"
-                  item="item"
-                  href="#/item/{{item.id}}">
-          <a class="item item-thumbnail-left" href="#">
-            <img src="{{item.imgPath}}">
-            <h2>{{item.id}}</h2>
-            <p>Nine Inch Nails</p>
-          </a>
-        </ion-item>
-
-      </ion-list>
-
-    </ion-content>
+  <!-- 中间内容 -->
+  <ion-side-menu-content ng-controller="HomeTabCtrl">
+    <ion-nav-bar class="bar-light">
+      <ion-nav-back-button>
+      </ion-nav-back-button>
+    </ion-nav-bar>
+    <ion-nav-view></ion-nav-view>
   </ion-side-menu-content>
 
   <!-- 左侧菜单 -->
@@ -98,21 +57,153 @@
       </div>
     </ion-content>
   </ion-side-menu>
-  <div class="tabs tabs-icon-top">
-    <a class="tab-item">
-      <i class="icon ion-home"></i>
-      首页
-    </a>
-    <a class="tab-item">
-      <i class="icon ion-star"></i>
-      用药提醒
-    </a>
-    <a class="tab-item">
-      <i class="icon ion-gear-a"></i>
-      我的家庭
-    </a>
-  </div>
 </ion-side-menus>
+
+
+<script id="templates/tabs.html" type="text/ng-template">
+  <ion-tabs class="tabs-icon-top tabs-light">
+
+    <ion-tab title="首页" icon="ion-home" href="#/tab/home">
+      <ion-nav-view name="home-tab"></ion-nav-view>
+    </ion-tab>
+
+    <ion-tab title="用药提醒" icon="ion-star" href="#/tab/about">
+      <ion-nav-view name="about-tab"></ion-nav-view>
+    </ion-tab>
+
+    <ion-tab title="我的家庭" icon="ion-person-stalker" ui-sref="tabs.contact">
+      <ion-nav-view name="contact-tab"></ion-nav-view>
+    </ion-tab>
+
+  </ion-tabs>
+</script>
+
+<script id="templates/home.html" type="text/ng-template">
+  <ion-view title="首页">
+    <!-- 中心内容 -->
+    <ion-nav-buttons>
+      <button class="button button-icon" menu-toggle="left" ng-click="toggleProjects()">
+        <i class="icon ion-navicon"></i>
+      </button>
+    </ion-nav-buttons>
+    <ion-content>
+      <div class="bar bar-header item-input-inset" style="border-style: none;margin: 0px;">
+        <label class="item-input-wrapper">
+          <i class="icon ion-ios-search placeholder-icon"></i>
+          <input type="search" placeholder="搜索" >
+        </label>
+      </div>
+
+      <div class="list card">
+
+        <a href="#" class="item item-icon-left">
+          <i class="icon ion-home"></i>
+          身边的医院药店
+        </a>
+
+        <a href="#" class="item item-icon-left">
+          <i class="icon ion-ios-telephone"></i>
+          健康咨询
+        </a>
+
+        <a href="#" class="item item-icon-left">
+          <i class="icon ion-alert"></i>
+          急救手册
+        </a></div>
+      <!-- The list directive is great, but be sure to also checkout the collection repeat directive when scrolling through large lists -->
+      <ion-list show-delete="data.showDelete" show-reorder="data.showReorder">
+        <ion-item ng-repeat="item in items"
+                  item="item"
+                  href="#/item/{{item.id}}"
+                  style=" margin: 0;padding: 0;"
+                  class="item-avatar">
+          <img src="{{item.imgPath}}">
+          <h2>{{item.id}}</h2>
+          <p>Nine Inch Nails</p>
+        </ion-item>
+      </ion-list>
+    </ion-content>
+  </ion-view>
+</script>
+
+<script id="templates/facts.html" type="text/ng-template">
+  <ion-view>
+    <ion-content class="padding">
+      <p>Banging your head against a wall uses 150 calories an hour.</p>
+      <p>Dogs have four toes on their hind feet, and five on their front feet.</p>
+      <p>The ant can lift 50 times its own weight, can pull 30 times its own weight and always falls over on its right side when intoxicated.</p>
+      <p>A cockroach will live nine days without it's head, before it starves to death.</p>
+      <p>Polar bears are left handed.</p>
+      <p>
+        <a class="button icon ion-home" href="#/tab/home"> Home</a>
+        <a class="button icon icon-right ion-chevron-right" href="#/tab/facts2">More Facts</a>
+      </p>
+    </ion-content>
+  </ion-view>
+</script>
+
+<script id="templates/facts2.html" type="text/ng-template">
+  <ion-view >
+    <ion-content class="padding">
+      <p>111,111,111 x 111,111,111 = 12,345,678,987,654,321</p>
+      <p>1 in every 4 Americans has appeared on T.V.</p>
+      <p>11% of the world is left-handed.</p>
+      <p>1 in 8 Americans has worked at a McDonalds restaurant.</p>
+      <p>$283,200 is the absolute highest amount of money you can win on Jeopardy.</p>
+      <p>101 Dalmatians, Peter Pan, Lady and the Tramp, and Mulan are the only Disney cartoons where both parents are present and don't die throughout the movie.</p>
+      <p>
+        <a class="button icon ion-home" href="#/tab/home"> Home</a>
+        <a class="button icon ion-chevron-left" href="#/tab/facts"> Scientific Facts</a>
+      </p>
+    </ion-content>
+  </ion-view>
+</script>
+
+<script id="templates/about.html" type="text/ng-template">
+  <ion-view  view-title="用药提醒">
+    <ion-nav-buttons>
+      <button class="button button-icon" menu-toggle="left" ng-click="toggleProjects()">
+        <i class="icon ion-navicon"></i>
+      </button>
+    </ion-nav-buttons>
+    <ion-content class="padding">
+      <h3>Create hybrid mobile apps with the web technologies you love.</h3>
+      <p>Free and open source, Ionic offers a library of mobile-optimized HTML, CSS and JS components for building highly interactive apps.</p>
+      <p>Built with Sass and optimized for AngularJS.</p>
+      <p>
+        <a class="button icon icon-right ion-chevron-right" href="#/tab/navstack">Tabs Nav Stack</a>
+      </p>
+    </ion-content>
+  </ion-view>
+</script>
+
+<script id="templates/nav-stack.html" type="text/ng-template">
+  <ion-view >
+    <ion-content class="padding">
+      <p><img src="http://ionicframework.com/img/diagrams/tabs-nav-stack.png" style="width:100%"></p>
+    </ion-content>
+  </ion-view>
+</script>
+
+<script id="templates/contact.html" type="text/ng-template">
+  <ion-view  title="我的家庭" align-title="center">
+    <ion-nav-buttons>
+      <button class="button button-icon" menu-toggle="left" ng-click="toggleProjects()">
+        <i class="icon ion-navicon"></i>
+      </button>
+    </ion-nav-buttons>
+    <ion-content>
+      <div class="list">
+        <div class="item">
+          @IonicFramework
+        </div>
+        <div class="item">
+          @DriftyTeam
+        </div>
+      </div>
+    </ion-content>
+  </ion-view>
+</script>
 
 </body>
 </html>
