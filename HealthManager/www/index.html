@@ -18,7 +18,7 @@
 
   <!-- 中间内容 -->
   <ion-side-menu-content ng-controller="HomeTabCtrl">
-    <ion-nav-bar class="bar-light">
+    <ion-nav-bar class="bar-light" align-title="center">
       <ion-nav-back-button>
       </ion-nav-back-button>
     </ion-nav-bar>
@@ -26,11 +26,29 @@
   </ion-side-menu-content>
 
   <!-- 左侧菜单 -->
-  <ion-side-menu side="left">
-    <ion-header-bar class="bar-assertive">
+  <ion-side-menu side="left" width="265">
+    <ion-header-bar class="bar-balanced">
       <h1 style="color:white;" class="title">Info</h1>
     </ion-header-bar>
     <ion-content>
+      <div class="list card">
+
+        <div class="item item-avatar">
+          <img src="avatar.jpg">
+          <h2>Pretty Hate Machine</h2>
+          <p>Nine Inch Nails</p>
+        </div>
+
+        <div class="item item-image">
+          <img src="cover.jpg">
+        </div>
+
+        <a class="item item-icon-left assertive" href="#">
+          <i class="icon ion-music-note"></i>
+          Start listening
+        </a>
+
+      </div>
       <div class="list">
 
         <a class="item item-icon-left" href="#">
