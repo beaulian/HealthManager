@@ -1,8 +1,8 @@
 # -*- coding: utf-8 -*- 
 
 from config import *
-from controller.models import User
-from controller.errors import *
+from models import User
+from errors import *
 
 from flask import request, g
 from functools import wraps

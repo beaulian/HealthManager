@@ -1,12 +1,13 @@
 # -*- coding: utf-8 -*- 
 
-import re
-from os import urandom
+import re, os
+
+basedir = os.path.abspath(os.path.dirname(__file__))
 
 APP_NAME = "家庭健康助手"
 NETLOC_NAME = "127.0.0.1:5000"
 
-SECRET_KEY = urandom(24)
+SECRET_KEY = os.urandom(24)
 STATIC_SECRET_CODE = "hard to guess"
 EMAIL_SALT = "hard to think"
 DEBUG = True

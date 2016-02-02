@@ -12,8 +12,8 @@ from flask import jsonify
 from pymongo import MongoClient
 from passlib.hash import md5_crypt
 from pymongo.errors import InvalidId
-from itsdangerous import TimestampSigner, \
-                         SignatureExpired
+from itsdangerous import (TimestampSigner, 
+                            SignatureExpired)
 
 
 class Model(object):

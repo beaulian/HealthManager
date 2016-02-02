@@ -14,19 +14,19 @@ def create_app():
         return response
 
     # 蓝本
-    from auth import auth as auth_blueprint
+    from .controller.auth import auth as auth_blueprint
     app.register_blueprint(auth_blueprint)
 
-    from user import user as user_blueprint
+    from .controller.user import user as user_blueprint
     app.register_blueprint(user_blueprint)
 
-    from main import main as main_blueprint
+    from .controller.main import main as main_blueprint
     app.register_blueprint(main_blueprint)
 
-    from medicine import medicine as medicine_blueprint
+    from .controller.medicine import medicine as medicine_blueprint
     app.register_blueprint(medicine_blueprint)
 
-    from record import record as record_blueprint
+    from .controller.record import record as record_blueprint
     app.register_blueprint(record_blueprint)
 
     return app

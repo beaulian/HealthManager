@@ -4,9 +4,9 @@ from config import *
 from errors import *
 
 from flask import request, jsonify, make_response
-from controller.decorators import login_required
-from controller.models import User, Model
-from controller.errors import *
+from ..decorators import login_required
+from ..models import User, Model
+from ..errors import *
 from datetime import datetime
 from mail import send_email
 from . import auth
@@ -44,7 +44,7 @@ def register():
 					<p>请点击<a href='http://{netloc}/validate/{verifycode}'>此处</a>
 					验证您的邮箱</p>""".format(username=username, netloc=NETLOC_NAME,
 																verifycode=user["verify_code"])):
-		Model.db.Users.insert(user.__dict__)
+		user.insert()
 		user["head_image"] = "http://" + NETLOC_NAME + user["head_image"]
 		return jsonify({"status": "success", "user": user.to_json()})
 	else:
