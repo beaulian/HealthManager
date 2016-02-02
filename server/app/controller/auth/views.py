@@ -1,12 +1,10 @@
 # -*- coding: utf-8 -*- 
 
-from config import *
-from errors import *
-
 from flask import request, jsonify, make_response
 from ..decorators import login_required
 from ..models import User, Model
 from ..errors import *
+from config import *
 from datetime import datetime
 from mail import send_email
 from . import auth

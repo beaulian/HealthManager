@@ -28,6 +28,15 @@ class Model(object):
             element["_id"] = str(element["_id"])
         return element
 
+    @classmethod
+    def verify_id(cls, dbname, _id):
+        try:
+            if not cls.db[dbname].find_one({"_id": ObjectId(_id)}):
+                raise InvalidId
+        except InvalidId:
+            return False
+        return True
+
     def __del__(self):
         self.client.close()
 
@@ -65,14 +74,14 @@ class User(Model):
         self.db.Users.insert(self.__dict__)
 
     @classmethod
-    def generate_token(self, uid):
-        user = self.db.Users.find_one({"$or": [{"username": uid},{"email": uid}]})
+    def generate_token(cls, uid):
+        user = cls.db.Users.find_one({"$or": [{"username": uid},{"email": uid}]})
         s = TimestampSigner(user["password_hash"]+STATIC_SECRET_CODE)
         return s.sign(uid)
     
     @classmethod
-    def verify_token(self, token_to_check, uid):
-        user = self.db.Users.find_one({"$or": [{"username": uid},{"email": uid}]})
+    def verify_token(cls, token_to_check, uid):
+        user = cls.db.Users.find_one({"$or": [{"username": uid},{"email": uid}]})
         s = TimestampSigner(user["password_hash"]+STATIC_SECRET_CODE)
         try:
             s.unsign(token_to_check, max_age=7200)
@@ -81,14 +90,14 @@ class User(Model):
         return True
 
     @classmethod
-    def verify_uid(self, uid):
-    	if self.db.Users.find_one({"$or": [{"username": uid},{"email": uid}]}):
+    def verify_uid(cls, uid):
+    	if cls.db.Users.find_one({"$or": [{"username": uid},{"email": uid}]}):
     		return True
     	return False
 
     @classmethod
-    def verify_user(self, uid, password):
-    	user = self.db.Users.find_one({"$or": [{"username": uid},{"email": uid}]})
+    def verify_user(cls, uid, password):
+    	user = cls.db.Users.find_one({"$or": [{"username": uid},{"email": uid}]})
         if user:
             if md5_crypt.verify(password, user["password_hash"]):
                 if user["confirmed"]:

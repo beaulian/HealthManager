@@ -1,7 +1,7 @@
 # -*- coding: utf-8 -*- 
 
 from config import *
-from models import User
+from models import User, Model
 from errors import *
 
 from flask import request, g
@@ -28,4 +28,15 @@ def login_required(func):
 				return healthmanager_error("2005")
 		return func(*args, **kwargs)
 	return wrapper
+
+
+def valid_id_required(db_name, id_name):
+	def handle(func):
+	    @wraps(func)
+	    def wrapper(*args, **kwargs):
+	        if not Model.verify_id(db_name, kwargs.get(id_name)):
+	            return healthmanager_error("2004")
+	        return func(*args, **kwargs)
+	    return wrapper
+	return handle
 		
