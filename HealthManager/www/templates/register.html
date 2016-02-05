@@ -5,19 +5,20 @@
     </button>
   </ion-nav-buttons>
   <ion-content>
-  <form action="" method="post">
+  <form role="form">
   	<div class="list list-inset">
           <label class="item item-input">
-            <input type="text" name="username" placeholder="用户名" required="required" >
+            <input type="text" name="username" placeholder="用户名" required="required" ng-model="formData.username">
           </label>
           <label class="item item-input">
-            <input type="email" name="email" placeholder="邮箱" required="required">
+            <input type="email" name="email" placeholder="邮箱" required="required" ng-model="formData.email">
           </label>
           <label class="item item-input">
-            <input type="password" name="password" placeholder="密码" required="required">
+            <input type="password" name="password" placeholder="密码" required="required" ng-model="formData.password">
           </label>
           <div class="padding">
-              <input type="submit" class="button button-block button-balanced" value="注册" />
+              <!-- <input type="submit" class="button button-block button-balanced" value="注册" /> -->
+              <button class="button button-block button-balanced" id="register" ng-click="register()">注册</button>
           </div>
        </div>
   </form>

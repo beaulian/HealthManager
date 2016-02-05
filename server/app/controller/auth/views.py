@@ -2,7 +2,7 @@
 
 from flask import request, jsonify, make_response
 from ..decorators import login_required
-from ..models import User, Model
+from ..models import User, Model, Pwd
 from ..errors import *
 from config import *
 from datetime import datetime
@@ -16,17 +16,16 @@ def register():
 	email = request.form.get("email", None)
 	password = request.form.get("password", None)
 	if (not username) or (not email) or (not password):
-		return healthmanager_error("2008")
+		return healthmanager_error("2009")
 
-	if Model.db.Users.find_one({"username": username}):
+	if Model.db.User.find_one({"username": username}):
 		return healthmanager_error("2002")
-	if Model.db.Users.find_one({"email": email}):
+	if Model.db.User.find_one({"email": email}):
 		return healthmanager_error("2001")
 
 	user = User(
 			username = username, 
 			email = email,
-			password_hash = User.encrypt(password),
 			verify_code = User.get_verify_code(email),
 			head_image = DEFAULT_IMAGE_PATH,
 			confirmed = False,
@@ -37,13 +36,20 @@ def register():
 			register_time = datetime.now().__format__("%Y-%m-%d %H:%M:%S"),
 			last_seen = datetime.now().__format__("%Y-%m-%d %H:%M:%S")
 	)
+	pwd = Pwd(
+			username = username, 
+			email = email,
+			password_hash = User.encrypt(password)
+	)
 	if send_email("验证邮箱", [email], u"""<p>{username}, 您好</p>
 					<p>欢迎注册家庭健康助手,我们竭诚为您提供最优质的家庭健康管理,如果有好的意见和建议,欢迎联系我们</p>
 					<p>请点击<a href='http://{netloc}/validate/{verifycode}'>此处</a>
 					验证您的邮箱</p>""".format(username=username, netloc=NETLOC_NAME,
 																verifycode=user["verify_code"])):
 		user.insert()
+		pwd.insert()
 		user["head_image"] = "http://" + NETLOC_NAME + user["head_image"]
+		user["token"] = User.generate_token(username)
 		return jsonify({"status": "success", "user": user.to_json()})
 	else:
 		return healthmanager_error("2099")
@@ -69,10 +75,11 @@ def login():
 @auth.route("/validate/<string:verifycode>")
 def validate(verifycode):
 	"""not restful api"""
-	user = Model.db.Users.find_one({"verify_code": verifycode})
+	user = Model.db.User.find_one({"verify_code": verifycode})
 	if user:
 		user["confirmed"] = True
-		Model.db.Users.save(user)
+		del user["verify_code"]
+		Model.db.User.save(user)
 		print user["confirmed"]
 		return make_response("<p>您已成功验证!</p>")
 
