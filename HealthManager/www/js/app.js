@@ -5,21 +5,37 @@
 // the 2nd parameter is an array of 'requires'
 var LoginStatus = false;
 
-angular.module('starter', ['ionic', 'starter.controllers', 'starter.services', 'ngCookies'])
+angular.module('starter', ['ionic', 'starter.controllers', 'starter.services', 'ngCookies', 'ngRoute'])
 
-.run(function($ionicPlatform) {
-  $ionicPlatform.ready(function() {
-    if(window.cordova && window.cordova.plugins.Keyboard) {
-      // Hide the accessory bar by default (remove this to show the accessory bar above the keyboard
-      // for form inputs)
-      cordova.plugins.Keyboard.hideKeyboardAccessoryBar(true);
+.run(function($ionicPlatform, $rootScope, $cookieStore, $location, $http) {
+  $rootScope.$on('$routeChangeStart', function(evt, next, current) {
+    if (!$cookieStore.get("logged-in")) {
+      if (next.templateUrl === "login.html") {
 
-      // Don't remove this line unless you know what you are doing. It stops the viewport
-      // from snapping when text inputs are focused. Ionic handles this internally for
-      // a much nicer keyboard experience.
-      cordova.plugins.Keyboard.disableScroll(true);
+      }else {
+        $location.path('#/user/login');
+      }
+    }else {
+      if (!$cookieStore.get("tokenState") && $cookieStore.get("token")) {
+        $http.put("http://127.0.0.1:5000/user/login?uid="+$cookieStore.get("uid")+"&token="+$cookieStore.get("token")).success(function(data){
+          $cookieStore.remove("token");
+          $cookieStore.put("token", data["token"], {'expires': 7200});
+          $cookieStore.put("tokenState", true, {'expires': 7000});
+        });
+      }
     }
-    if(window.StatusBar) {
+  });
+
+  $ionicPlatform.ready(function() {
+    // Hide the accessory bar by default (remove this to show the accessory bar above the keyboard
+    // for form inputs)
+    if (window.cordova && window.cordova.plugins && window.cordova.plugins.Keyboard) {
+      cordova.plugins.Keyboard.hideKeyboardAccessoryBar(true);
+      cordova.plugins.Keyboard.disableScroll(true);
+
+    }
+    if (window.StatusBar) {
+      // org.apache.cordova.statusbar required
       StatusBar.styleDefault();
     }
   });

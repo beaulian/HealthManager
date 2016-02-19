@@ -55,21 +55,31 @@ def register():
 		return healthmanager_error("2099")
 
 
-@auth.route("/user/login", methods=["POST", "PUT"])
+@auth.route("/user/login", methods=["POST"])
 def login():
 	uid = request.form.get("uid", None)
 	password = request.form.get("password", None)
 	status = User.verify_user(uid, password)
 	if status == 2:
 		token = User.generate_token(uid)
-		if request.method == "POST":
-			return jsonify({"status": "success", "token": token})
-		elif request.method == "PUT":
-			return jsonify({"status": "success", "refresh_token": token})
+		return jsonify({"status": "success", "token": token})
 	elif status == 1:
 		return healthmanager_error("2000")
 	else:
 		return healthmanager_error("2004")
+
+
+@auth.route("/user/login", methods=["PUT"])
+def put_token():
+	uid = request.args.get("uid", False)
+	old_token = request.args.get("token", False)
+	if not User.verify_uid(uid):
+		return healthmanager_error("2005")
+	token = User.refresh_token(old_token, uid)
+	if token:
+		return jsonify({"status": "success", "token": token})
+	else:
+		return healthmanager_error("2006", token=old_token)
 
 
 @auth.route("/validate/<string:verifycode>")

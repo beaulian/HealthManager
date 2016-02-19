@@ -1,35 +1,37 @@
 angular.module('starter.controllers', ['ngCookies'])
 
 .controller('LoginCtrl', function($scope, $http, $ionicLoading, $cookieStore, $location, User) {
-		var postdata = {"uid": $scope.uid, "password": $scope.password};
-		$scope.login = function() {
-			$http({
-				method: "POST",
-				url: "http://127.0.0.1:5000/user/login",
-				data: $.param($scope.postdata)
-			}).success(function(data) {
+	$scope.formData = {};
+	$scope.login = function() {
+		$http({
+			method: "POST",
+			url: "http://127.0.0.1:5000/user/login",
+			data: $.param($scope.formData),
+			headers: {'Content-Type': 'application/x-www-form-urlencoded'}
+		}).success(function(data) {
 				if (data["status"] == "success") {
 					$cookieStore.put("logged-in", true);
 					$cookieStore.put("token", data["token"], {'expires': 7200});
 					$cookieStore.put("tokenState", true, {'expires': 7000});
 					$location.path("#/tab/home");
-				} else {
-					if (data["error_code"] == "2000") {
-						$ionicLoading.show({ 
-							template: '邮箱未认证', 
-							noBackdrop: true, 
-							duration: 2000 
-						});
-					} else if (data["error_code"] == "2004") {
-						$ionicLoading.show({ 
-							template: '用户名或密码错误', 
-							noBackdrop: true, 
-							duration: 2000 
-						});
-					}
+				} 	
+		})
+		.error(function(data) {
+				if (data["error_code"] == "2000") {
+					$ionicLoading.show({ 
+						template: '邮箱未认证', 
+						noBackdrop: true, 
+						duration: 2000 
+					});
+				} else if (data["error_code"] == "2004") {
+					$ionicLoading.show({ 
+						template: '用户名或密码错误', 
+						noBackdrop: true, 
+						duration: 2000 
+					});
 				}
-			});
-		};
+		});
+	};
 })
 
 .controller('RegisterCtrl', function($scope, $http, $ionicLoading, $cookieStore, $location, User) {
@@ -91,6 +93,7 @@ angular.module('starter.controllers', ['ngCookies'])
 .controller('SideBarCtrl', function($scope, $cookieStore, User) {
 	$scope.logged_in = $cookieStore.get("logged-in");
 	$scope.user = $cookieStore.get("user");
+	console.log($scope.logged_in);
 })
 
 .controller('HomeTabCtrl', function($scope) {});

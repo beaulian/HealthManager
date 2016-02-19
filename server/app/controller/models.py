@@ -92,6 +92,17 @@ class User(Model):
         return True
 
     @classmethod
+    def refresh_token(cls, old_token, uid):
+        pwd = cls.db.Pwd.find_one({"$or": [{"username": uid},{"email": uid}]})
+        s = TimestampSigner(pwd["password_hash"]+STATIC_SECRET_CODE)
+        try:
+            s.unsign(old_token, max_age=7200)
+        except Exception:
+            return False
+
+        return s.sign(uid)
+
+    @classmethod
     def verify_uid(cls, uid):
     	if cls.db.User.find_one({"$or": [{"username": uid},{"email": uid}]}):
     		return True
