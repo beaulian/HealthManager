@@ -70,3 +70,8 @@
 	float: right;
 	margin-right: 80px;
 }
+
+.news_nav a {
+	color: gray;
+	text-decoration: none;
+}
