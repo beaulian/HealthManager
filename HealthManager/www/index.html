@@ -5,6 +5,7 @@
     <meta name="viewport" content="initial-scale=1, maximum-scale=1, user-scalable=no, width=device-width">
     <title></title>
 
+    <link rel="stylesheet" type="text/css" href="fonts/foundation-icons/foundation-icons.css">
     <link href="lib/ionic/css/ionic.css" rel="stylesheet">
     <link href="css/style.css" rel="stylesheet">
 
@@ -49,7 +50,7 @@
             <!-- 未登录时显示 -->
             <div style="background-color: #33cd5f;height:60px;" ng-if="logged_in!=true">
                 <p style="text-align: center;color:white;"> 亲,您还没有登录哦~</p>
-                <p style="text-align:center;"><a href="#/user/login" menu-close>去登录&nbsp;<i class="ion-chevron-right" data-pack="default" data-tags="arrow, right"></i></a></p>
+                <p style="text-align:center;"><a href="#/user/login" class="login" menu-close>去登录&nbsp;<i class="ion-chevron-right" data-pack="default" data-tags="arrow, right"></i></a></p>
             </div>
             <div class="list">
             <a class="item item-icon-left" href="#/tab/home" menu-close>

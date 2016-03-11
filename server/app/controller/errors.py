@@ -29,5 +29,5 @@ def healthmanager_error(error_code, **kwargs):
 	            "error_msg": error_code_map_message[error_code]
 	        }, **kwargs)
 		)
-	response.status_code = 222
+	response.status_code = 400
 	return response

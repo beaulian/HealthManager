@@ -22,12 +22,29 @@
 
         <a href="#" class="item item-icon-left">
           <i class="icon ion-ios-telephone"></i>
-          健康咨询
+          健康资讯
         </a>
 
         <a href="#" class="item item-icon-left">
           <i class="icon ion-alert"></i>
           急救手册
-        </a></div>
+        </a>
+      </div>
+
+    <div class="content ionic-pseudo">
+      <div class="list card">
+        <div class="item item-text-wrap">
+         推荐文章
+        </div>
+
+        <div ng-repeat="news in mutinews">
+        <a class="item item-thumbnail-left" href="#/news/{{news.classf}}/{{news.id}}">
+          <img class="indeximg" src="{{news.thumbnail}}">
+          <h2>{{news.title}}</h2>
+        </a>
+        </div>
+      </div>
+
+    </div>
     </ion-content>
 </ion-view>

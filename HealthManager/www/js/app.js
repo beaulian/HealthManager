@@ -90,6 +90,12 @@ angular.module('starter', ['ionic', 'starter.controllers', 'starter.services', '
     url: '/user/register',
     templateUrl: 'templates/register.html',
     controller: 'RegisterCtrl'
+  })
+
+  .state('indexnews', {
+    url: "/news/:classf/:id",
+    templateUrl: 'templates/news.html',
+    controller: 'NewsCtrl' 
   });
 
   $urlRouterProvider.otherwise('/tab/home');

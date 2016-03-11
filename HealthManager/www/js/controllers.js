@@ -93,10 +93,37 @@ angular.module('starter.controllers', ['ngCookies'])
 .controller('SideBarCtrl', function($scope, $cookieStore, User) {
 	$scope.logged_in = $cookieStore.get("logged-in");
 	$scope.user = $cookieStore.get("user");
-	console.log($scope.logged_in);
 })
 
-.controller('HomeTabCtrl', function($scope) {});
+.controller('HomeTabCtrl', function($scope, $http) {
+	$http({
+		method: "GET",
+		url: "http://127.0.0.1:5000/news/index",
+	}).success(function(data) {
+		$scope.mutinews = data.mutinews;
+		// console.log($scope.mutinews);
+	});
+})
+
+.controller('NewsCtrl', function($scope, $http, $stateParams, $sce) {
+	var classf = $stateParams.classf;
+	var id = $stateParams.id;
+	$http({
+		method: "GET",
+		url: "http://127.0.0.1:5000/news/"+classf+"/"+id,
+	}).success(function(data) {
+		$scope.news = data.news;
+		$scope.news.body = $sce.trustAsHtml($scope.news.body);
+	});
+	// var top = $('.news_nav').offset().top;
+	// var windowTop =  $(window).height();
+ //    if (top > windowTop) {
+ //    	$("news_nav").offset.top = 603;
+ //    	$("news_nav").css("position","fixed");
+ //    } else {
+ //    	$("news_nav").css("position","static");
+ //    }
+});
 
 
 // 注意事项: 最上面的最后不能有分号,控制器只有一个分号,就是在最后的那个控制器后
