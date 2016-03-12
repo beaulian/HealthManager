@@ -7,23 +7,23 @@ var LoginStatus = false;
 
 angular.module('starter', ['ionic', 'starter.controllers', 'starter.services', 'ngCookies', 'ngRoute'])
 
-.run(function($ionicPlatform, $rootScope, $cookieStore, $location, $http) {
-  $rootScope.$on('$routeChangeStart', function(evt, next, current) {
-    if (!$cookieStore.get("logged-in")) {
-      if (next.templateUrl === "login.html") {
-
-      }else {
-        $location.path('#/user/login');
+.run(function($ionicPlatform, $rootScope, $cookieStore, $location, $http, $state) {
+  $rootScope.$on('$stateChangeStart', function(event, toState) {
+      if (toState.name == "login") {
+          return;
       }
-    }else {
-      if (!$cookieStore.get("tokenState") && $cookieStore.get("token")) {
-        $http.put("http://127.0.0.1:5000/user/login?uid="+$cookieStore.get("uid")+"&token="+$cookieStore.get("token")).success(function(data){
-          $cookieStore.remove("token");
-          $cookieStore.put("token", data["token"], {'expires': 7200});
-          $cookieStore.put("tokenState", true, {'expires': 7000});
-        });
+      if (!$cookieStore.get("logged-in")) {
+        event.preventDefault();// 取消默认跳转行为
+        $state.go("login");
       }
-    }
+    // }else {
+    //   if (!$cookieStore.get("tokenState") && $cookieStore.get("token")) {
+    //     $http.put("http://127.0.0.1:5000/user/login?uid="+$cookieStore.get("uid")+"&token="+$cookieStore.get("token")).success(function(data){
+    //       $cookieStore.remove("token");
+    //       $cookieStore.put("token", data["token"], {'expires': 7200});
+    //       $cookieStore.put("tokenState", true, {'expires': 7000});
+    //     });
+    //   }
   });
 
   $ionicPlatform.ready(function() {
@@ -96,6 +96,12 @@ angular.module('starter', ['ionic', 'starter.controllers', 'starter.services', '
     url: "/news/:classf/:id",
     templateUrl: 'templates/news.html',
     controller: 'NewsCtrl' 
+  })
+
+  .state('user', {
+    url: '/user/detail',
+    templateUrl: 'templates/user.html',
+    controller: 'UserCtrl'
   });
 
   $urlRouterProvider.otherwise('/tab/home');

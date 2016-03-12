@@ -1,0 +1,29 @@
+<ion-view title="我的信息">
+  <ion-nav-buttons>
+    <button class="button button-icon" menu-toggle="left" ng-click="toggleProjects()">
+      <i class="icon ion-navicon"></i>
+    </button>
+  </ion-nav-buttons>
+  <ion-content>
+      <div class="content has-header ionic-pseudo" ng-if="logged_in">
+        <div class="list">
+          <div class="item item-divider">基本信息</div>
+            <div class="item item-avatar">
+              <img src="{{user.head_image}}">
+              <h2>{{user.username}}</h2>
+              <p>{{user.age}}岁&nbsp;&nbsp;&nbsp;{{user.sex}}</p>
+            </div>
+          <div class="item item-divider">邮箱</div>
+          <p class="item item_p">{{user.email}}</p>
+          <div class="item item-divider"> 手机号</div>
+          <p class="item item_p">{{user.phone_number}}</p>
+          <div class="item item-divider">个性签名</div>
+          <p class="item" style="height:70px;">{{user.introduction}}</p>
+          <!-- <div class="item item-divider"></div> -->
+          <br>
+          <a class="item item_p item-icon-right" href="#/user/edit" menu-close>编辑资料<i class="icon ion-ios-arrow-right"></i></a> 
+        </div>
+      </div>
+  </ion-content>
+  <button class="button button-full button-assertive logout" style="position:fixed;bottom:0px;">退出登录</button>
+</ion-view>

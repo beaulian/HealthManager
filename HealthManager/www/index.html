@@ -39,16 +39,16 @@
         <ion-nav-view></ion-nav-view>
       </ion-side-menu-content>
 <!-- 左侧菜单 -->
-      <ion-side-menu side="left" ng-controller="SideBarCtrl">
+      <ion-side-menu side="left" ng-controller="SideBarCtrl" style="display: none;" class="sidebar">
         <ion-content>
             <!-- 已登录时显示 -->
-            <div class="item item-avatar" style="background-color: #33cd5f;" ng-if="logged_in==true">
-              <img src="http://www.runoob.com/try/demo_source/venkman.jpg">
-              <h2 style="color:white">{{ user.head_image }}</h2>
-              <p style="color:white">{{ user.introduction }}</p>
+            <div class="item item-avatar" style="background-color: #33cd5f;" ng-if="logged_in">
+              <img src="{{user.head_image}}">
+              <h2 style="color:white">{{user.username}}</h2>
+              <p style="color:white">{{user.introduction}}</p>
             </div>
             <!-- 未登录时显示 -->
-            <div style="background-color: #33cd5f;height:60px;" ng-if="logged_in!=true">
+            <div style="background-color: #33cd5f;height:60px;" ng-if="!logged_in">
                 <p style="text-align: center;color:white;"> 亲,您还没有登录哦~</p>
                 <p style="text-align:center;"><a href="#/user/login" class="login" menu-close>去登录&nbsp;<i class="ion-chevron-right" data-pack="default" data-tags="arrow, right"></i></a></p>
             </div>
@@ -58,7 +58,7 @@
               首页
             </a>  
 
-            <a class="item item-icon-left" href="#" menu-close> 
+            <a class="item item-icon-left" href="#/user/detail" menu-close> 
               <i class="icon ion-android-person" data-tags=""></i>
               个人中心
             </a>
@@ -67,6 +67,11 @@
               <i class="icon ion-gear-b" data-tags="settings,options,cog"></i>
               设置
 
+            </a>
+
+            <a class="item item-icon-left" href="#" menu-close>
+              <i class="icon ion-medkit"></i>
+              我的药箱
             </a>
 
             <a class="item item-icon-left" href="#" menu-close>

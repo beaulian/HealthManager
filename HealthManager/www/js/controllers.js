@@ -1,6 +1,6 @@
 angular.module('starter.controllers', ['ngCookies'])
 
-.controller('LoginCtrl', function($scope, $http, $ionicLoading, $cookieStore, $location, User) {
+.controller('LoginCtrl', function($scope, $http, $ionicLoading, $cookieStore, $location, $window, User) {
 	$scope.formData = {};
 	$scope.login = function() {
 		$http({
@@ -14,6 +14,7 @@ angular.module('starter.controllers', ['ngCookies'])
 					$cookieStore.put("token", data["token"], {'expires': 7200});
 					$cookieStore.put("tokenState", true, {'expires': 7000});
 					$location.path("#/tab/home");
+					$window.location.reload(true);
 				} 	
 		})
 		.error(function(data) {
@@ -34,7 +35,7 @@ angular.module('starter.controllers', ['ngCookies'])
 	};
 })
 
-.controller('RegisterCtrl', function($scope, $http, $ionicLoading, $cookieStore, $location, User) {
+.controller('RegisterCtrl', function($scope, $http, $ionicLoading, $cookieStore, $window, $location, User) {
 	$scope.formData = {};
 	$scope.register = function() {
 		$ionicLoading.show({ 
@@ -64,6 +65,7 @@ angular.module('starter.controllers', ['ngCookies'])
 				$cookieStore.put("uid", data["user"]["username"]);
 				$cookieStore.put("user", data["user"]);
 				$location.path("#/tab/home");
+				$window.location.reload(true);
 			}
 		})
 		.error(function(data){
@@ -91,8 +93,11 @@ angular.module('starter.controllers', ['ngCookies'])
 })
 
 .controller('SideBarCtrl', function($scope, $cookieStore, User) {
+	// $scope.$on('$stateChangeSuccess', $scope.doRefresh());
+	$('.sidebar').css("display", "block");
 	$scope.logged_in = $cookieStore.get("logged-in");
 	$scope.user = $cookieStore.get("user");
+	// console.log($scope.user.head_image);
 })
 
 .controller('HomeTabCtrl', function($scope, $http) {
@@ -115,14 +120,18 @@ angular.module('starter.controllers', ['ngCookies'])
 		$scope.news = data.news;
 		$scope.news.body = $sce.trustAsHtml($scope.news.body);
 	});
-	// var top = $('.news_nav').offset().top;
-	// var windowTop =  $(window).height();
- //    if (top > windowTop) {
- //    	$("news_nav").offset.top = 603;
- //    	$("news_nav").css("position","fixed");
- //    } else {
- //    	$("news_nav").css("position","static");
- //    }
+})
+
+.controller('UserCtrl', function($scope, $cookieStore, $window, $location, $state) {
+	$scope.logged_in = $cookieStore.get("logged-in");
+	var status = $scope.logged_in;
+	$scope.user = $cookieStore.get("user");
+
+	$('.logout').click(function() {
+		$cookieStore.remove("logged-in");
+		$state.go('tabs.home');
+		$window.location.reload(true);
+	});
 });
 
 
