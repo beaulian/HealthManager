@@ -33,6 +33,7 @@ def register():
 			phone_number = "",
 			introduction = "",
 			age = 0,
+			sex = "男",
 			register_time = datetime.now().__format__("%Y-%m-%d %H:%M:%S"),
 			last_seen = datetime.now().__format__("%Y-%m-%d %H:%M:%S")
 	)
@@ -41,18 +42,15 @@ def register():
 			email = email,
 			password_hash = User.encrypt(password)
 	)
-	if send_email("验证邮箱", [email], u"""<p>{username}, 您好</p>
-					<p>欢迎注册家庭健康助手,我们竭诚为您提供最优质的家庭健康管理,如果有好的意见和建议,欢迎联系我们</p>
-					<p>请点击<a href='http://{netloc}/validate/{verifycode}'>此处</a>
-					验证您的邮箱</p>""".format(username=username, netloc=NETLOC_NAME,
-																verifycode=user["verify_code"])):
-		user.insert()
-		pwd.insert()
-		user["head_image"] = "http://" + NETLOC_NAME + user["head_image"]
-		user["token"] = User.generate_token(username)
-		return jsonify({"status": "success", "user": user.to_json()})
-	else:
-		return healthmanager_error("2099")
+	send_email.delay("验证邮箱", [email], EMAIL_HTML.format(
+											username=username, 
+											netloc=NETLOC_NAME,
+											verifycode=user["verify_code"]))
+	user.insert()
+	pwd.insert()
+	user["head_image"] = "http://" + NETLOC_NAME + user["head_image"]
+	user["token"] = User.generate_token(username)
+	return jsonify({"status": "success", "user": user.to_json()})
 
 
 @auth.route("/user/login", methods=["POST"])

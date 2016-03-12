@@ -2,19 +2,19 @@
 
 from . import user
 from config import *
+from ..utils import *
 from ..errors import *
 from ..models import User, Model
+from ..decorators import login_required, valid_id_required
 
 from bson import ObjectId
 from datetime import datetime
 from flask import request, jsonify
-from ..decorators import login_required, valid_id_required
 
 
-@user.route("/user/<string:user_id>", methods=["GET"])
+@user.route("/user/<string:uid>", methods=["GET"])
 @login_required
-@valid_id_required("User", "user_id")
-def get_user_info(user_id):
-	user = Model.db.User.find_one({"_id": ObjectId(user_id)})
-	user["_id"] = str(user["_id"])
-	return jsonify({"status": "success", "user": user})
+def get_user_info(uid):
+	user = Model.db.User.find_one({"username": uid})
+	user["head_image"] = "http://" + NETLOC_NAME + user["head_image"]
+	return jsonify({"status": "success", "user": change_object_attr(user)})

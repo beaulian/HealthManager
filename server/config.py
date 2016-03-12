@@ -16,9 +16,15 @@ MONGO_HOST = "localhost"
 MONGO_PORT = 27017
 
 # email
-MAIL_HOST = "smtp.qq.com"
-MAIL_SENDER = "870402916@qq.com"
-MAIL_PASSWORD = "08151997bccb"
+MAIL_HOST = "smtp.163.com"
+MAIL_SENDER = "gjw870402916@163.com"
+MAIL_PASSWORD = "08151997bc"
 
 DEFAULT_IMAGE_PATH = "/static/img/user/default.jpg"
 CHECK_EMAIL_REGEX = re.compile(r'[a-zA-Z0-9][-_.a-zA-Z0-9]*@[-_.a-zA-Z0-9]+((\.[-_a-zA-Z0-9]){2,5}){1,2}')
+
+EMAIL_HTML = u"""<p>{username}, 您好</p>
+				 <p>欢迎注册家庭健康助手,我们竭诚为您提供最优质的家庭健康管理,如果有好的意见和建议,欢迎联系我们</p>
+				 <p>请点击<a href='http://{netloc}/validate/{verifycode}'>此处</a>
+				 验证您的邮箱</p>
+			  """
