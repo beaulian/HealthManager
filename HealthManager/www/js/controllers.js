@@ -11,6 +11,7 @@ angular.module('starter.controllers', ['ngCookies'])
 		}).success(function(data) {
 				if (data["status"] == "success") {
 					$cookieStore.put("logged-in", true);
+					$cookieStore.put("uid", $scope.formData.uid);
 					$cookieStore.put("token", data["token"], {'expires': 7200});
 					$cookieStore.put("tokenState", true, {'expires': 7000});
 					$location.path("#/tab/home");
@@ -92,11 +93,18 @@ angular.module('starter.controllers', ['ngCookies'])
 	};
 })
 
-.controller('SideBarCtrl', function($scope, $cookieStore, User) {
+.controller('SideBarCtrl', function($scope, $cookieStore, $http, User) {
 	// $scope.$on('$stateChangeSuccess', $scope.doRefresh());
 	$('.sidebar').css("display", "block");
 	$scope.logged_in = $cookieStore.get("logged-in");
-	$scope.user = $cookieStore.get("user");
+	var uid = $cookieStore.get("uid");
+	var token = $cookieStore.get("token");
+	$http({
+		"method": "GET",
+		"url": "http://127.0.0.1:5000/user/self" + "?uid=" + uid + "&token=" + token
+	}).success(function(data) {
+		$scope.user = data.user;
+	});
 	// console.log($scope.user.head_image);
 })
 
