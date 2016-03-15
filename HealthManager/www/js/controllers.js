@@ -164,7 +164,7 @@ angular.module('starter.controllers', ['ngCookies'])
        });
        $timeout(function() {
           myPopup.close(); // 3秒后关闭弹窗
-       }, 3000);
+       }, 2500);
       };
 })
 
@@ -183,7 +183,7 @@ angular.module('starter.controllers', ['ngCookies'])
        });
        $timeout(function() {
           myPopup.close(); // 3秒后关闭弹窗
-       }, 3000);
+       }, 2500);
       };
 
       //开关

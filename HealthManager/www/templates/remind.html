@@ -3,6 +3,7 @@
       <button class="button button-icon" menu-toggle="left" ng-click="toggleProjects()">
         <i class="icon ion-navicon"></i>
       </button>
+      <a ng-click="showPopup();" class="plus"><i class="icon ion-plus"></i></a>
     </ion-nav-buttons>
   
   <style type="text/css">
@@ -11,13 +12,13 @@
   }
   </style>
     <ion-content class="padding">
-      <ul class="list">
+    <!--  <ul class="list">
 
-     <h4>我的提醒</h4>
+     <h4>给自己的提醒</h4>
   <li class="item">
 	  <div class="row">
-		<div class="col col-11">
-		<div style="width:40px; height:40px;"><img src="img/pills-blue.png" width="100%" height="100%" /></div>
+		<div class="col col-8">
+		<div style="width:20px; height:20px;"><img src="img/pills-blue.png" width="100%" height="100%" /></div>
 		</div>
 		<div class="col col-60">
 		<h2>
@@ -31,137 +32,30 @@
 		</button>
 		</div>
 	  </div>
-	  </li> 
-	   <li class="item">
-	  <div class="row">
-		<div class="col col-11">
-		<div style="width:40px; height:40px;"><img src="img/pills-blue.png" width="100%" height="100%" /></div>
-		</div>
-		<div class="col col-60">
-		<h2>
-		咽炎片（吴太感康）
-		</h2>
-		<p>成人量一次1片，一日2次。</p>
-		</div>
-		<div class="col col-5 col-offset-5">
-		<button class="button button-light">
-		  <i class="icon ion-chevron-right"></i>
-		</button>
-		</div>
+	  </li>  -->
+	  <p>给自己的提醒</p>
+	  <div class="list">
+	  	<ion-toggle ng-repeat="item in RemindsList" ng-model="item.checked" ng-checked="item.checked">
+	  		<!-- <div style="float:left;padding:8px;"> -->
+	  			<img src="img/pills-blue.png" width="30px" height="30px" style="float:left;" />
+	  		<!-- </div> -->
+	  		<div class="remindtext">
+		  		<h2>{{item.text}}</h2>
+		  		<p>{{item.time}} | {{item.period}}</p>
+	  		</div>
+	  	</ion-toggle>
 	  </div>
-	  </li>
-	    <li class="item">
-	  <div class="row">
-		<div class="col col-11">
-		<div style="width:40px; height:40px;"><img src="img/pills-blue.png" width="100%" height="100%" /></div>
-		</div>
-		<div class="col col-40">
-		<h3>
-		Call Ma
-		</h3>
-		<p>12345654asd</p>
-		</div>
-		<div class="col col-5 col-offset-25">
-		<button class="button button-light">
-		  <i class="icon ion-chevron-right"></i>
-		</button>
-		</div>
+	  <p>给家人的提醒</p>
+	  <div class="list">
+	  	<ion-toggle ng-repeat="item in RemindsList" ng-model="item.checked" ng-checked="item.checked">
+	  		<!-- <div style="float:left;padding:8px;"> -->
+	  			<img src="img/pills-blue.png" width="30px" height="30px" style="float:left;" />
+	  		<!-- </div> -->
+	  		<div class="remindtext">
+		  		<h2>{{item.text}}</h2>
+		  		<p>{{item.time}} | {{item.period}}</p>
+	  		</div>
+	  	</ion-toggle>
 	  </div>
-	  </li>
-	    <li class="item">
-	  <div class="row">
-		<div class="col col-11">
-		<div style="width:40px; height:40px;"><img src="img/pills-blue.png" width="100%" height="100%" /></div>
-		</div>
-		<div class="col col-40">
-		<h3>
-		Call Ma
-		</h3>
-		<p>12345654asd</p>
-		</div>
-		<div class="col col-5 col-offset-25">
-		<button class="button button-light">
-		  <i class="icon ion-chevron-right"></i>
-		</button>
-		</div>
-	  </div>
-	  </li>
-	  </ul>
-	  <ul class="list">
-
-     <h4>家人提醒</h4>
-  <li class="item">
-	  <div class="row">
-		<div class="col col-11">
-		<div style="width:40px; height:40px;"><img src="img/pills-blue.png" width="100%" height="100%" /></div>
-		</div>
-		<div class="col col-40">
-		<h3>
-		Call Ma
-		</h3>
-		<p>12345654asd</p>
-		</div>
-		<div class="col col-5 col-offset-25">
-		<button class="button button-light">
-		  <i class="icon ion-chevron-right"></i>
-		</button>
-		</div>
-	  </div>
-	  </li>
-	    <li class="item">
-	  <div class="row">
-		<div class="col col-11">
-		<div style="width:40px; height:40px;"><img src="img/pills-blue.png" width="100%" height="100%" /></div>
-		</div>
-		<div class="col col-40">
-		<h3>
-		Call Ma
-		</h3>
-		<p>12345654asd</p>
-		</div>
-		<div class="col col-5 col-offset-25">
-		<button class="button button-light">
-		  <i class="icon ion-chevron-right"></i>
-		</button>
-		</div>
-	  </div>
-	  </li>
-	    <li class="item">
-	  <div class="row">
-		<div class="col col-11">
-		<div style="width:40px; height:40px;"><img src="img/pills-blue.png" width="100%" height="100%" /></div>
-		</div>
-		<div class="col col-40">
-		<h3>
-		Call Ma
-		</h3>
-		<p>12345654asd</p>
-		</div>
-		<div class="col col-5 col-offset-25">
-		<button class="button button-light">
-		  <i class="icon ion-chevron-right"></i>
-		</button>
-		</div>
-	  </div>
-	  </li>
-	    <li class="item">
-	  <div class="row">
-		<div class="col col-11">
-		<div style="width:40px; height:40px;"><img src="img/pills-blue.png" width="100%" height="100%" /></div>
-		</div>
-		<div class="col col-40">
-		<h3>
-		Call Ma
-		</h3>
-		<p>12345654asd</p>
-		</div>
-		<div class="col col-5 col-offset-25">
-		<button class="button button-light">
-		  <i class="icon ion-chevron-right"></i>
-		</button>
-		</div>
-	  </div>
-	  </li>
-	  </ul>
     </ion-content>
   </ion-view>

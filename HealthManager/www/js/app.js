@@ -16,14 +16,15 @@ angular.module('starter', ['ionic', 'starter.controllers', 'starter.services', '
         event.preventDefault();// 取消默认跳转行为
         $state.go("login");
       }
-    // }else {
-    //   if (!$cookieStore.get("tokenState") && $cookieStore.get("token")) {
-    //     $http.put("http://127.0.0.1:5000/user/login?uid="+$cookieStore.get("uid")+"&token="+$cookieStore.get("token")).success(function(data){
-    //       $cookieStore.remove("token");
-    //       $cookieStore.put("token", data["token"], {'expires': 7200});
-    //       $cookieStore.put("tokenState", true, {'expires': 7000});
-    //     });
-    //   }
+    
+      if (!$cookieStore.get("tokenState") && $cookieStore.get("token")) {
+        $http.put("http://127.0.0.1:5000/user/login?uid="+$cookieStore.get("uid")+"&token="+$cookieStore.get("token")).success(function(data){
+          $cookieStore.remove("token");
+          $cookieStore.put("token", data["token"], {'expires': 7200});
+          $cookieStore.put("tokenState", true, {'expires': 7000});
+        });
+      }
+      // console.log($cookieStore.get("token"));
   });
 
   $ionicPlatform.ready(function() {
