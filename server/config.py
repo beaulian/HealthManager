@@ -5,7 +5,7 @@ import re, os
 basedir = os.path.abspath(os.path.dirname(__file__))
 
 APP_NAME = "家庭健康助手"
-NETLOC_NAME = "127.0.0.1:5000"
+NETLOC_NAME = "222.198.155.138:5000"
 
 SECRET_KEY = os.urandom(24)
 STATIC_SECRET_CODE = "hard to guess"
