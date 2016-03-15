@@ -40,7 +40,7 @@
         <ion-nav-view></ion-nav-view>
       </ion-side-menu-content>
 <!-- 左侧菜单 -->
-      <ion-side-menu side="left" ng-controller="SideBarCtrl" style="display: none;" class="sidebar">
+      <ion-side-menu side="left" ng-controller="SideBarCtrl" class="sidebar">
         <ion-content>
             <!-- 已登录时显示 -->
             <div class="item item-avatar" style="background-color: #33cd5f;" ng-if="logged_in">
@@ -90,7 +90,7 @@
       </ion-side-menu>
     </ion-side-menus>
     <script id="templates/tabs.html" type="text/ng-template">
-      <ion-tabs class="tabs-icon-top tabs-light">
+      <ion-tabs class="tabs-icon-bottom tabs-light">
 
         <ion-tab title="首页" icon="ion-home" href="#/tab/home">
           <ion-nav-view name="home-tab"></ion-nav-view>

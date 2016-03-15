@@ -95,7 +95,7 @@ angular.module('starter.controllers', ['ngCookies'])
 
 .controller('SideBarCtrl', function($scope, $cookieStore, $http, User) {
 	// $scope.$on('$stateChangeSuccess', $scope.doRefresh());
-	$('.sidebar').css("display", "block");
+	// $('.sidebar').css("display", "block");
 	$scope.logged_in = $cookieStore.get("logged-in");
 	var uid = $cookieStore.get("uid");
 	var token = $cookieStore.get("token");
