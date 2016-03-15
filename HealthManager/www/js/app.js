@@ -65,7 +65,8 @@ angular.module('starter', ['ionic', 'starter.controllers', 'starter.services', '
     url: "/remind",
     views: {
       'remind-tab': {
-        templateUrl: "templates/remind.html"
+        templateUrl: "templates/remind.html",
+        controller: "RemindCtrl"
       }
     }
   })

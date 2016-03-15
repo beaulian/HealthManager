@@ -166,6 +166,39 @@ angular.module('starter.controllers', ['ngCookies'])
           myPopup.close(); // 3秒后关闭弹窗
        }, 3000);
       };
+})
+
+.controller('RemindCtrl', function($scope, $ionicPopup, $timeout) {
+	 $scope.showPopup = function() {
+       $scope.data = {}
+
+       // 自定义弹窗
+       var myPopup = $ionicPopup.show({
+         template: "<div class='polist'><a class='popup' href='#'>喝水</a><a class='popup' href='#'>吃药</a><a class='popup' href='#'>自定义</a></div>",
+         title: '选择提醒类型',
+         scope: $scope,
+       });
+       myPopup.then(function(res) {
+         console.log('Tapped!', res);
+       });
+       $timeout(function() {
+          myPopup.close(); // 3秒后关闭弹窗
+       }, 3000);
+      };
+
+      //开关
+       $scope.RemindsList = [
+	    { text: "喝水", time: "07:00", period: "每两天", checked: false },
+	    { text: "吃药", time: "18:00", period: "每天", checked: false },
+	    { text: "买药", time: "13:00", period: "每天", checked: false }
+	  ];
+
+	  $scope.pushNotificationChange = function() {
+	    console.log('Push Notification Change', $scope.pushNotification.checked);
+	  };
+	  
+	  $scope.pushNotification = { checked: true };
+	  $scope.emailNotification = 'Subscribed';
 });
 
 
