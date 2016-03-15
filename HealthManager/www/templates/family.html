@@ -3,7 +3,7 @@
       <button class="button button-icon" menu-toggle="left" ng-click="toggleProjects()">
         <i class="icon ion-navicon"></i>
       </button>
-      <button class="button button-clear button-positive" >Edit</button>
+      <a ng-click="showPopup();" class="plus"><i class="icon ion-plus"></i></a>
     </ion-nav-buttons>
     <ion-content>
       <div class="bar bar-header item-input-inset item-select">
@@ -13,9 +13,9 @@
   }
   </style>
     <select>
-      <option>Blue</option>
-      <option selected>Green</option>
-      <option>Red</option>
+      <option selected>成员</option>
+      <option>购药记录</option>
+      <option>门诊住院记录</option>
     </select>
     <label class="item-input-wrapper">
     <i class="icon ion-ios-search placeholder-icon"></i>
@@ -62,7 +62,5 @@
 	  </li>
 	    
 	  </ul>
-	  <ul class="list">
-
     </ion-content>
   </ion-view>

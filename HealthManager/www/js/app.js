@@ -74,7 +74,8 @@ angular.module('starter', ['ionic', 'starter.controllers', 'starter.services', '
     url: "/family",
     views: {
       'family-tab': {
-        templateUrl: "templates/family.html"
+        templateUrl: "templates/family.html",
+        controller: "FamilyCtrl"
       }
     }
   })

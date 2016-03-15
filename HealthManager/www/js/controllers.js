@@ -130,16 +130,42 @@ angular.module('starter.controllers', ['ngCookies'])
 	});
 })
 
-.controller('UserCtrl', function($scope, $cookieStore, $window, $location, $state) {
+.controller('UserCtrl', function($scope, $cookieStore, $window, $location, $state, $http) {
 	$scope.logged_in = $cookieStore.get("logged-in");
 	var status = $scope.logged_in;
-	$scope.user = $cookieStore.get("user");
+	var uid = $cookieStore.get("uid");
+	var token = $cookieStore.get("token");
+	$http({
+		"method": "GET",
+		"url": "http://127.0.0.1:5000/user/self" + "?uid=" + uid + "&token=" + token
+	}).success(function(data) {
+		$scope.user = data.user;
+	});
 
 	$('.logout').click(function() {
 		$cookieStore.remove("logged-in");
 		$state.go('tabs.home');
 		$window.location.reload(true);
 	});
+})
+
+.controller('FamilyCtrl', function($scope, $ionicPopup, $timeout) {
+	 $scope.showPopup = function() {
+       $scope.data = {}
+
+       // 自定义弹窗
+       var myPopup = $ionicPopup.show({
+         template: "<div class='polist'><a class='popup' href='#'>添加家庭成员</a><a class='popup' href='#'>添加平时购药记录</a><a class='popup' href='#'>添加门诊/住院记录</a></div>",
+         title: '选择操作',
+         scope: $scope,
+       });
+       myPopup.then(function(res) {
+         console.log('Tapped!', res);
+       });
+       $timeout(function() {
+          myPopup.close(); // 3秒后关闭弹窗
+       }, 3000);
+      };
 });
 
 
