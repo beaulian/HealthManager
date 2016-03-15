@@ -5,7 +5,7 @@ angular.module('starter.controllers', ['ngCookies'])
 	$scope.login = function() {
 		$http({
 			method: "POST",
-			url: "http://10.251.102.89:5000/user/login",
+			url: "http://222.198.155.138:5000/user/login",
 			data: $.param($scope.formData),
 			headers: {'Content-Type': 'application/x-www-form-urlencoded'}
 		}).success(function(data) {
@@ -49,7 +49,7 @@ angular.module('starter.controllers', ['ngCookies'])
 
 		$http({
 			method: "POST",
-			url: "http://10.251.102.89:5000/user/register",
+			url: "http://222.198.155.138:5000/user/register",
 			data: $.param($scope.formData),
 			headers: {'Content-Type': 'application/x-www-form-urlencoded'}
 		}).success(function(data) {
@@ -101,7 +101,7 @@ angular.module('starter.controllers', ['ngCookies'])
 	var token = $cookieStore.get("token");
 	$http({
 		"method": "GET",
-		"url": "http://10.251.102.89:5000/user/self" + "?uid=" + uid + "&token=" + token
+		"url": "http://222.198.155.138:5000/user/self" + "?uid=" + uid + "&token=" + token
 	}).success(function(data) {
 		$scope.user = data.user;
 	});
@@ -111,7 +111,7 @@ angular.module('starter.controllers', ['ngCookies'])
 .controller('HomeTabCtrl', function($scope, $http) {
 	$http({
 		method: "GET",
-		url: "http://10.251.102.89:5000/news/index",
+		url: "http://222.198.155.138:5000/news/index",
 	}).success(function(data) {
 		$scope.mutinews = data.mutinews;
 		// console.log($scope.mutinews);
@@ -123,7 +123,7 @@ angular.module('starter.controllers', ['ngCookies'])
 	var id = $stateParams.id;
 	$http({
 		method: "GET",
-		url: "http://10.251.102.89:5000/news/"+classf+"/"+id,
+		url: "http://222.198.155.138:5000/news/"+classf+"/"+id,
 	}).success(function(data) {
 		$scope.news = data.news;
 		$scope.news.body = $sce.trustAsHtml($scope.news.body);
@@ -137,7 +137,7 @@ angular.module('starter.controllers', ['ngCookies'])
 	var token = $cookieStore.get("token");
 	$http({
 		"method": "GET",
-		"url": "http://10.251.102.89:5000/user/self" + "?uid=" + uid + "&token=" + token
+		"url": "http://222.198.155.138:5000/user/self" + "?uid=" + uid + "&token=" + token
 	}).success(function(data) {
 		$scope.user = data.user;
 	});

@@ -9,7 +9,7 @@ angular.module('starter', ['ionic', 'starter.controllers', 'starter.services', '
 
 .run(function($ionicPlatform, $rootScope, $cookieStore, $location, $http, $state) {
   $rootScope.$on('$stateChangeStart', function(event, toState) {
-      if (toState.name == "login") {
+      if (toState.name == "login" || toState.name == "register") {
           return;
       }
       if (!$cookieStore.get("logged-in")) {
