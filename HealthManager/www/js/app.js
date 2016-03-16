@@ -26,15 +26,6 @@ angular.module('starter', ['ionic', 'starter.controllers', 'starter.services', '
       // }
       // console.log($cookieStore.get("token"));
   });
-  $rootScope.$on('$stateChangeSuccess', 
-    function(event, toState, toParams, fromState, fromParams) {
-      if (fromState.name == "login" || fromState.name == "register") {
-        if (toState.name == "tabs.home") {
-          event.preventDefault();// 取消默认跳转行为
-          $window.location.reload();
-        }
-      }
-  });
 
   $ionicPlatform.ready(function() {
     // Hide the accessory bar by default (remove this to show the accessory bar above the keyboard

@@ -30,6 +30,9 @@ angular.module('starter.controllers', ['ngCookies'])
 					$window.localStorage.setItem("tokenState", true, {'expires': 7000});
 					// $location.path("#/tab/home");
 					// event.preventDefault();// 取消默认跳转行为
+					User.set("logged-in", true);
+					User.set("uid", $scope.formData.uid);
+					User.set("token", data["token"]);
 					$state.go("tabs.home");
 					// $window.location.reload(true);
 					// $route.reload();
@@ -82,7 +85,6 @@ angular.module('starter.controllers', ['ngCookies'])
 				$window.localStorage.setItem("tokenState", true, {'expires': 7000});
 				$window.localStorage.setItem("uid", data["user"]["username"]);
 				$window.localStorage.setItem("user", data["user"]);
-				$state.go("tabs.home");
 				// $window.location.reload(true);
 			}
 		})
@@ -110,21 +112,41 @@ angular.module('starter.controllers', ['ngCookies'])
 	};
 })
 
-.controller('SideBarCtrl', function($scope, $cookieStore, $http, $window, User) {
+.controller('SideBarCtrl', function($scope, $cookieStore, $rootScope, $http, $window, User) {
 	// $scope.$on('$stateChangeSuccess', $scope.doRefresh());
 	// $('.sidebar').css("display", "block");
 	// $scope.logged_in = $cookieStore.get("logged-in");
 	// var uid = $cookieStore.get("uid");
 	// var token = $cookieStore.get("token");
-	$scope.logged_in = $window.localStorage.getItem("logged-in");
-	var uid = $window.localStorage.getItem("uid");
-	var token = $window.localStorage.getItem("token")
-	$http({
-		"method": "GET",
-		"url": "http://222.198.155.138:5000/user/self" + "?uid=" + uid + "&token=" + token
-	}).success(function(data) {
-		$scope.user = data.user;
-	});
+	$rootScope.$on('$stateChangeSuccess', 
+	    function(event, toState, toParams, fromState, fromParams) {
+	      if ((fromState.name == "login" && toState.name == "tabs.home") || (fromState.name == "register" && toState.name == "tabs.home")) {
+	        
+        	// console.log(User.get("uid"));
+         	$scope.logged_in = User.get("logged-in");
+			var uid = User.get("uid");
+			var token = User.get("token");
+			$http({
+				"method": "GET",
+				"url": "http://222.198.155.138:5000/user/self" + "?uid=" + uid + "&token=" + token
+			}).success(function(data) {
+				$scope.user = data.user;
+			});
+	        
+	      }
+	      else {
+	      	$scope.logged_in = $window.localStorage.getItem("logged-in");
+			var uid = $window.localStorage.getItem("uid");
+			var token = $window.localStorage.getItem("token");
+		  	$http({
+				"method": "GET",
+				"url": "http://222.198.155.138:5000/user/self" + "?uid=" + uid + "&token=" + token
+			}).success(function(data) {
+				$scope.user = data.user;
+			});
+	      }
+  	});
+	
 	// console.log($scope.user.head_image);
 })
 
