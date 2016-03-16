@@ -12,6 +12,10 @@
 	color: gray;
 }
 
+.auth a {
+	text-decoration: none;
+}
+
 .item a {
 	text-decoration: none;
 	color: white;

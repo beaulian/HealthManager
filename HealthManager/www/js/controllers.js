@@ -7,7 +7,7 @@ angular.module('starter.controllers', ['ngCookies'])
 			content: 'Loading',
 		    animation: 'fade-in',
 		    maxWidth: 200,
-		    showDelay: 2, 
+		    showDelay: 0, 
 		    noBackdrop: true
 		});
 
@@ -31,7 +31,7 @@ angular.module('starter.controllers', ['ngCookies'])
 					// $location.path("#/tab/home");
 					// event.preventDefault();// 取消默认跳转行为
 					$state.go("tabs.home");
-					$window.location.reload(true);
+					// $window.location.reload(true);
 					// $route.reload();
 				} 	
 		})
@@ -60,7 +60,7 @@ angular.module('starter.controllers', ['ngCookies'])
 			content: 'Loading',
 		    animation: 'fade-in',
 		    maxWidth: 200,
-		    showDelay: 2, 
+		    showDelay: 0, 
 		    noBackdrop: true
 		});
 
@@ -68,7 +68,7 @@ angular.module('starter.controllers', ['ngCookies'])
 			method: "POST",
 			url: "http://222.198.155.138:5000/user/register",
 			data: $.param($scope.formData),
-			// headers: {'Content-Type': 'application/x-www-form-urlencoded'}
+			headers: {'Content-Type': 'application/x-www-form-urlencoded'}
 		}).success(function(data) {
 			$ionicLoading.hide();
 			if (data["status"] == "success") {
@@ -116,9 +116,6 @@ angular.module('starter.controllers', ['ngCookies'])
 	// $scope.logged_in = $cookieStore.get("logged-in");
 	// var uid = $cookieStore.get("uid");
 	// var token = $cookieStore.get("token");
-	$scope.$on('$ionicView.beforeEnter', function(){
-  		$window.location.reload(true);
-	});
 	$scope.logged_in = $window.localStorage.getItem("logged-in");
 	var uid = $window.localStorage.getItem("uid");
 	var token = $window.localStorage.getItem("token")
@@ -173,7 +170,7 @@ angular.module('starter.controllers', ['ngCookies'])
 			content: 'Loading',
 		    animation: 'fade-in',
 		    maxWidth: 200,
-		    showDelay: 2, 
+		    showDelay: 0, 
 		    noBackdrop: true
 		});
 

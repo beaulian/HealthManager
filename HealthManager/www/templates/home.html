@@ -39,7 +39,7 @@
 
         <div ng-repeat="news in mutinews">
         <a class="item item-thumbnail-left" href="#/news/{{news.classf}}/{{news.id}}">
-          <img class="indeximg" src="{{news.thumbnail}}">
+          <img class="indeximg" ng-src="{{news.thumbnail}}">
           <h2>{{news.title}}</h2>
         </a>
         </div>

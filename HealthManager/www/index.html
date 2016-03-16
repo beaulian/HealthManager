@@ -45,7 +45,7 @@
         <ion-content>
             <!-- 已登录时显示 -->
             <div class="item item-avatar" style="background-color: #33cd5f;" ng-if="logged_in">
-              <img src="{{user.head_image}}">
+              <img ng-src="{{user.head_image}}">
               <h2 style="color:white">{{user.username}}</h2>
               <p style="color:white">{{user.introduction}}</p>
             </div>
