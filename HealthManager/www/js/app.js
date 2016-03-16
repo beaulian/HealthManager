@@ -7,12 +7,12 @@ var LoginStatus = false;
 
 angular.module('starter', ['ionic', 'starter.controllers', 'starter.services', 'ngCookies', 'ngRoute'])
 
-.run(function($ionicPlatform, $rootScope, $cookieStore, $location, $http, $state) {
+.run(function($ionicPlatform, $rootScope, $cookieStore, $location, $http, $state, $window) {
   $rootScope.$on('$stateChangeStart', function(event, toState) {
       if (toState.name == "login" || toState.name == "register") {
           return;
       }
-      if (!$cookieStore.get("logged-in")) {
+      if (!$window.localStorage.getItem("logged-in")) {
         event.preventDefault();// 取消默认跳转行为
         $state.go("login");
       }

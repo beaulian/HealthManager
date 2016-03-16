@@ -1,21 +1,38 @@
 angular.module('starter.controllers', ['ngCookies'])
 
-.controller('LoginCtrl', function($scope, $http, $ionicLoading, $cookieStore, $location, $window, User) {
+.controller('LoginCtrl', function($scope, $http, $ionicLoading, $cookieStore, $location, $state, $window, User) {
 	$scope.formData = {};
 	$scope.login = function() {
+		$ionicLoading.show({ 
+			content: 'Loading',
+		    animation: 'fade-in',
+		    maxWidth: 200,
+		    showDelay: 2, 
+		    noBackdrop: true
+		});
+
 		$http({
 			method: "POST",
 			url: "http://222.198.155.138:5000/user/login",
 			data: $.param($scope.formData),
 			headers: {'Content-Type': 'application/x-www-form-urlencoded'}
 		}).success(function(data) {
+				$ionicLoading.hide();
 				if (data["status"] == "success") {
-					$cookieStore.put("logged-in", true);
-					$cookieStore.put("uid", $scope.formData.uid);
-					$cookieStore.put("token", data["token"], {'expires': 7200});
-					$cookieStore.put("tokenState", true, {'expires': 7000});
-					$location.path("#/tab/home");
+					// $cookieStore.put("logged-in", true);
+					// $cookieStore.put("uid", $scope.formData.uid);
+					// $cookieStore.put("token", data["token"], {'expires': 7200});
+					// $cookieStore.put("tokenState", true, {'expires': 7000});
+					// $location.path("#/tab/home");
+					$window.localStorage.setItem("logged-in", true);
+					$window.localStorage.setItem("uid", $scope.formData.uid);
+					$window.localStorage.setItem("token", data["token"], {'expires': 7200});
+					$window.localStorage.setItem("tokenState", true, {'expires': 7000});
+					// $location.path("#/tab/home");
+					// event.preventDefault();// 取消默认跳转行为
+					$state.go("tabs.home");
 					$window.location.reload(true);
+					// $route.reload();
 				} 	
 		})
 		.error(function(data) {
@@ -43,7 +60,7 @@ angular.module('starter.controllers', ['ngCookies'])
 			content: 'Loading',
 		    animation: 'fade-in',
 		    maxWidth: 200,
-		    showDelay: 0, 
+		    showDelay: 2, 
 		    noBackdrop: true
 		});
 
@@ -51,7 +68,7 @@ angular.module('starter.controllers', ['ngCookies'])
 			method: "POST",
 			url: "http://222.198.155.138:5000/user/register",
 			data: $.param($scope.formData),
-			headers: {'Content-Type': 'application/x-www-form-urlencoded'}
+			// headers: {'Content-Type': 'application/x-www-form-urlencoded'}
 		}).success(function(data) {
 			$ionicLoading.hide();
 			if (data["status"] == "success") {
@@ -60,13 +77,13 @@ angular.module('starter.controllers', ['ngCookies'])
 					showBackdrop: true, 
 					duration: 2000 
 				});
-				$cookieStore.put("logged-in", true);
-				$cookieStore.put("token", data["user"]["token"], {'expires': 7200});
-				$cookieStore.put("tokenState", true, {'expires': 7000});
-				$cookieStore.put("uid", data["user"]["username"]);
-				$cookieStore.put("user", data["user"]);
-				$location.path("#/tab/home");
-				$window.location.reload(true);
+				$window.localStorage.setItem("logged-in", true);
+				$window.localStorage.setItem("token", data["user"]["token"], {'expires': 7200});
+				$window.localStorage.setItem("tokenState", true, {'expires': 7000});
+				$window.localStorage.setItem("uid", data["user"]["username"]);
+				$window.localStorage.setItem("user", data["user"]);
+				$state.go("tabs.home");
+				// $window.location.reload(true);
 			}
 		})
 		.error(function(data){
@@ -93,12 +110,18 @@ angular.module('starter.controllers', ['ngCookies'])
 	};
 })
 
-.controller('SideBarCtrl', function($scope, $cookieStore, $http, User) {
+.controller('SideBarCtrl', function($scope, $cookieStore, $http, $window, User) {
 	// $scope.$on('$stateChangeSuccess', $scope.doRefresh());
 	// $('.sidebar').css("display", "block");
-	$scope.logged_in = $cookieStore.get("logged-in");
-	var uid = $cookieStore.get("uid");
-	var token = $cookieStore.get("token");
+	// $scope.logged_in = $cookieStore.get("logged-in");
+	// var uid = $cookieStore.get("uid");
+	// var token = $cookieStore.get("token");
+	$scope.$on('$ionicView.beforeEnter', function(){
+  		$window.location.reload(true);
+	});
+	$scope.logged_in = $window.localStorage.getItem("logged-in");
+	var uid = $window.localStorage.getItem("uid");
+	var token = $window.localStorage.getItem("token")
 	$http({
 		"method": "GET",
 		"url": "http://222.198.155.138:5000/user/self" + "?uid=" + uid + "&token=" + token
@@ -108,7 +131,10 @@ angular.module('starter.controllers', ['ngCookies'])
 	// console.log($scope.user.head_image);
 })
 
-.controller('HomeTabCtrl', function($scope, $http) {
+.controller('HomeTabCtrl', function($scope, $http, $state, $window) {
+	// $scope.$on("$ionicView.Enter", function() {
+	// 	$window.location.reload(true);
+	// })
 	$http({
 		method: "GET",
 		url: "http://222.198.155.138:5000/news/index",
@@ -130,11 +156,11 @@ angular.module('starter.controllers', ['ngCookies'])
 	});
 })
 
-.controller('UserCtrl', function($scope, $cookieStore, $window, $location, $state, $http) {
-	$scope.logged_in = $cookieStore.get("logged-in");
+.controller('UserCtrl', function($scope, $cookieStore, $window, $location, $state, $http, $ionicLoading) {
+	$scope.logged_in = $window.localStorage.getItem("logged-in");
 	var status = $scope.logged_in;
-	var uid = $cookieStore.get("uid");
-	var token = $cookieStore.get("token");
+	var uid = $window.localStorage.getItem("uid");
+	var token = $window.localStorage.getItem("token");
 	$http({
 		"method": "GET",
 		"url": "http://222.198.155.138:5000/user/self" + "?uid=" + uid + "&token=" + token
@@ -143,7 +169,15 @@ angular.module('starter.controllers', ['ngCookies'])
 	});
 
 	$('.logout').click(function() {
-		$cookieStore.remove("logged-in");
+		$ionicLoading.show({ 
+			content: 'Loading',
+		    animation: 'fade-in',
+		    maxWidth: 200,
+		    showDelay: 2, 
+		    noBackdrop: true
+		});
+
+		$window.localStorage.removeItem("logged-in");
 		$state.go('tabs.home');
 		$window.location.reload(true);
 	});
