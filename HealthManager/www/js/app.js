@@ -96,6 +96,11 @@ angular.module('starter', ['ionic', 'starter.controllers', 'starter.services', '
       }
     }
   })
+.state('family_member',{
+  url:"/family/family_member",
+templateUrl:'templates/family_member.html',
+
+})
 
   // set up abstract state for user
   .state('login', {
