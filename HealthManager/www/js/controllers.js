@@ -221,6 +221,19 @@ angular.module('starter.controllers', ['ngCookies'])
       };
 })
 
+.controller('FamilyMemberCtrl', function($scope, $window, $location, $state, $http, $ionicLoading) {
+	// $scope.logged_in = $window.localStorage.getItem("logged-in");
+	// var status = $scope.logged_in;
+	// var uid = $window.localStorage.getItem("uid");
+	// var token = $window.localStorage.getItem("token");
+	// $http({
+	// 	"method": "GET",
+	// 	"url": "http://222.198.155.138:5000/user/" + uid + "?uid=" + uid + "&token=" + token
+	// }).success(function(data) {
+	// 	$scope.user = data.user;
+	// });
+})
+
 .controller('RemindCtrl', function($scope, $ionicPopup, $timeout) {
 	 $scope.showPopup = function() {
        $scope.data = {}

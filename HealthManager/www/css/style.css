@@ -109,3 +109,17 @@
 .remindtext {
 	padding-left: 50px;
 }
+
+.forbid-scroll {
+	overflow-y: hidden;
+}
+
+.family-member {
+	border-top: 5px solid #4e8ef7 !important;
+	height: 90px !important;
+	padding: 7px !important;
+}
+
+.family-member h3 {
+	font-size: 1.2em;
+}
