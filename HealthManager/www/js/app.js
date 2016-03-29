@@ -5,14 +5,14 @@
 // the 2nd parameter is an array of 'requires'
 var LoginStatus = false;
 
-angular.module('starter', ['ionic', 'starter.controllers', 'starter.services', 'ngCookies', 'ngRoute'])
+angular.module('starter', ['ionic', 'starter.controllers', 'starter.services', 'ngCookies', 'ngRoute','ngCordova'])
 
 .run(function($ionicPlatform, $rootScope, $cookieStore, $location, $http, $state, $window) {
   $rootScope.$on('$stateChangeStart', function(event, toState) {
       if (toState.name == "login" || toState.name == "register") {
           return;
       }
-      if (!$window.localStorage.getItem("logged-in")) {
+      if ($window.localStorage.getItem("logged-in")) {
         event.preventDefault();// 取消默认跳转行为
         $state.go("login");
       }
@@ -126,6 +126,12 @@ angular.module('starter', ['ionic', 'starter.controllers', 'starter.services', '
     url: '/user/detail',
     templateUrl: 'templates/user.html',
     controller: 'UserCtrl'
+  })
+
+  .state('medicine',{
+  	url:'/home/mymedicine',
+  	templateUrl:'templates/my_medicine.html',
+  	controller:'ExampleController'
   });
 
   $urlRouterProvider.otherwise('/tab/home');

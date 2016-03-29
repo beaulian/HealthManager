@@ -3,7 +3,7 @@
       <button class="button button-icon" menu-toggle="left" ng-click="toggleProjects()">
         <i class="icon ion-navicon"></i>
       </button>
-      <a ng-click="showPopup();" class="plus"><i class="icon ion-plus"></i></a>
+      <a  ng-click="scanBarcode()" class="plus"><i class="icon ion-plus"></i></a>
     </ion-nav-buttons>
     <ion-content>
       	<div class="bar bar-header item-input-inset">
@@ -24,16 +24,8 @@
 				<i class="icon ion-ios-arrow-right"></i>
 			</a>
 			<div class="item item-divider">医疗记录</div>
-			<a class="item item-icon-left item-icon-right" href="#">
-				<i class="icon ion-medkit"></i>
-				平时购药记录
-				<i class="icon ion-ios-arrow-right"></i>
-			</a>
-			<a class="item item-icon-left item-icon-right" href="#">
-				<i class="icon ion-ios-film"></i>
-				门诊/住院记录
-				<i class="icon ion-ios-arrow-right"></i>
-			</a>
+			
+			<p>{{info}}   {{isf}}</p>
 		</div>
       </ion-content>
   </ion-view>
