@@ -5,7 +5,8 @@ import re, os
 basedir = os.path.abspath(os.path.dirname(__file__))
 
 APP_NAME = "家庭健康助手"
-NETLOC_NAME = "222.198.155.138:5000"
+NETWORK_ADDRESS = "http://127.0.0.1:5000"
+NETLOC_NAME = "127.0.0.1:5000"
 
 SECRET_KEY = os.urandom(24)
 STATIC_SECRET_CODE = "hard to guess"
@@ -21,6 +22,8 @@ MAIL_SENDER = "gjw870402916@163.com"
 MAIL_PASSWORD = "08151997bc"
 
 DEFAULT_IMAGE_PATH = "/static/img/user/default.jpg"
+# DEFAULT_FAMILY_IMAGE_PATH = "/static/img/family/default.jpg"
+HEAD_IMAGE_PATH = "/static/img/user/"
 CHECK_EMAIL_REGEX = re.compile(r'[a-zA-Z0-9][-_.a-zA-Z0-9]*@[-_.a-zA-Z0-9]+((\.[-_a-zA-Z0-9]){2,5}){1,2}')
 
 EMAIL_HTML = u"""<p>{username}, 您好</p>

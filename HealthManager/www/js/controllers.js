@@ -168,7 +168,7 @@ angular.module('starter.controllers', ['ngCookies'])
 	var id = $stateParams.id;
 	$http({
 		method: "GET",
-		url: "http://222.198.155.138:5000/news/"+classf+"/"+id,
+		url: "http://222.198.155.138:5000/news/index"+classf+"/"+id,
 	}).success(function(data) {
 		$scope.news = data.news;
 		$scope.news.body = $sce.trustAsHtml($scope.news.body);

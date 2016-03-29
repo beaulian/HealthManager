@@ -20,6 +20,8 @@ def healthmanager_error(error_code, **kwargs):
 		"2012": "image_wrong_format",
 		"2013": "out_of_pages",
 		"2014": "invalid_id",
+		"2015": "create_family_occupied",
+		"2016": "add_user_occupied",
 		"2099": "unknow_error"
 	}
 	response = jsonify(

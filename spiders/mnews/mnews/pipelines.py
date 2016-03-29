@@ -5,7 +5,7 @@ from pymongo import MongoClient
 from pymongo.errors import DuplicateKeyError
 
 
-class NewsPipeline(object):
+class MnewsPipeline(object):
     def __init__(self, mongo_uri, mongo_port, mongo_db):
         self.mongo_uri = mongo_uri
         self.mongo_port = mongo_port
@@ -29,10 +29,19 @@ class NewsPipeline(object):
         self.client.close()
 
     def process_item(self, item, spider):
+    	class_map = {
+			"nv"  : "女性",
+			"nan" : "男性",
+			"zyk" : "中医",
+			"ye"  : "育儿",
+			"ys"  : "饮食",
+			"jf"  : "减肥"
+		}
+		
         item['title']        = item['title'][0]
         item['time']         = item['time'][0]
         item['source']       = item['source'][0]
-        item['classf']       = item['classf'][1]
+        item['classf']       = class_map[item['classf'][0]]
         item['body']         = clear_html(item['body'][0])
         item['thumbnail']    = item['thumbnail'][0]
         item['url']          = item['url'][0]
@@ -43,3 +52,4 @@ class NewsPipeline(object):
             print "skip %s" % item['url']
 
         return item
+
