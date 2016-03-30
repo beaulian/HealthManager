@@ -45,7 +45,7 @@ def put_self_info():
 
 	if head_image:
 		if allow_image(head_image.filename):
-			head_image = save_img(head_image, 80)
+			head_image = save_img(head_image, 80, HEAD_IMAGE_PATH)
 		else:
 			return healthmanager_error("2012")
 
