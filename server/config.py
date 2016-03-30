@@ -1,4 +1,4 @@
-# -*- coding: utf-8 -*- 
+# -*- coding: utf-8 -*-  = "/sta"
 
 import re, os
 
@@ -21,9 +21,13 @@ MAIL_HOST = "smtp.163.com"
 MAIL_SENDER = "gjw870402916@163.com"
 MAIL_PASSWORD = "08151997bc"
 
+MAX_MEDICINE_NUM_PER_PAGE = 8
+
 DEFAULT_IMAGE_PATH = "/static/img/user/default.jpg"
 # DEFAULT_FAMILY_IMAGE_PATH = "/static/img/family/default.jpg"
 HEAD_IMAGE_PATH = "/static/img/user/"
+MEDICINE_THUMBNAIL_PATH = "/static/img/medicine/"
+
 CHECK_EMAIL_REGEX = re.compile(r'[a-zA-Z0-9][-_.a-zA-Z0-9]*@[-_.a-zA-Z0-9]+((\.[-_a-zA-Z0-9]){2,5}){1,2}')
 
 EMAIL_HTML = u"""<p>{username}, 您好</p>

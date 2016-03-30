@@ -22,6 +22,7 @@ def healthmanager_error(error_code, **kwargs):
 		"2014": "invalid_id",
 		"2015": "create_family_occupied",
 		"2016": "add_user_occupied",
+		"2017": "medicine_occupied",
 		"2099": "unknow_error"
 	}
 	response = jsonify(

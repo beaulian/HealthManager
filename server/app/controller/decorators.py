@@ -105,6 +105,31 @@ def can(func):
 	return wrapper
 
 
+def admin_required_if_not_self(func):
+	@wraps(func)
+	def wrapper(*args, **kwargs):
+		uid = request.args.get("uid", None)
+		token = request.args.get("token", None)
+		if (not uid) or (not token):
+			if (not uid) and (not token):
+				return healthmanager_error("2003")
+			else:
+				return healthmanager_error("2009")
+		else:
+			if User.verify_uid(uid):
+				if kwargs.get("uid") == uid or User.verify_admin(uid):
+					if User.verify_token(token, uid):
+						pass
+					else:
+						return healthmanager_error("2006")
+				else:
+					return healthmanager_error("2007")
+			else:
+				return healthmanager_error("2005")
+		return func(*args, **kwargs)
+	return wrapper
+
+
 def valid_id_required(db_name, id_name):
 	def handle(func):
 	    @wraps(func)

@@ -164,6 +164,10 @@ class FamilyUser(Model):
 class FamilyUserNot(Model):
     pass
 
+class Medicine(Model):
+    pass
+
+
 
 if __name__ == '__main__':
     user = User(username=1)
