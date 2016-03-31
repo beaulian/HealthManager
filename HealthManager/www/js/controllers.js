@@ -268,41 +268,28 @@ angular.module('starter.controllers', ['ngCookies'])
 })
 
 
-.controller("ExampleController", function($scope, $cordovaBarcodeScanner, $ionicPopup,$http) {
-	// $scope.scanBarcode = function(){
-	// 	$cordovaBarcodeScanner.scan()
-	// 	.then(function(imageData)
-	// 	{
-	// 	$.ajax({
-	// 		 url: 'http://www.tngou.net/api/drug/code?',
-	// 		 type: "GET",
-	// 		 data: {'code':imageData.text},
-	// 		 dataType: 'jsonp',
-	// 		 jsonp:'callback',
-	// 		 success: function(msg){
-	// 		 	// console.log(msg);
-	// 		 	$scope.info=msg.factory;
-	// 		 	$scope.isf=typeof(msg);
-	// 		 	// alert(msg.factory);
-	// 		 	// for(var i in msg){
-	// 		 	// 	var obj=msg[i];
-	// 		 	// 	alert(obj);	
-	// 		 	// }
+.controller("ExampleController", function($scope, $cordovaBarcodeScanner, $ionicPopup,$http,$rootScope,$cordovaNetwork) {
+	$scope.scanBarcode = function(){
+		$cordovaBarcodeScanner.scan()
+		.then(function(imageData)
+		{
+		$.ajax({
+			 url: 'http://www.tngou.net/api/drug/code?',
+			 type: "GET",
+			 data: {'code':imageData.text},
+			 dataType: 'jsonp',
+			 jsonp:'callback',
+			 success: function(msg){
+			 	$scope.info=msg.factory;
+			 	$scope.isf=typeof(msg);
 
-	// 		 },
-	// 		 error:function(msg){
-	// 		 	// console.log(msg);
-	// 		 	$scope.info=msg.factory;
-	// 		 	$scope.isf=typeof(msg);
-	// 		 	// alert(msg.factory);
-	// 		 	// for(var i in msg){
-	// 		 	// 	var obj=msg[i];
-	// 		 	// 	alert(obj);	
-	// 		 	// }
-	// 		 }
-	// 		 	});
-	// });}
-
+			 },
+			 error:function(msg){
+			 	$scope.info="error";
+			 	$scope.isf=typeof(msg);
+			 }
+			 	});
+	});}
 
 	
 	// $scope.test=function(){
@@ -313,54 +300,25 @@ angular.module('starter.controllers', ['ngCookies'])
 	// 			$scope.info="error";
 	// 		});
 // 	// }
-// $http.jsonp("http://www.tngou.net/api/drug/code?callback=JSON_CALLBACK&code="+imageData.text)
-// 			.success(function(data){
-// 				$scope.info=data.factory;
-// 				$scope.isf=typeof(imageData.text);
-// 			}).error(function(){
-// 				$scope.info="error";
-// 				$scope.isf=typeof(imageData.text);
-// 			});
+	// $scope.scanBarcode = function() {	
 
-	$scope.scanBarcode = function() {	
-	   //      $.getJSON('http://www.tngou.net/api/drug/code?jsoncallback=?',{'code':'6921361286510'},function(data){
-	   //      	$scope.info=data.factory;
-				// $scope.isf=typeof(imageData.text);
-	   //      })
+	// 	$.ajax({
+	// 		 url: 'http://www.tngou.net/api/drug/code?',
+	// 		 type: "GET",
+	// 		 data: {'code':'6921361286510'},
+	// 		 dataType: 'jsonp',
+	// 		 jsonp:'callback',
+	// 		 success: function(msg){
+	// 		 	$scope.info=msg.factory;
+	// 		 	$scope.isf=typeof(msg);
 
-		$.ajax({
-			 url: 'http://www.tngou.net/api/drug/code?',
-			 type: "GET",
-			 data: {'code':'6921361286510'},
-			 dataType: 'jsonp',
-			 jsonp:'callback',
-			 success: function(msg){
-			 	// console.log(msg);
-			 	$scope.info=msg.factory;
-			 	$scope.isf=typeof(msg);
-			 	// alert(msg.factory);
-			 	// for(var i in msg){
-			 	// 	var obj=msg[i];
-			 	// 	alert(obj);	
-			 	// }
-
-			 },
-			 error:function(msg){
-			 	$scope.info="error";
-			 	$scope.isf=typeof(msg);
-			 	// console.log(msg);
-			 	// $scope.info=typeof(msg.factory);
-			 	// $scope.isf=typeof(msg);
-			 	// alert(msg.factory);
-			 	// for(var i in msg){
-			 	// 	var obj=msg[i];
-			 	// 	alert(obj);	
-			 	// }
-			 }
-			 	});
-		// $scope.info=resdata[0].factory;
-		// $scope.isf=typeof(resdata[0].factory);
-	};
+	// 		 },
+	// 		 error:function(msg){
+	// 		 	$scope.info="error";
+	// 		 	$scope.isf=typeof(msg);
+	// 		 }
+	// 		 	});
+	// };
 
 
 
