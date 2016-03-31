@@ -280,9 +280,14 @@ angular.module('starter.controllers', ['ngCookies'])
 			 dataType: 'jsonp',
 			 jsonp:'callback',
 			 success: function(msg){
-			 	$scope.info=msg.factory;
-			 	$scope.isf=typeof(msg);
-
+			 	if(msg.status){
+			 		$scope.info=msg.message;
+			 		$scope.isf=typeof(msg);
+			 	}
+			 	else{
+			 		$scope.info="抱歉,数据不存在:(";
+			 		$scope.isf=typeof(msg);
+			 	}
 			 },
 			 error:function(msg){
 			 	$scope.info="error";
@@ -290,37 +295,6 @@ angular.module('starter.controllers', ['ngCookies'])
 			 }
 			 	});
 	});}
-
-	
-	// $scope.test=function(){
-	// 	$http.jsonp("http://www.tngou.net/api/drug/code?callback=JSON_CALLBACK&code="+"6921361286510")
-	// 		.success(function(data){
-	// 			$scope.info=data.factory;
-	// 		}).error(function(){
-	// 			$scope.info="error";
-	// 		});
-// 	// }
-	// $scope.scanBarcode = function() {	
-
-	// 	$.ajax({
-	// 		 url: 'http://www.tngou.net/api/drug/code?',
-	// 		 type: "GET",
-	// 		 data: {'code':'6921361286510'},
-	// 		 dataType: 'jsonp',
-	// 		 jsonp:'callback',
-	// 		 success: function(msg){
-	// 		 	$scope.info=msg.factory;
-	// 		 	$scope.isf=typeof(msg);
-
-	// 		 },
-	// 		 error:function(msg){
-	// 		 	$scope.info="error";
-	// 		 	$scope.isf=typeof(msg);
-	// 		 }
-	// 		 	});
-	// };
-
-
 
 
 });	
