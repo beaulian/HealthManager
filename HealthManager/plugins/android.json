@@ -15,6 +15,10 @@
         },
         "phonegap-plugin-barcodescanner": {
             "PACKAGE_NAME": "com.ionicframework.starter"
+        },
+        "cn.jpush.phonegap.JPushPlugin": {
+            "API_KEY": "a5aa7fea10e1466b7bf1357a",
+            "PACKAGE_NAME": "com.ionicframework.starter"
         }
     },
     "dependent_plugins": {}

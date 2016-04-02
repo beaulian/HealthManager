@@ -25,9 +25,37 @@ angular.module('starter', ['ionic', 'starter.controllers', 'starter.services', '
       //   });
       // }
       // console.log($cookieStore.get("token"));
+
+
+
   });
 
   $ionicPlatform.ready(function() {
+    // Hide the accessory bar by default (remove this to show the accessory bar above the keyboard 
+
+    // for form inputs) 
+
+    if(window.cordova && window.cordova.plugins.Keyboard) { 
+
+      cordova.plugins.Keyboard.hideKeyboardAccessoryBar(true); 
+
+    } 
+
+    if(window.StatusBar) { 
+
+      StatusBar.styleDefault(); 
+
+    } 
+
+ //启动极光推送服务 
+
+    window.plugins.jPushPlugin.init(); 
+
+ //调试模式 
+
+    window.plugins.jPushPlugin.setDebugMode(true); 
+
+    
     // Hide the accessory bar by default (remove this to show the accessory bar above the keyboard
     // for form inputs)
     if (window.cordova && window.cordova.plugins && window.cordova.plugins.Keyboard) {
@@ -39,6 +67,7 @@ angular.module('starter', ['ionic', 'starter.controllers', 'starter.services', '
       // org.apache.cordova.statusbar required
       StatusBar.styleDefault();
     }
+
   });
 })
 
