@@ -97,10 +97,14 @@ angular.module('starter', ['ionic', 'starter.controllers', 'starter.services', '
     }
   })
 
-  .state('family-member', {
-    url:"/family/member",
-    templateUrl:'templates/family_member.html',
-    controller: "FamilyMemberCtrl"
+  .state('tabs.family-member', {
+    url:"/member",
+    views:{
+      'family-tab':{
+        templateUrl:'templates/family_member.html',
+        controller: "FamilyMemberCtrl"
+      }
+    }
   })
 
   // set up abstract state for user
@@ -128,10 +132,14 @@ angular.module('starter', ['ionic', 'starter.controllers', 'starter.services', '
     controller: 'UserCtrl'
   })
 
-  .state('medicine',{
-  	url:'/home/mymedicine',
-  	templateUrl:'templates/my_medicine.html',
-  	controller:'ExampleController'
+  .state('tabs.medicine',{
+  	url:'/mymedicine',
+    views:{
+      'medicine-tab':{
+              templateUrl:'templates/my_medicine.html',
+              controller:'ExampleController'
+            }
+      }
   });
 
   $urlRouterProvider.otherwise('/tab/home');

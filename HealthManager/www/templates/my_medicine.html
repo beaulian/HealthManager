@@ -6,33 +6,49 @@
       <a  ng-click="scanBarcode()" class="plus"><i class="icon ion-plus"></i></a>
     </ion-nav-buttons>
     <ion-content>
-      	<div class="bar bar-header item-input-inset">
-      	<!-- <select>
-      		<option selected>成员</option>
-	      	<option>购药记录</option>
-	      	<option>门诊住院记录</option>
-      	</select> -->
-		   <label class="item-input-wrapper">
-				<i class="icon ion-ios-search placeholder-icon"></i>
-			    <input type="search" placeholder="搜索">
-		   </label>
+      	<div class="list card"  >
+			<div class="item family-member">
+				<div class="row">
+					<div class="col col-80">
+					<h3>张三&nbsp;<i class="ion-male " style="color: #4169E1;"></i></h3>
+					<p>儿子&nbsp;17岁</p>
+					</div>
+					<div class="col">
+
+					<button class="button button-clear icon ion-cloud"></button>
+					</div>
+				</div>
+			</div>
 		</div>
-		<div class="list">
-			<a class="item item-icon-left item-icon-right" href="#/family/member">
-				<i class="icon ion-ios-people"></i>
-				家庭成员
-				<i class="icon ion-ios-arrow-right"></i>
-			</a>
-			<div class="item item-divider">医疗记录</div>
-			<p>
-				{{info}}
-			</p>
-			<a class="item item-icon-left item-icon-right" href="#/family/member">
-				<i class="icon ion-ios-people"></i>
-				{{isf}}
-				<i class="icon ion-ios-arrow-right"></i>
-			</a>
-			
+
+		<div class="list card"  >
+			<div class="item family-member">
+				<div class="row">
+					<div class="col col-80">
+					<h3>李四&nbsp;<i class="ion-male " style="color: #4169E1;"></i></h3>
+					<p>父亲&nbsp;48岁</p>
+					</div>
+					<div class="col">
+
+					<button class="button button-clear icon ion-cloud"></button>
+					</div>
+				</div>
+			</div>
+		</div>
+
+		<div class="list card"  >
+			<div class="item family-member">
+				<div class="row">
+					<div class="col col-80">
+					<h3>王五&nbsp;<i class="ion-female " style="color:   #FFAEB9;"></i></h3>
+					<p>母亲&nbsp;48岁</p>
+					</div>
+					<div class="col">
+
+					<button class="button button-clear icon ion-cloud"></button>
+					</div>
+				</div>
+			</div>
 		</div>
       </ion-content>
   </ion-view>
