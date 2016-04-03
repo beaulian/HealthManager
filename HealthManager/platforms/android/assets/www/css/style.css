@@ -1,0 +1,125 @@
+/* Empty. Add your own CSS if you like */
+
+.to_register {
+	float: right;
+	margin-right: 30px;
+	color: gray; 
+}	
+
+.to_login {
+	float: left;
+	margin-left: 20px;
+	color: gray;
+}
+
+.auth a {
+	text-decoration: none;
+}
+
+.item a {
+	text-decoration: none;
+	color: white;
+}
+
+.login {
+	text-decoration: none;
+	color: white;
+}
+
+.to_register a:visited, .to_login a:visited {
+	color: #68EE68;
+}
+
+.ion-ios-arrow-right {
+	color: gray;
+}
+
+.item-divider {
+	height: 0px !important;
+}
+
+.item-thumbnail-left {
+	min-height: 70px !important;
+}
+
+.item-text-wrap {
+	padding: 5px;
+}
+
+.indeximg {
+	width: 60px !important;
+	height: 55px !important;
+}
+
+.bottom_nav {
+	width: 100%;
+	height: 45px;
+	background-color: rgb(250,250,250);
+	border-top: 1px;
+	z-index: 999;
+	position: fixed;
+	bottom: 0;
+}
+
+.bottom_nav .left {
+	margin-top: 15px;
+	margin-left: 70px;
+	font-size: 15px;
+	float: left;
+}
+
+.bottom_nav .right {
+	margin-top: 15px;
+	font-size: 15px;
+	float: right;
+	margin-right: 80px;
+}
+
+.bottom_nav a {
+	color: gray;
+	text-decoration: none;
+}
+
+.item_p {
+	height: 50px !important;
+}
+
+.plus {
+	text-decoration: none;
+	color: white;
+	font-size: 20px;
+	position: fixed;
+	padding-top: 8px;
+	right: 20px;
+}
+
+.polist {
+	overflow: hidden;
+	height: 80px;
+	text-align: center;
+}
+
+.polist a {
+	text-decoration: none;
+	color: black;
+	padding: 3px;
+	border-bottom: 1px solid rgb(250,250,250);
+}
+
+.remindtext {
+	padding-left: 50px;
+}
+
+.forbid-scroll {
+	overflow-y: hidden;
+}
+
+.family-member {
+	border-top: 5px solid #4e8ef7 !important;
+	height: 90px !important;
+	padding: 7px !important;
+}
+
+.family-member h3 {
+	font-size: 1.2em;
+}

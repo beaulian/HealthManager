@@ -1,0 +1,28 @@
+<ion-view title="登录">
+    <ion-nav-buttons>
+          <button class="button button-icon" menu-toggle="left" ng-click="toggleProjects()">
+            <i class="icon ion-navicon"></i>
+          </button>
+        </ion-nav-buttons>
+  <ion-content>
+  <form role="form" name="loginForm">
+  	<div class="list list-inset">
+          <label class="item item-input">
+            <i class="icon ion-person placeholder-icon"></i>
+            <input type="text" name="uid" placeholder="请输入您的用户名" required="required" ng-model="formData.uid">
+          </label>
+          <label class="item item-input">
+            <i class="icon ion-locked placeholder-icon"></i>
+            <input type="password" name="password" placeholder="请输入您的密码" required="required" ng-model="formData.password">
+          </label>
+          <div class="padding">
+              <!-- <input type="submit" class="button button-block button-balanced" value="登录" /> -->
+              <button class="button button-block button-balanced" id="login" ng-click="login()">登录</button>
+          </div>
+       </div>
+  </form>
+  <div class="to_register auth">
+      还未注册?&nbsp;<a href="#/user/register" menu-close>点击注册</a>
+  </div>
+  </ion-content>
+</ion-view>
