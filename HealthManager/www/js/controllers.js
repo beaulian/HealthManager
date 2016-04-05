@@ -265,7 +265,41 @@ angular.module('starter.controllers', ['ngCookies'])
 	  
 	  $scope.pushNotification = { checked: true };
 	  $scope.emailNotification = 'Subscribed';
-});
+})
+
+
+.controller("ExampleController", function($scope, $cordovaBarcodeScanner, $ionicPopup,$http,$rootScope,$cordovaNetwork) {
+	$scope.scanBarcode = function(){
+		$cordovaBarcodeScanner.scan()
+		.then(function(imageData)
+		{
+		$.ajax({
+			 url: 'http://www.tngou.net/api/drug/code?',
+			 type: "GET",
+			 data: {'code':imageData.text},
+			 dataType: 'jsonp',
+			 jsonp:'callback',
+			 success: function(msg){
+			 	if(msg.status){
+			 		$scope.info=msg.message;
+			 		$scope.isf=typeof(msg);
+			 	}
+			 	else{
+			 		$scope.info="抱歉,数据不存在:(";
+			 		$scope.isf=typeof(msg);
+			 	}
+			 },
+			 error:function(msg){
+			 	$scope.info="error";
+			 	$scope.isf=typeof(msg);
+			 }
+			 	});
+	});}
+
+
+});	
+
+
 
 
 // 注意事项: 最上面的最后不能有分号,控制器只有一个分号,就是在最后的那个控制器后

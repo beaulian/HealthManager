@@ -1,0 +1,50 @@
+<ion-view title="首页">
+    <!-- 中心内容 -->
+    <ion-nav-buttons>
+      <button class="button button-icon" menu-toggle="left" ng-click="toggleProjects()">
+        <i class="icon ion-navicon"></i>
+      </button>
+    </ion-nav-buttons>
+    <ion-content>
+      <div class="bar bar-header item-input-inset" style="border-style: none;margin: 0px;">
+        <label class="item-input-wrapper">
+          <i class="icon ion-ios-search placeholder-icon"></i>
+          <input type="search" placeholder="搜索" >
+        </label>
+      </div>
+
+      <div class="list card">
+
+        <a href="#" class="item item-icon-left">
+          <i class="icon ion-home"></i>
+          身边的医院药店
+        </a>
+
+        <a href="#" class="item item-icon-left">
+          <i class="icon ion-ios-telephone"></i>
+          健康资讯
+        </a>
+
+        <a href="#" class="item item-icon-left">
+          <i class="icon ion-alert"></i>
+          急救手册
+        </a>
+      </div>
+
+    <div class="content ionic-pseudo">
+      <div class="list card">
+        <div class="item item-text-wrap">
+         推荐文章
+        </div>
+
+        <div ng-repeat="news in mutinews">
+        <a class="item item-thumbnail-left" href="#/news/{{news.classf}}/{{news.id}}">
+          <img class="indeximg" ng-src="{{news.thumbnail}}">
+          <h2>{{news.title}}</h2>
+        </a>
+        </div>
+      </div>
+
+    </div>
+    </ion-content>
+</ion-view>
