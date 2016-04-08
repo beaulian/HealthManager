@@ -3,8 +3,8 @@
 .to_register {
 	float: right;
 	margin-right: 30px;
-	color: gray; 
-}	
+	color: gray;
+}
 
 .to_login {
 	float: left;
@@ -116,7 +116,7 @@
 
 .family-member {
 	border-top: 5px solid #4e8ef7 !important;
-	height: 90px !important;
+	/*height: 100px !important;*/
 	padding: 7px !important;
 }
 
