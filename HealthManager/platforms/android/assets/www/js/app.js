@@ -16,7 +16,7 @@ angular.module('starter', ['ionic', 'starter.controllers', 'starter.services', '
         event.preventDefault();// 取消默认跳转行为
         $state.go("login");
       }
-    
+
       // if (!$cookieStore.get("tokenState") && $cookieStore.get("token")) {
       //   $http.put("http://10.251.102.89:5000/user/login?uid="+$cookieStore.get("uid")+"&token="+$cookieStore.get("token")).success(function(data){
       //     $cookieStore.remove("token");
@@ -31,31 +31,31 @@ angular.module('starter', ['ionic', 'starter.controllers', 'starter.services', '
   });
 
   $ionicPlatform.ready(function() {
-    // Hide the accessory bar by default (remove this to show the accessory bar above the keyboard 
+    // Hide the accessory bar by default (remove this to show the accessory bar above the keyboard
 
-    // for form inputs) 
+    // for form inputs)
 
-    if(window.cordova && window.cordova.plugins.Keyboard) { 
+    if(window.cordova && window.cordova.plugins.Keyboard) {
 
-      cordova.plugins.Keyboard.hideKeyboardAccessoryBar(true); 
+      cordova.plugins.Keyboard.hideKeyboardAccessoryBar(true);
 
-    } 
+    }
 
-    if(window.StatusBar) { 
+    if(window.StatusBar) {
 
-      StatusBar.styleDefault(); 
+      StatusBar.styleDefault();
 
-    } 
+    }
 
- //启动极光推送服务 
+ //启动极光推送服务
 
-    window.plugins.jPushPlugin.init(); 
+    window.plugins.jPushPlugin.init();
 
- //调试模式 
+ //调试模式
 
-    window.plugins.jPushPlugin.setDebugMode(true); 
+    window.plugins.jPushPlugin.setDebugMode(true);
 
-    
+
     // Hide the accessory bar by default (remove this to show the accessory bar above the keyboard
     // for form inputs)
     if (window.cordova && window.cordova.plugins && window.cordova.plugins.Keyboard) {
@@ -73,18 +73,18 @@ angular.module('starter', ['ionic', 'starter.controllers', 'starter.services', '
 
 .config(function($stateProvider, $urlRouterProvider, $ionicConfigProvider) {
 
-  $ionicConfigProvider.platform.ios.tabs.style('standard'); 
+  $ionicConfigProvider.platform.ios.tabs.style('standard');
   $ionicConfigProvider.platform.ios.tabs.position('bottom');
   $ionicConfigProvider.platform.android.tabs.style('standard');
   $ionicConfigProvider.platform.android.tabs.position('bottom');
 
-  $ionicConfigProvider.platform.ios.navBar.alignTitle('center'); 
+  $ionicConfigProvider.platform.ios.navBar.alignTitle('center');
   $ionicConfigProvider.platform.android.navBar.alignTitle('center');
 
   $ionicConfigProvider.platform.ios.backButton.previousTitleText('').icon('ion-ios-arrow-thin-left');
-  $ionicConfigProvider.platform.android.backButton.previousTitleText('').icon('ion-android-arrow-back');        
+  $ionicConfigProvider.platform.android.backButton.previousTitleText('').icon('ion-android-arrow-back');
 
-  $ionicConfigProvider.platform.ios.views.transition('ios'); 
+  $ionicConfigProvider.platform.ios.views.transition('ios');
   $ionicConfigProvider.platform.android.views.transition('android');
 
 
@@ -149,10 +149,14 @@ angular.module('starter', ['ionic', 'starter.controllers', 'starter.services', '
     controller: 'RegisterCtrl'
   })
 
-  .state('indexnews', {
+  .state('tabs.indexnews', {
     url: "/news/:classf/:id",
-    templateUrl: 'templates/news.html',
-    controller: 'NewsCtrl' 
+    views:{
+      'home-tab':{
+      templateUrl: 'templates/news.html',
+      controller: 'NewsCtrl'
+    }
+  }
   })
 
   .state('user', {
@@ -161,12 +165,30 @@ angular.module('starter', ['ionic', 'starter.controllers', 'starter.services', '
     controller: 'UserCtrl'
   })
 
+  .state('tabs.addMedicine',{
+    url:'/addMedicine',
+    views:{
+      'medicine-tab':{
+        templateUrl:'templates/add_medicine.html',
+        controller:'ExampleController'
+      }
+    }
+  })
+
+  .state('tabs.medicineInfo',{
+    url:'/medicineInfo',
+    views:{
+      'medicine-tab':{
+        templateUrl:'templates/medicine_info.html'
+      }
+    }
+  })
+
   .state('tabs.medicine',{
   	url:'/mymedicine',
     views:{
       'medicine-tab':{
-              templateUrl:'templates/my_medicine.html',
-              controller:'ExampleController'
+              templateUrl:'templates/my_medicine.html'
             }
       }
   });

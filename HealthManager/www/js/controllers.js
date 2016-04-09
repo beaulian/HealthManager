@@ -234,7 +234,21 @@ angular.module('starter.controllers', ['ngCookies'])
 	// });
 })
 
-.controller('RemindCtrl', function($scope, $ionicPopup, $timeout) {
+.controller('RemindCtrl', function($scope, $ionicPopup, $timeout,$window) {
+
+	$scope.test_notification = function(){
+		var now             = new Date().getTime(),
+    _5_sec_from_now = new Date(now + 5*1000);
+
+		cordova.plugins.notification.local.schedule({
+		    text: "Delayed Notification",
+		    at: _5_sec_from_now,
+		    led: "FF0000",
+		    sound: null
+		});
+	};
+
+
 	 $scope.showPopup = function() {
        $scope.data = {}
 
@@ -259,6 +273,8 @@ angular.module('starter.controllers', ['ngCookies'])
 	    { text: "买药", time: "13:00", period: "每天", checked: false }
 	  ];
 
+
+
 	  $scope.pushNotificationChange = function() {
 	    console.log('Push Notification Change', $scope.pushNotification.checked);
 	  };
@@ -269,6 +285,23 @@ angular.module('starter.controllers', ['ngCookies'])
 
 
 .controller("ExampleController", function($scope, $cordovaBarcodeScanner, $ionicPopup,$http,$rootScope,$cordovaNetwork) {
+
+		$scope.medicine={
+			"name":"",
+			"thumbnail":"",
+			"feature":"",
+			"company":"",
+			"usage":"",
+			"taboo":"",
+			"reaction":"",
+			"place":"",
+			"buy_time":"",
+			"overdue_time":"",
+			"long_term_use":0,
+			"purchase_quantity":1,
+			"residue_quantity":""
+		}
+
 	$scope.scanBarcode = function(){
 		$cordovaBarcodeScanner.scan()
 		.then(function(imageData)
@@ -281,8 +314,7 @@ angular.module('starter.controllers', ['ngCookies'])
 			 jsonp:'callback',
 			 success: function(msg){
 			 	if(msg.status){
-			 		$scope.info=msg.message;
-			 		$scope.isf=typeof(msg);
+			 		$scope.medicine['company']=msg['factory'];
 			 	}
 			 	else{
 			 		$scope.info="抱歉,数据不存在:(";
@@ -296,21 +328,6 @@ angular.module('starter.controllers', ['ngCookies'])
 			 	});
 	});}
 
-	$scope.medicine={
-		"name":"",
-		"thumbnail":"",
-		"feature":"",
-		"company":"",
-		"usage":"",
-		"taboo":"",
-		"reaction":"",
-		"place":"",
-		"buy_time":"",
-		"overdue_time":"",
-		"long_term_use":0,
-		"purchase_quantity":1,
-		"residue_quantity":""
-	}
 
 
 });
