@@ -1,21 +1,17 @@
 <ion-view  view-title="资讯详情">
-    <ion-nav-buttons>
-      <button class="button button-icon" menu-toggle="left" ng-click="toggleProjects()">
-        <i class="icon ion-navicon"></i>
-      </button>
-    </ion-nav-buttons>
-    <ion-content class="padding">
-      <h4><b>{{news.title}}</b></h4>
-      <div style="color: gray;">
-	      <p>来源: {{news.source}}</p>
-	      <p>分类: {{news.classf}}</p>
-	      <p>时间: {{news.time}}</p>
-	      <br/>
-      </div>
-      <div ng-bind-html="news.body" style="margin-left: 0px;padding-bottom:45px;"></div>
-      </ion-content>
-      <div class="bottom_nav">
-      	<p class="left"><a href="#"><i class="fi-share"></i>&nbsp;分享</a></p>
-      	<p class="right"><a href="#"><i class="fi-star"></i>&nbsp;收藏</a></p>
-      </div>
-  </ion-view>
+  <ion-content class="padding">
+    <h4><b>{{news.title}}</b></h4>
+    <div style="color: gray;">
+      <p>来源: {{news.source}}</p>
+      <p>分类: {{news.classf}}</p>
+      <p>时间: {{news.time}}</p>
+      <br/>
+    </div>
+    <div ng-bind-html="news.body" style="margin-left: 0px;padding-bottom:45px;"></div>
+    </ion-content>
+    <div class="bottom_nav">
+    	<p class="left"><a href="#"><i class="fi-share"></i>&nbsp;分享</a></p>
+    	<p class="right"><a href="#"><i class="fi-star"></i>&nbsp;收藏</a></p>
+    </div>
+  </ion-content>
+</ion-view>

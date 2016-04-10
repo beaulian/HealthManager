@@ -3,11 +3,11 @@ angular.module('starter.controllers', ['ngCookies'])
 .controller('LoginCtrl', function($scope, $http, $ionicLoading, $cookieStore, $location, $state, $window, User) {
 	$scope.formData = {};
 	$scope.login = function() {
-		$ionicLoading.show({ 
+		$ionicLoading.show({
 			content: 'Loading',
 		    animation: 'fade-in',
 		    maxWidth: 200,
-		    showDelay: 0, 
+		    showDelay: 0,
 		    noBackdrop: true
 		});
 
@@ -36,20 +36,20 @@ angular.module('starter.controllers', ['ngCookies'])
 					$state.go("tabs.home");
 					// $window.location.reload(true);
 					// $route.reload();
-				} 	
+				}
 		})
 		.error(function(data) {
 				if (data["error_code"] == "2000") {
-					$ionicLoading.show({ 
-						template: '邮箱未认证', 
-						noBackdrop: true, 
-						duration: 2000 
+					$ionicLoading.show({
+						template: '邮箱未认证',
+						noBackdrop: true,
+						duration: 2000
 					});
 				} else if (data["error_code"] == "2004") {
-					$ionicLoading.show({ 
-						template: '用户名或密码错误', 
-						noBackdrop: true, 
-						duration: 2000 
+					$ionicLoading.show({
+						template: '用户名或密码错误',
+						noBackdrop: true,
+						duration: 2000
 					});
 				}
 		});
@@ -59,11 +59,11 @@ angular.module('starter.controllers', ['ngCookies'])
 .controller('RegisterCtrl', function($scope, $http, $ionicLoading, $cookieStore, $window, $location, User) {
 	$scope.formData = {};
 	$scope.register = function() {
-		$ionicLoading.show({ 
+		$ionicLoading.show({
 			content: 'Loading',
 		    animation: 'fade-in',
 		    maxWidth: 200,
-		    showDelay: 0, 
+		    showDelay: 0,
 		    noBackdrop: true
 		});
 
@@ -75,10 +75,10 @@ angular.module('starter.controllers', ['ngCookies'])
 		}).success(function(data) {
 			$ionicLoading.hide();
 			if (data["status"] == "success") {
-				$ionicLoading.show({ 
-					template: '请打开邮箱进行验证', 
-					showBackdrop: true, 
-					duration: 2000 
+				$ionicLoading.show({
+					template: '请打开邮箱进行验证',
+					showBackdrop: true,
+					duration: 2000
 				});
 				$window.localStorage.setItem("logged-in", true);
 				$window.localStorage.setItem("token", data["user"]["token"], {'expires': 7200});
@@ -90,22 +90,22 @@ angular.module('starter.controllers', ['ngCookies'])
 		})
 		.error(function(data){
 			if (data["error_code"] == "2009") {
-				$ionicLoading.show({ 
-					template: '请填写完整信息', 
-					noBackdrop: true, 
-					duration: 2000 
+				$ionicLoading.show({
+					template: '请填写完整信息',
+					noBackdrop: true,
+					duration: 2000
 				});
 			} else if (data["error_code"] == "2002") {
-				$ionicLoading.show({ 
-					template: '用户名已存在', 
-					noBackdrop: true, 
-					duration: 2000 
+				$ionicLoading.show({
+					template: '用户名已存在',
+					noBackdrop: true,
+					duration: 2000
 				});
 			} else if (data["error_code"] == "2001") {
-				$ionicLoading.show({ 
-					template: '邮箱已存在', 
-					noBackdrop: true, 
-					duration: 2000 
+				$ionicLoading.show({
+					template: '邮箱已存在',
+					noBackdrop: true,
+					duration: 2000
 				});
 			}
 		});
@@ -118,10 +118,10 @@ angular.module('starter.controllers', ['ngCookies'])
 	// $scope.logged_in = $cookieStore.get("logged-in");
 	// var uid = $cookieStore.get("uid");
 	// var token = $cookieStore.get("token");
-	$rootScope.$on('$stateChangeSuccess', 
+	$rootScope.$on('$stateChangeSuccess',
 	    function(event, toState, toParams, fromState, fromParams) {
 	      if ((fromState.name == "login" && toState.name == "tabs.home") || (fromState.name == "register" && toState.name == "tabs.home")) {
-	        
+
         	// console.log(User.get("uid"));
          	$scope.logged_in = User.get("logged-in");
 			var uid = User.get("uid");
@@ -132,7 +132,7 @@ angular.module('starter.controllers', ['ngCookies'])
 			}).success(function(data) {
 				$scope.user = data.user;
 			});
-	        
+
 	      }
 	      else {
 	      	$scope.logged_in = $window.localStorage.getItem("logged-in");
@@ -146,7 +146,7 @@ angular.module('starter.controllers', ['ngCookies'])
 			});
 	      }
   	});
-	
+
 	// console.log($scope.user.head_image);
 })
 
@@ -188,11 +188,11 @@ angular.module('starter.controllers', ['ngCookies'])
 	});
 
 	$('.logout').click(function() {
-		$ionicLoading.show({ 
+		$ionicLoading.show({
 			content: 'Loading',
 		    animation: 'fade-in',
 		    maxWidth: 200,
-		    showDelay: 0, 
+		    showDelay: 0,
 		    noBackdrop: true
 		});
 
@@ -234,7 +234,21 @@ angular.module('starter.controllers', ['ngCookies'])
 	// });
 })
 
-.controller('RemindCtrl', function($scope, $ionicPopup, $timeout) {
+.controller('RemindCtrl', function($scope, $ionicPopup, $timeout,$window) {
+
+	$scope.test_notification = function(){
+		var now             = new Date().getTime(),
+    _5_sec_from_now = new Date(now + 5*1000);
+
+		cordova.plugins.notification.local.schedule({
+		    text: "Delayed Notification",
+		    at: _5_sec_from_now,
+		    led: "FF0000",
+		    sound: null
+		});
+	};
+
+
 	 $scope.showPopup = function() {
        $scope.data = {}
 
@@ -259,16 +273,35 @@ angular.module('starter.controllers', ['ngCookies'])
 	    { text: "买药", time: "13:00", period: "每天", checked: false }
 	  ];
 
+
+
 	  $scope.pushNotificationChange = function() {
 	    console.log('Push Notification Change', $scope.pushNotification.checked);
 	  };
-	  
+
 	  $scope.pushNotification = { checked: true };
 	  $scope.emailNotification = 'Subscribed';
 })
 
 
 .controller("ExampleController", function($scope, $cordovaBarcodeScanner, $ionicPopup,$http,$rootScope,$cordovaNetwork) {
+
+		$scope.medicine={
+			"name":"",
+			"thumbnail":"",
+			"feature":"",
+			"company":"",
+			"usage":"",
+			"taboo":"",
+			"reaction":"",
+			"place":"",
+			"buy_time":"",
+			"overdue_time":"",
+			"long_term_use":0,
+			"purchase_quantity":1,
+			"residue_quantity":""
+		}
+
 	$scope.scanBarcode = function(){
 		$cordovaBarcodeScanner.scan()
 		.then(function(imageData)
@@ -281,8 +314,7 @@ angular.module('starter.controllers', ['ngCookies'])
 			 jsonp:'callback',
 			 success: function(msg){
 			 	if(msg.status){
-			 		$scope.info=msg.message;
-			 		$scope.isf=typeof(msg);
+			 		$scope.medicine['company']=msg['factory'];
 			 	}
 			 	else{
 			 		$scope.info="抱歉,数据不存在:(";
@@ -297,7 +329,8 @@ angular.module('starter.controllers', ['ngCookies'])
 	});}
 
 
-});	
+
+});
 
 
 
