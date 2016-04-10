@@ -1,4 +1,4 @@
-# -*- coding: utf-8 -*- 
+# -*- coding: utf-8 -*-
 
 from . import medicine
 from config import *
@@ -30,7 +30,7 @@ def post_medicine():
 	long_term_use     = request.form.get("long_term_use", 0)
 	purchase_quantity = request.form.get("purchase_quantity", None)
 	residue_quantity  = request.form.get("residue_quantity", None)
-	
+
 	for key in ["name", "feature", "company", "usage", "thumbnail",
 				"taboo", "place", "buy_time", "overdue_time",
 				"purchase_quantity", "residue_quantity"]:
@@ -77,7 +77,7 @@ def put_medicine(medicine_id):
 	long_term_use     = request.form.get("long_term_use", None)
 	residue_quantity  = request.form.get("residue_quantity", None)
 
-	medicine = Model.db.Medicine.find_one({"uid": uid, 
+	medicine = Model.db.Medicine.find_one({"uid": uid,
 								"_id": ObjectId(medicine_id)})
 	if not medicine:
 		return healthmanager_error("2099", info="you don't have such medicine")
@@ -115,8 +115,31 @@ def get_medicines():
 			"uid": medicine["uid"]
 		}
 		medicines.append(temp_medicine)
-	return jsonify({"status": "success", "medicines": medicines, 
+	return jsonify({"status": "success", "medicines": medicines,
 						"curr_page": page_num})
+
+
+@medicine.route("/medicine/lilac", methods=["GET"])
+@login_required
+def get_medicines_from_lilac():
+	_type    = request.args.get("type", None)
+	keyword  = request.args.get("keyword", None)
+	if not _type:
+		return healthmanager_error("2009")
+
+	medicines = []
+	if _type == "barcode":
+		temp_medicine = Model.db.Barcode.find_one({"barcode": keyword})
+		if temp_medcine:
+			for medicine in Model.db.Medicine.find({"name": temp_medicine["name"]}):
+				medicines.append(change_object_attr(medicine))
+
+	elif _type == "medicine":
+		condition = {"name": {"$regex": keyword, "$options": "i"}} if keyword else {}
+		for medicine in Model.db.Medicine.find(condition):
+			medicines.append(change_object_attr(medicine))
+
+	return jsonify({"status": "success", "medicines": medicines})
 
 
 @medicine.route("/medicine/<string:medicine_id>", methods=["GET"])
@@ -124,7 +147,7 @@ def get_medicines():
 @valid_id_required("Medicine", "medicine_id")
 def get_medicine(medicine_id):
 	uid = request.args.get("uid")
-	medicine = Model.db.Medicine.find_one({"uid": uid, 
+	medicine = Model.db.Medicine.find_one({"uid": uid,
 										"_id": ObjectId(medicine_id)})
 	del medicine["_id"]
 	medicine["thumbnail"] = NETWORK_ADDRESS + medicine["thumbnail"]
