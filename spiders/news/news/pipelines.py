@@ -36,6 +36,7 @@ class NewsPipeline(object):
         item['body']         = clear_html(item['body'][0])
         item['thumbnail']    = item['thumbnail'][0]
         item['url']          = item['url'][0]
+        item['news_type']    = item['news_type'][0]
 
         try:
             self.db[self.collection_name].insert(dict(item))

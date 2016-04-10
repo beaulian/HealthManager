@@ -16,3 +16,4 @@ class MnewsItem(Item):
     body           = Field()
     thumbnail      = Field()
     url            = Field()     # 用来实现增量式爬虫
+    news_type      = Field()

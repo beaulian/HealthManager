@@ -37,7 +37,7 @@ class MnewsPipeline(object):
 			"ys"  : "饮食",
 			"jf"  : "减肥"
 		}
-		
+
         item['title']        = item['title'][0]
         item['time']         = item['time'][0]
         item['source']       = item['source'][0]
@@ -45,6 +45,7 @@ class MnewsPipeline(object):
         item['body']         = clear_html(item['body'][0])
         item['thumbnail']    = item['thumbnail'][0]
         item['url']          = item['url'][0]
+        item['news_type']    = item['news_type'][0]
 
         try:
             self.db[self.collection_name].insert(dict(item))
@@ -52,4 +53,3 @@ class MnewsPipeline(object):
             print "skip %s" % item['url']
 
         return item
-

@@ -13,7 +13,7 @@ from ..decorators import valid_id_required
 @news.route("/news/index", methods=["GET"])
 def get_index_news():
 	mutinews = []
-	for temp_news in Model.db.HealthNews.find().limit(4):
+	for temp_news in Model.db.HealthNews.find({"news_type": "index"}):
 		news = {
 			"id": str(temp_news["_id"]),
 			"title": temp_news["title"],
@@ -22,7 +22,7 @@ def get_index_news():
 		}
 		mutinews.append(news)
 
-	return jsonify({"status": "success", "mutinews": mutinews}) 
+	return jsonify({"status": "success", "mutinews": mutinews})
 
 
 @news.route("/news/<string:classf>/<string:news_id>", methods=["GET"])
@@ -36,7 +36,7 @@ def get_news_detail(classf, news_id):
 @news.route("/news/main/<string:classf>", methods=["GET"])
 def get_main_news(classf):
 	main_mutinews = []
-	for temp in Model.db.HealthNews.find({"classf": classf}).skip(4):
+	for temp in Model.db.HealthNews.find({"classf": classf, "news_type": "main"}):
 		temp["_id"] = str(temp["_id"])
 		main_mutinews.append(temp)
 

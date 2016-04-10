@@ -41,6 +41,7 @@ class MnewsSpider(CrawlSpider):
 		el.add_xpath('body', "//div[@class='detail_con']")
 		el.add_value('thumbnail', response.meta['thumbnail'])
 		el.add_value('url', response.url)
+		el.add_value('news_type', 'main')
 		# el.add_xpath('classf', "//div[@class='l_path']/span/a/text()")
 		# el.add_value('second_domain', response.meta["class"])
 		# print el.load_item().__dict__

@@ -32,4 +32,5 @@ class NewsSpider(CrawlSpider):
         el.add_xpath('body', "//div[@class='detail_con']")
         el.add_value('thumbnail', response.meta['indeximg'])
         el.add_value('url', response.url)
+        el.add_value('news_type', 'index')
         return el.load_item()
