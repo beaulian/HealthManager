@@ -120,7 +120,6 @@ def get_medicines():
 
 
 @medicine.route("/medicine/lilac", methods=["GET"])
-@login_required
 def get_medicines_from_lilac():
 	_type    = request.args.get("type", None)
 	keyword  = request.args.get("keyword", None)
@@ -136,7 +135,7 @@ def get_medicines_from_lilac():
 
 	elif _type == "medicine":
 		condition = {"name": {"$regex": keyword, "$options": "i"}} if keyword else {}
-		for medicine in Model.db.Medicine.find(condition):
+		for medicine in Model.db.TempMedicine.find(condition):
 			medicines.append(change_object_attr(medicine))
 
 	return jsonify({"status": "success", "medicines": medicines})
