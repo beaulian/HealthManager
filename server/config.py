@@ -1,12 +1,20 @@
 # -*- coding: utf-8 -*-  = "/sta"
 
-import re, os
+import re, os, platform
+
+def get_netloc():
+	if platform.uname()[1] == "Ubuntu":
+		return "127.0.0.1:5000"
+	elif platform.uname()[1] == "pub-PowerEdge-R820":
+		return "222.198.155.138:5000"
 
 basedir = os.path.abspath(os.path.dirname(__file__))
 
 APP_NAME = "家庭健康助手"
-NETWORK_ADDRESS = "http://127.0.0.1:5000"
-NETLOC_NAME = "127.0.0.1:5000"
+NETWORK_ADDRESS = "http://" + get_netloc()
+NETLOC_NAME = get_netloc()
+
+# print NETLOC_NAME
 
 SECRET_KEY = os.urandom(24)
 STATIC_SECRET_CODE = "hard to guess"
