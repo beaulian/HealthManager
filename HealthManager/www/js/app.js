@@ -5,7 +5,7 @@
 // the 2nd parameter is an array of 'requires'
 var LoginStatus = false;
 
-angular.module('starter', ['ionic', 'starter.controllers', 'starter.services', 'ngCookies', 'ngRoute','ngCordova'])
+angular.module('starter', ['ionic', 'starter.controllers', 'starter.directives', 'starter.services', 'ngCookies', 'ngRoute','ngCordova'])
 
 .run(function($ionicPlatform, $rootScope, $cookieStore, $location, $http, $state, $window) {
   $rootScope.$on('$stateChangeStart', function(event, toState) {
@@ -49,11 +49,11 @@ angular.module('starter', ['ionic', 'starter.controllers', 'starter.services', '
 
  //启动极光推送服务
 
-    window.plugins.jPushPlugin.init();
+//    window.plugins.jPushPlugin.init();
 
  //调试模式
 
-    window.plugins.jPushPlugin.setDebugMode(true);
+//    window.plugins.jPushPlugin.setDebugMode(true);
 
 
     // Hide the accessory bar by default (remove this to show the accessory bar above the keyboard

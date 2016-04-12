@@ -328,7 +328,9 @@ angular.module('starter.controllers', ['ngCookies'])
 			 	});
 	});}
 
+})
 
+.controller("MapCtrl", function($scope, $window) {
 
 });
 
