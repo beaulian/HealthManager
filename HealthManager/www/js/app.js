@@ -191,6 +191,16 @@ angular.module('starter', ['ionic', 'starter.controllers', 'starter.services', '
               templateUrl:'templates/my_medicine.html'
             }
       }
+  })
+
+  .state('tabs.map', {
+    url:'/map',
+    views: {
+        'home-tab':{
+            templateUrl:'templates/map.html',
+            controller:'MapCtrl'
+        }
+    }
   });
 
   $urlRouterProvider.otherwise('/tab/home');
