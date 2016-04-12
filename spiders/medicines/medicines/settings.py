@@ -14,9 +14,9 @@ SPIDER_MODULES = ['medicines.spiders']
 NEWSPIDER_MODULE = 'medicines.spiders'
 
 # log
-# LOG_ENABLED = True
-# LOG_FILE = "medicine.log"
-# LOG_STDOUT = True
+LOG_ENABLED = True
+LOG_FILE = "medicine.log"
+LOG_STDOUT = True
 
 # Crawl responsibly by identifying yourself (and your website) on the user-agent
 #USER_AGENT = 'medicines (+http://www.yourdomain.com)'

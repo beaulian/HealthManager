@@ -31,7 +31,6 @@ class MedicineSpider(CrawlSpider):
 	# 		yield Request(url=link, callback=self.parse_page)
 
 	def parse_page(self, response):
-		print response.url
 		response_selector = Selector(response=response)
 		for detail_link in response_selector.xpath("//div[@class='drugs-ser-list']/div/h3/a/@href").extract():
 			yield Request(url=detail_link, callback=self.parse_detail)
