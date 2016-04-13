@@ -4,10 +4,11 @@
 // 'starter' is the name of this angular module example (also set in a <body> attribute in index.html)
 // the 2nd parameter is an array of 'requires'
 var LoginStatus = false;
+var db = null;
 
 angular.module('starter', ['ionic', 'starter.controllers', 'starter.services', 'ngCookies', 'ngRoute','ngCordova'])
 
-.run(function($ionicPlatform, $rootScope, $cookieStore, $location, $http, $state, $window) {
+.run(function($ionicPlatform, $rootScope, $cookieStore, $location, $http, $state, $window,$cordovaSQLite) {
   $rootScope.$on('$stateChangeStart', function(event, toState) {
       if (toState.name == "login" || toState.name == "register") {
           return;
@@ -46,6 +47,10 @@ angular.module('starter', ['ionic', 'starter.controllers', 'starter.services', '
       StatusBar.styleDefault();
 
     }
+
+    //sqlite测试
+    db = $cordovaSQLite.openDB({ name: "my.db" });
+            $cordovaSQLite.execute(db, "CREATE TABLE IF NOT EXISTS people (id integer primary key, firstname text, lastname text)");
 
  //启动极光推送服务
 
@@ -165,24 +170,35 @@ angular.module('starter', ['ionic', 'starter.controllers', 'starter.services', '
     controller: 'UserCtrl'
   })
 
-  .state('tabs.addMedicine',{
-    url:'/addMedicine',
+  .state('tabs.searchMedicine',{
+    url:'/searchMedicine',
     views:{
       'medicine-tab':{
-        templateUrl:'templates/add_medicine.html',
+        templateUrl:'templates/search_medicine.html',
         controller:'ExampleController'
       }
     }
   })
 
   .state('tabs.medicineInfo',{
-    url:'/medicineInfo',
+    url:'/medicineInfo/:id',
+    cache:true,
     views:{
       'medicine-tab':{
-        templateUrl:'templates/medicine_info.html'
+        templateUrl:'templates/medicine_info.html',
+        controller:'InfoCtrl'
       }
     }
   })
+
+  // .state('tabs.medicineSearch',{
+  //   url:'/medicineSearch',
+  //   views:{
+  //     'medicineSearch-tab':{
+  //       templateUrl:'templates/search_medicine.html'
+  //     }
+  //   }
+  // })
 
   .state('tabs.medicine',{
   	url:'/mymedicine',

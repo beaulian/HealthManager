@@ -284,23 +284,40 @@ angular.module('starter.controllers', ['ngCookies'])
 })
 
 
+.controller('InfoCtrl', function($scope, $http, $stateParams) {
+	var id = $stateParams.id;
+	$http({
+		method: "GET",
+		url: "http://222.198.155.138:5000/medicine/lilac/"+id,
+	}).success(function(data) {
+		if(data.status=="success"){
+			$scope.medicine=data.medicine;
+		}
+		else{
+			alert('获取药品信息失败！');
+		}
+	});
+})
+
 .controller("ExampleController", function($scope, $cordovaBarcodeScanner, $ionicPopup,$http,$rootScope,$cordovaNetwork) {
 
-		$scope.medicine={
-			"name":"",
-			"thumbnail":"",
-			"feature":"",
-			"company":"",
-			"usage":"",
-			"taboo":"",
-			"reaction":"",
-			"place":"",
-			"buy_time":"",
-			"overdue_time":"",
-			"long_term_use":0,
-			"purchase_quantity":1,
-			"residue_quantity":""
-		}
+		// $scope.medicines=[];
+
+		$scope.mSearch = function(){
+			$http({
+				method: "GET",
+				url: "http://222.198.155.138:5000/medicine/lilac?type=medicine&keyword="+$('#msea').val()
+			}).success(function(data) {
+				if(!data.medicines){
+					alert('药品未收录！');}
+				else {
+					alert(data['status']);
+					$scope.medicines=data.medicines;
+				}
+			}).error(function(data){
+				alert('查询失败！');
+			});
+	}
 
 	$scope.scanBarcode = function(){
 		$cordovaBarcodeScanner.scan()
@@ -312,21 +329,33 @@ angular.module('starter.controllers', ['ngCookies'])
 			 data: {'code':imageData.text},
 			 dataType: 'jsonp',
 			 jsonp:'callback',
-			 success: function(msg){
-			 	if(msg.status){
-			 		$scope.medicine['company']=msg['factory'];
-			 	}
-			 	else{
-			 		$scope.info="抱歉,数据不存在:(";
-			 		$scope.isf=typeof(msg);
-			 	}
+			 success: function(data){
+				 if(!data.status){
+					 alert('药品信息未收录！');
+				 }
+				 else {
+				 	$http({
+						method:"GET",
+						url:"http://222.198.155.138:5000/medicine/lilac?type=medicine&keyword="+data.name
+					}).success(function(){
+						if(!data.medicines){
+							alert('药品未收录！');}
+						else {
+							alert(data['status']);
+							$scope.medicines=data.medicines;
+						}
+					}).error(function(){
+						alert('查询失败！');
+					})
+				 }
 			 },
-			 error:function(msg){
-			 	$scope.info="error";
-			 	$scope.isf=typeof(msg);
+			 error:function(data){
+			 	alert('查询失败！');
 			 }
 			 	});
-	});}
+	});
+
+}
 
 
 
