@@ -12,25 +12,13 @@ angular.module('starter.directives', [])
             map = new BMap.Map("initMap");
             map.centerAndZoom(point, 14);
             map.enableScrollWheelZoom();
+            var marker = new BMap.Marker(point);        // 创建标注
+            map.addOverlay(marker);
 
-            function addMarker(point, index) {
-                var myIcon = new BMap.Icon("http://api.map.baidu.com/images/marker_red_sprite.png",
-                                        new BMap.Size(23,25), {
-                                          offset: new BMap.size(10,25),
-                                          imageOffset: new BMap.Size(0, 0-index*25)
-                             });
-                var marker = new BMap.Marker(point, {icon: myIcon});
-                map.addOverlay(marker);
-            }
+            marker.addEventListener("click", function(){
+             alert("您点击了标注");
+            });
 
-            var bounds = map.getBounds();
-            var lngSpan = bounds.maxX - bounds.minX;
-            var latSpan = bounds.maxY - bounds.minY;
-            for (var i = 0; i < 10; i ++) {
-                var point = new BMap.Point(bounds.minX + lngSpan * (Math.random() * 0.7 + 0.15),
-                bounds.minY + latSpan * (Math.random() * 0.7 + 0.15));
-                addMarker(point, i);
-            }
         }
     };
 });

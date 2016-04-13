@@ -141,6 +141,13 @@ def get_medicines_from_lilac():
 	return jsonify({"status": "success", "medicines": medicines})
 
 
+@medicine.route("/medicine/lilac/<string:medicine_id>", methods=["GET"])
+@valid_id_required("TempMedicine", "medicine_id")
+def get_medicine_from_lilac_by_id(medicine_id):
+	medicine = Model.db.TempMedicine.find_one({"_id": ObjectId(medicine_id)})
+	return jsonify({"status": "success", "medicine": change_object_attr(medicine)})
+
+
 @medicine.route("/medicine/<string:medicine_id>", methods=["GET"])
 @login_required
 @valid_id_required("Medicine", "medicine_id")
