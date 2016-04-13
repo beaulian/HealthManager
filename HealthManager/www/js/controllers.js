@@ -284,7 +284,33 @@ angular.module('starter.controllers', ['ngCookies'])
 })
 
 
-.controller('InfoCtrl', function($scope, $http, $stateParams) {
+.controller('InfoCtrl', function($scope, $http, $stateParams,$scope,$cordovaSQLite,$rootScope) {
+
+//testSqlite
+	$scope.insert = function(firstname, lastname) {
+	var query = "INSERT INTO people (firstname, lastname) VALUES (?,?)";
+	$cordovaSQLite.execute($rootScope.db, query, [firstname, lastname]).then(function(res) {
+			alert('success');
+	}, function (err) {
+			alert('error');
+	});
+	}
+
+	$scope.select = function(lastname) {
+	var query = "SELECT firstname, lastname FROM people WHERE lastname = ?";
+	$cordovaSQLite.execute($rootScope.db, query, [lastname]).then(function(res) {
+			if(res.rows.length > 0) {
+					console.log("SELECTED -> " + res.rows.item(0).firstname + " " + res.rows.item(0).lastname);
+					$scope.testsql=res.rows.item(0).firstname;
+			} else {
+					console.log("No results found");
+					$scope.testsql="No results found";
+			}
+	}, function (err) {
+			console.error(err);
+	});
+}
+
 	var id = $stateParams.id;
 	$http({
 		method: "GET",

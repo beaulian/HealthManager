@@ -4,6 +4,7 @@
 // 'starter' is the name of this angular module example (also set in a <body> attribute in index.html)
 // the 2nd parameter is an array of 'requires'
 var LoginStatus = false;
+var db = null;
 
 angular.module('starter', ['ionic', 'starter.controllers', 'starter.services', 'ngCookies', 'ngRoute','ngCordova'])
 
@@ -12,7 +13,7 @@ angular.module('starter', ['ionic', 'starter.controllers', 'starter.services', '
       if (toState.name == "login" || toState.name == "register") {
           return;
       }
-      if ($window.localStorage.getItem("logged-in")) {
+      if (!$window.localStorage.getItem("logged-in")) {
         event.preventDefault();// 取消默认跳转行为
         $state.go("login");
       }
@@ -48,20 +49,8 @@ angular.module('starter', ['ionic', 'starter.controllers', 'starter.services', '
     }
 
     //sqlite测试
-  //   var db = $cordovaSQLite.openDB({ name: "my.db" });
-  //
-  // // for opening a background db:
-  // var db = $cordovaSQLite.openDB({ name: "my.db", bgType: 1 });
-  //
-  // $scope.execute = function() {
-  //   var query = "INSERT INTO test_table (data, data_num) VALUES (?,?)";
-  //   $cordovaSQLite.execute(db, query, ["test", 100]).then(function(res) {
-  //     console.log("insertId: " + res.insertId);
-  //   }, function (err) {
-  //     console.error(err);
-  //   });
-  // };
-
+    $rootScope.db = $cordovaSQLite.openDB({name: 'my.db', location: 'default'});
+    $cordovaSQLite.execute($rootScope.db, "CREATE TABLE IF NOT EXISTS people (id integer primary key, firstname text, lastname text)");
  //启动极光推送服务
 
     window.plugins.jPushPlugin.init();

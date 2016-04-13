@@ -13,7 +13,7 @@ angular.module('starter', ['ionic', 'starter.controllers', 'starter.services', '
       if (toState.name == "login" || toState.name == "register") {
           return;
       }
-      if ($window.localStorage.getItem("logged-in")) {
+      if (!$window.localStorage.getItem("logged-in")) {
         event.preventDefault();// 取消默认跳转行为
         $state.go("login");
       }
@@ -49,9 +49,8 @@ angular.module('starter', ['ionic', 'starter.controllers', 'starter.services', '
     }
 
     //sqlite测试
-    db = $cordovaSQLite.openDB({ name: "my.db" });
-            $cordovaSQLite.execute(db, "CREATE TABLE IF NOT EXISTS people (id integer primary key, firstname text, lastname text)");
-
+    $rootScope.db = $cordovaSQLite.openDB({name: 'my.db', location: 'default'});
+    $cordovaSQLite.execute($rootScope.db, "CREATE TABLE IF NOT EXISTS people (id integer primary key, firstname text, lastname text)");
  //启动极光推送服务
 
     window.plugins.jPushPlugin.init();
