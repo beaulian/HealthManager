@@ -50,7 +50,7 @@ angular.module('starter', ['ionic', 'starter.controllers', 'starter.services', '
 
     //sqlite测试
     $rootScope.db = $cordovaSQLite.openDB({name: 'my.db', location: 'default'});
-    $cordovaSQLite.execute($rootScope.db, "CREATE TABLE IF NOT EXISTS people (id integer primary key, firstname text, lastname text)");
+    $cordovaSQLite.execute($rootScope.db, "CREATE TABLE IF NOT EXISTS medicine (name text, thumbnail text, feature text,company text,usage text,taboo text,reaction text,place text,buy_time text,overdue_time text,long_term_use INTEGER,purchase_quantity text,residue_quantity text)");
  //启动极光推送服务
 
     window.plugins.jPushPlugin.init();
@@ -190,21 +190,23 @@ angular.module('starter', ['ionic', 'starter.controllers', 'starter.services', '
     }
   })
 
-  // .state('tabs.medicineSearch',{
-  //   url:'/medicineSearch',
-  //   views:{
-  //     'medicineSearch-tab':{
-  //       templateUrl:'templates/search_medicine.html'
-  //     }
-  //   }
-  // })
+  .state('tabs.addMedicine',{
+    url:'/addMedicine/:id',
+    views:{
+      'medicine-tab':{
+        templateUrl:'templates/add_medicine.html',
+        controller:'addMedCtrl'
+      }
+    }
+  })
 
   .state('tabs.medicine',{
   	url:'/mymedicine',
     views:{
       'medicine-tab':{
-              templateUrl:'templates/my_medicine.html'
-            }
+        templateUrl:'templates/my_medicine.html',
+        controller:'myMedCtrl'
+        }
       }
   });
 

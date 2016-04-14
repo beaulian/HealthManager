@@ -287,30 +287,22 @@ angular.module('starter.controllers', ['ngCookies'])
 .controller('InfoCtrl', function($scope, $http, $stateParams,$scope,$cordovaSQLite,$rootScope) {
 
 //testSqlite
-	$scope.insert = function(firstname, lastname) {
-	var query = "INSERT INTO people (firstname, lastname) VALUES (?,?)";
-	$cordovaSQLite.execute($rootScope.db, query, [firstname, lastname]).then(function(res) {
+	$scope.insert = function() {
+	var query = "INSERT INTO medicine (name, thumbnail, feature, company ,usage ,taboo ,reaction ,place ,buy_time ,overdue_time ,long_term_use ,purchase_quantity ,residue_quantity) VALUES (?,?,?,?,?,?,?,?,?,?,?,?,?)";
+	$cordovaSQLite.execute($rootScope.db, query, [$scope.medicine["name"],"", $scope.medicine["feature"],$scope.medicine["company"],$scope.medicine["usage"],$scope.medicine["taboo"],"","","","",0,"",""]).then(function(res) {
 			alert('success');
 	}, function (err) {
 			alert('error');
 	});
 	}
 
-	$scope.select = function(lastname) {
-	var query = "SELECT firstname, lastname FROM people WHERE lastname = ?";
-	$cordovaSQLite.execute($rootScope.db, query, [lastname]).then(function(res) {
-			if(res.rows.length > 0) {
-					console.log("SELECTED -> " + res.rows.item(0).firstname + " " + res.rows.item(0).lastname);
-					$scope.testsql=res.rows.item(0).firstname;
-			} else {
-					console.log("No results found");
-					$scope.testsql="No results found";
-			}
-	}, function (err) {
-			console.error(err);
-	});
-}
-
+	$scope.select = function() {
+		var query = "SELECT * FROM medicine";
+		$cordovaSQLite.execute($rootScope.db,query).then(function(res){
+			$scope.testsql=res.rows.item(0);
+		});
+	}
+	$scope.medicineList =new Array();
 	var id = $stateParams.id;
 	$http({
 		method: "GET",
@@ -325,19 +317,58 @@ angular.module('starter.controllers', ['ngCookies'])
 	});
 })
 
-.controller("ExampleController", function($scope, $cordovaBarcodeScanner, $ionicPopup,$http,$rootScope,$cordovaNetwork) {
+.controller('myMedCtrl',function($scope, $http, $stateParams,$scope,$cordovaSQLite,$rootScope){
+	alert('begin');
+	$scope.select = function() {
+		var query = "SELECT * FROM medicine";
+		$cordovaSQLite.execute($rootScope.db,query).then(function(res){
+			$scope.medicines=new Array();
+			for(var i=0;i<res.rows.length;i++){
+				$scope.medicines[i]=res.rows.item(i);
+			}
+			alert('yes');
+		},function(err){
+			alert('no')
+		});
+	}
+	$scope.select();
+})
+
+.controller('addMedCtrl',function($rootScope,$http,$scope,$stateParams){
+	var id=$stateParams.id;
+	$http({
+		method: "GET",
+		url: "http://222.198.155.138:5000/medicine/lilac/"+id,
+	}).success(function(data) {
+		if(data.status=="success"){
+			$scope.medicine=data.medicine;
+		}
+		else{
+			alert('获取药品信息失败！');
+		}
+	});
+})
+
+.controller("ExampleController", function($scope, $cordovaBarcodeScanner, $ionicPopup,$http,$rootScope,$cordovaNetwork,$ionicLoading) {
 
 		// $scope.medicines=[];
 
 		$scope.mSearch = function(){
+			$ionicLoading.show({
+				content: 'Loading',
+			    animation: 'fade-in',
+			    maxWidth: 200,
+			    showDelay: 0,
+			    noBackdrop: true
+			});
 			$http({
 				method: "GET",
 				url: "http://222.198.155.138:5000/medicine/lilac?type=medicine&keyword="+$('#msea').val()
 			}).success(function(data) {
+				$ionicLoading.hide();
 				if(!data.medicines){
 					alert('药品未收录！');}
 				else {
-					alert(data['status']);
 					$scope.medicines=data.medicines;
 				}
 			}).error(function(data){
@@ -349,6 +380,13 @@ angular.module('starter.controllers', ['ngCookies'])
 		$cordovaBarcodeScanner.scan()
 		.then(function(imageData)
 		{
+			$ionicLoading.show({
+				content: 'Loading',
+			    animation: 'fade-in',
+			    maxWidth: 200,
+			    showDelay: 0,
+			    noBackdrop: true
+			});
 		$.ajax({
 			 url: 'http://www.tngou.net/api/drug/code?',
 			 type: "GET",
@@ -357,6 +395,7 @@ angular.module('starter.controllers', ['ngCookies'])
 			 jsonp:'callback',
 			 success: function(data){
 				 if(!data.status){
+					 $ionicLoading.hide();
 					 alert('药品信息未收录！');
 				 }
 				 else {
@@ -365,10 +404,11 @@ angular.module('starter.controllers', ['ngCookies'])
 						url:"http://222.198.155.138:5000/medicine/lilac?type=medicine&keyword="+data.name
 					}).success(function(){
 						if(!data.medicines){
+		 				 $ionicLoading.hide();
 							alert('药品未收录！');}
 						else {
-							alert(data['status']);
-							$scope.medicines=data.medicines;
+		 				 $ionicLoading.hide();
+						 $scope.medicines=data.medicines;
 						}
 					}).error(function(){
 						alert('查询失败！');
@@ -378,7 +418,7 @@ angular.module('starter.controllers', ['ngCookies'])
 			 error:function(data){
 			 	alert('查询失败！');
 			 }
-			 	});
+	 	});
 	});
 
 }

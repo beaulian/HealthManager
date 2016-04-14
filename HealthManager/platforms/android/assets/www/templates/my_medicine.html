@@ -6,11 +6,14 @@
       <a  href="#/tab/searchMedicine" class="plus"><i class="icon ion-plus"></i></a>
     </ion-nav-buttons>
     <ion-content>
-      <div class="list card" href="#/tab/addMedicine" >
+      <p>
+        {{medicines}}
+      </p>
+      <div class="list card" ng-repeat="medicine in medicines | limitTo:10">
         <div class="item family-member">
           <div class="row">
             <div class="col col-60">
-              <em>咽立爽口含滴丸</em>
+              <em>{{medicine.name}}</em>
             </div>
             <div class="col">
               <p>2016.10.4</p>
@@ -18,53 +21,14 @@
           </div>
           <div class="row">
             <div class="col col-90">
-              <p><i class="icon ion-clipboard" style="color:#836FFF;"></i> 疏风散热，消肿止痛，清利咽喉。用于急性咽炎，慢性咽炎急性发作，咽痛，咽粘膜红肿，咽干，口臭等症。 </p>
+              <p><i class="icon ion-clipboard" style="color:#33CD5F;"></i> {{medicine.feature}} </p>
               <p><i class="icon ion-at" style="color:#836FFF;"></i> 一号抽屉</p>
+              <p>
+                {{medicine.company}}
+              </p>
             </div>
             <div class="col">
-              <a href="#/tab/medicineInfo"><i class="icon ion-ios-arrow-right" style="position:absolute;right:15px;font-size:20px;"></i></a>
-            </div>
-          </div>
-        </div>
-      </div>
-      <div class="list card" href="#/tab/addMedicine" >
-        <div class="item family-member">
-          <div class="row">
-            <div class="col col-60">
-              <em>咽立爽口含滴丸</em>
-            </div>
-            <div class="col">
-              <p>2016.10.4</p>
-            </div>
-          </div>
-          <div class="row">
-            <div class="col col-90">
-              <p><i class="icon ion-clipboard" style="color:#836FFF;"></i> 疏风散热，消肿止痛，清利咽喉。用于急性咽炎，慢性咽炎急性发作，咽痛，咽粘膜红肿，咽干，口臭等症。 </p>
-              <p><i class="icon ion-at" style="color:#836FFF;"></i> 一号抽屉</p>
-            </div>
-            <div class="col">
-              <a href="#/tab/medicineInfo"><i class="icon ion-ios-arrow-right" style="position:absolute;right:15px;font-size:20px;"></i></a>
-            </div>
-          </div>
-        </div>
-      </div>
-      <div class="list card" href="#/tab/addMedicine" >
-        <div class="item family-member">
-          <div class="row">
-            <div class="col col-60">
-              <em>咽立爽口含滴丸</em>
-            </div>
-            <div class="col">
-              <p>2016.10.4</p>
-            </div>
-          </div>
-          <div class="row">
-            <div class="col col-90">
-              <p><i class="icon ion-clipboard" style="color:#836FFF;"></i> 疏风散热，消肿止痛，清利咽喉。用于急性咽炎，慢性咽炎急性发作，咽痛，咽粘膜红肿，咽干，口臭等症。 </p>
-              <p><i class="icon ion-at" style="color:#836FFF;"></i> 一号抽屉</p>
-            </div>
-            <div class="col">
-              <a href="#/tab/medicineInfo"><i class="icon ion-ios-arrow-right" style="position:absolute;right:15px;font-size:20px;"></i></a>
+              <a href="#/tab/medicineInfo/{{medicine.id}}"><i class="icon ion-ios-arrow-right" style="position:absolute;right:15px;font-size:20px;"></i></a>
             </div>
           </div>
         </div>
