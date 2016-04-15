@@ -217,15 +217,25 @@ angular.module('starter', ['ionic',
        }
    })
 
-  .state('tabs.map', {
-    url:'/map',
+  .state('tabs.mapPharmacy', {
+    url:'/map/pharmacy',
     views: {
         'home-tab':{
-            templateUrl:'templates/map/map.html',
-            controller:'MapCtrl'
+            templateUrl:'templates/map/map-pharmacy.html',
+            controller:'MapPharmacyCtrl'
         }
     }
-  });
+  })
+
+  .state('tabs.mapHospital', {
+      url:'/map/hospital',
+      views: {
+          'home-tab':{
+              templateUrl:'templates/map/map-hospital.html',
+              controller:'MapHospitalCtrl'
+          }
+      }
+   });
 
   $urlRouterProvider.otherwise('/tab/home');
 

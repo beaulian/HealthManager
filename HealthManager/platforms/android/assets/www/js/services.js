@@ -25,38 +25,46 @@ angular.module('starter.services', [])
     };
 })
 
-.service('Pharmacy', function() {
-    this.results = [];
-    this.set = function(s) {
+.service('Pharmacy', function($window) {
+    var Pharmacy = {};
+
+    Pharmacy.set = function(s) {
+       var results = [];
        for (var i=0; i<s.length; i++) {
          var temp = {
            "title": s[i].split("&")[0],
            "address": s[i].split("&")[1]
          }
-         this.results.push(temp);
+         results.push(temp);
        }
-    }
-    this.get = function() {
-      return this.results;
-    }
+       $window.localStorage.setItem('results', JSON.stringify(results));
+    };
+    Pharmacy.get = function() {
+      return $window.localStorage.getItem('results');
+    };
 
+    return Pharmacy;
 })
 
-.service('Hospital', function() {
-    this.results = [];
-    this.set = function(s) {
+.service('Hospital', function($window) {
+    var Hospital = {};
+
+    Hospital.set = function(s) {
+       var results = [];
        for (var i=0; i<s.length; i++) {
          var temp = {
            "title": s[i].split("&")[0],
            "address": s[i].split("&")[1]
          }
-         this.results.push(temp);
+         results.push(temp);
        }
-    }
-    this.get = function() {
-      return this.results;
-    }
+       $window.localStorage.setItem('results', JSON.stringify(results));
+    };
+    Hospital.get = function() {
+      return $window.localStorage.getItem('results');
+    };
 
+    return Hospital;
 })
 
 .service('Preferences', function ($window) {

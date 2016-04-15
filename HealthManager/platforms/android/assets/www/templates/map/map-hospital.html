@@ -1,10 +1,10 @@
-<ion-view title="医院药店" hide-tabs="true">
+<ion-view title="医院" hide-tabs>
   <ion-nav-buttons side="right">
     <button ng-click="chooseTypeButtonClick()" class="button button-positive">
-      选择
+      药店
     </button>
   </ion-nav-buttons>
   <ion-content>
-    <app-map style='{{Style}}' service='{{service}}' describe='{{describe}}'></app-map>
+    <app-map-hospital style='width:100%;height:100%;'></app-map-hospital>
   </ion-content>
 </ion-view>
