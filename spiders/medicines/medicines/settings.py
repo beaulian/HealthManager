@@ -13,6 +13,11 @@ BOT_NAME = 'medicines'
 SPIDER_MODULES = ['medicines.spiders']
 NEWSPIDER_MODULE = 'medicines.spiders'
 
+# log
+LOG_ENABLED = True
+LOG_FILE = "medicine.log"
+LOG_STDOUT = True
+
 # Crawl responsibly by identifying yourself (and your website) on the user-agent
 #USER_AGENT = 'medicines (+http://www.yourdomain.com)'
 
@@ -43,4 +48,3 @@ COOKIES_ENABLED = False
 USER_AGENT = ''
 
 HTTP_PROXY = 'http://127.0.0.1:8118'
-

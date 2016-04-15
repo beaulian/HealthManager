@@ -319,26 +319,23 @@ angular.module('starter.controllers', ['ngCookies'])
 	});
 })
 
-.controller('myMedCtrl',function($scope, $http, $stateParams,$scope,$cordovaSQLite,$rootScope,$timeout){
-	alert('begin');
+.controller('myMedCtrl',function($scope, $http, $stateParams,$scope,$cordovaSQLite,$rootScope,$timeout,dbMed){
+	alert('1');
+	dbMed.select();
+	alert($rootScope.selectResult.length);
 	$scope.select = function() {
-		var query = "SELECT * FROM medicine";
-		$cordovaSQLite.execute($rootScope.db,query).then(function(res){
-			if(res.rows.length==0)
+		if(dbMed.select()!=false){
+			if($rootScope.selectResult.length==0){
 				$scope.status="暂未添加药品";
-			else {
+			}else{
 				$scope.status="";
-				$scope.medicines=new Array();
-				for(var i=0;i<res.rows.length;i++){
-					$scope.medicines[i]=res.rows.item(i);
-				}
+				$scope.medicines=$rootScope.selectResult;
+				$scope.$broadcast('scroll.refreshComplete');
 			}
-			$scope.$broadcast('scroll.refreshComplete');
-		},function(err){
-			alert('no')
-		});
+		}else{
+			alert('no');
+		}
 	}
-	$scope.select();
 })
 
 .controller('addMedCtrl',function($rootScope,$http,$scope,$stateParams){

@@ -5,7 +5,6 @@
 // the 2nd parameter is an array of 'requires'
 var LoginStatus = false;
 var db = null;
-
 angular.module('starter', ['ionic', 'starter.controllers', 'starter.services', 'ngCookies', 'ngRoute','ngCordova'])
 
 .service('dbMed',function($cordovaSQLite,$rootScope){
@@ -14,14 +13,11 @@ angular.module('starter', ['ionic', 'starter.controllers', 'starter.services', '
       var query = "SELECT * FROM medicine where "+key+" = "+value;
     }
     var query = "SELECT * FROM medicine";
-    ;
-    alert(query);
     $cordovaSQLite.execute($rootScope.db,query).then(function(res){
-      var result = new Array();
       for(var i=0;i<res.rows.length;i++){
-        result[i]=res.rows.item(i);
+        $rootScope.selectResult[i]=res.rows.item(i);
       }
-      return result;
+      return true;
     },function(err){
       return false;
   });};
@@ -77,6 +73,7 @@ angular.module('starter', ['ionic', 'starter.controllers', 'starter.services', '
     }
 
     //sqlite测试
+    $rootScope.selectResult = new Array();
     $rootScope.db = $cordovaSQLite.openDB({name: 'my.db', location: 'default'});
     $cordovaSQLite.execute($rootScope.db, "CREATE TABLE IF NOT EXISTS medicine (name text, thumbnail text, feature text,company text,usage text,taboo text,reaction text,place text,buy_time text,overdue_time text,long_term_use INTEGER,purchase_quantity text,residue_quantity text)");
  //启动极光推送服务
@@ -236,6 +233,16 @@ angular.module('starter', ['ionic', 'starter.controllers', 'starter.services', '
         controller:'myMedCtrl'
         }
       }
+  })
+
+  .state('tabs.map', {
+    url:'/map',
+    views: {
+        'home-tab':{
+            templateUrl:'templates/map/map.html',
+            controller:'MapCtrl'
+        }
+    }
   });
 
   $urlRouterProvider.otherwise('/tab/home');
