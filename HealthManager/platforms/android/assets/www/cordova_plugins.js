@@ -28,13 +28,6 @@ module.exports = [
         ]
     },
     {
-        "file": "plugins/cn.jpush.phonegap.JPushPlugin/www/JPushPlugin.js",
-        "id": "cn.jpush.phonegap.JPushPlugin.JPushPlugin",
-        "clobbers": [
-            "jPushPlugin"
-        ]
-    },
-    {
         "file": "plugins/cordova-plugin-device/www/device.js",
         "id": "cordova-plugin-device.device",
         "clobbers": [
@@ -64,6 +57,32 @@ module.exports = [
             "cordova.plugins.notification.local.core",
             "plugin.notification.local.core"
         ]
+    },
+    {
+        "file": "plugins/cordova-plugin-geolocation/www/android/geolocation.js",
+        "id": "cordova-plugin-geolocation.geolocation",
+        "clobbers": [
+            "navigator.geolocation"
+        ]
+    },
+    {
+        "file": "plugins/cordova-plugin-geolocation/www/PositionError.js",
+        "id": "cordova-plugin-geolocation.PositionError",
+        "runs": true
+    },
+    {
+        "file": "plugins/com.qdc.plugins.baidu.location/www/baidu_location.js",
+        "id": "com.qdc.plugins.baidu.location.baidu_location",
+        "clobbers": [
+            "baidu_location"
+        ]
+    },
+    {
+        "file": "plugins/cordova-sqlite-storage/www/SQLitePlugin.js",
+        "id": "cordova-sqlite-storage.SQLitePlugin",
+        "clobbers": [
+            "SQLitePlugin"
+        ]
     }
 ];
 module.exports.metadata = 
@@ -72,10 +91,12 @@ module.exports.metadata =
     "cordova-plugin-network-information": "1.2.0",
     "cordova-plugin-whitelist": "1.2.1",
     "phonegap-plugin-barcodescanner": "4.1.0",
-    "cn.jpush.phonegap.JPushPlugin": "2.1.0",
     "cordova-plugin-device": "1.1.1",
     "cordova-plugin-app-event": "1.2.0",
-    "de.appplant.cordova.plugin.local-notification": "0.8.4"
+    "de.appplant.cordova.plugin.local-notification": "0.8.4",
+    "cordova-plugin-geolocation": "2.1.0",
+    "com.qdc.plugins.baidu.location": "1.0.0",
+    "cordova-sqlite-storage": "1.2.1-pre1"
 };
 // BOTTOM OF METADATA
 });

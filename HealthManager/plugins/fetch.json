@@ -24,16 +24,6 @@
         "is_top_level": true,
         "variables": {}
     },
-    "cn.jpush.phonegap.JPushPlugin": {
-        "source": {
-            "type": "registry",
-            "id": "jpush-phonegap-plugin"
-        },
-        "is_top_level": true,
-        "variables": {
-            "API_KEY": "a5aa7fea10e1466b7bf1357a"
-        }
-    },
     "cordova-plugin-device": {
         "source": {
             "type": "registry",
@@ -57,6 +47,34 @@
             "id": "cordova-plugin-app-event"
         },
         "is_top_level": false,
+        "variables": {}
+    },
+    "cordova-plugin-geolocation": {
+        "source": {
+            "type": "registry",
+            "id": "cordova-plugin-geolocation"
+        },
+        "is_top_level": true,
+        "variables": {}
+    },
+    "com.qdc.plugins.baidu.location": {
+        "source": {
+            "type": "git",
+            "url": "https://github.com/mrwutong/cordova-qdc-baidu-location",
+            "subdir": "."
+        },
+        "is_top_level": true,
+        "variables": {
+            "API_KEY": "dcKwtdXHawutnzQl6mgGmcCgMGnmmM72"
+        }
+    },
+    "cordova-sqlite-storage": {
+        "source": {
+            "type": "git",
+            "url": "https://github.com/litehelpers/Cordova-sqlite-storage.git",
+            "subdir": "."
+        },
+        "is_top_level": true,
         "variables": {}
     }
 }

@@ -5,9 +5,16 @@
 // the 2nd parameter is an array of 'requires'
 var LoginStatus = false;
 
-angular.module('starter', ['ionic', 'starter.controllers', 'starter.directives', 'starter.services', 'ngCookies', 'ngRoute','ngCordova'])
+angular.module('starter', ['ionic',
+                            'starter.controllers',
+                            'starter.services',
+                            'starter.map',
+                            'ngCookies',
+                            'ngRoute',
+                            'ngCordova'
+                           ])
 
-.run(function($ionicPlatform, $rootScope, $cookieStore, $location, $http, $state, $window) {
+.run(function($ionicPlatform, $rootScope, $cookieStore, $location, $http, $state, $window, $cordovaSQLite) {
   $rootScope.$on('$stateChangeStart', function(event, toState) {
       if (toState.name == "login" || toState.name == "register") {
           return;
@@ -31,6 +38,7 @@ angular.module('starter', ['ionic', 'starter.controllers', 'starter.directives',
   });
 
   $ionicPlatform.ready(function() {
+
     // Hide the accessory bar by default (remove this to show the accessory bar above the keyboard
 
     // for form inputs)
@@ -46,6 +54,9 @@ angular.module('starter', ['ionic', 'starter.controllers', 'starter.directives',
       StatusBar.styleDefault();
 
     }
+
+    $rootScope.db = $cordovaSQLite.openDB({name: 'my.db', location: 'default'});
+    $cordovaSQLite.execute($rootScope.db, "CREATE TABLE IF NOT EXISTS medicine (name text, thumbnail text, feature text,company text,usage text,taboo text,reaction text,place text,buy_time text,overdue_time text,long_term_use INTEGER,purchase_quantity text,residue_quantity text)");
 
  //启动极光推送服务
 
@@ -165,39 +176,52 @@ angular.module('starter', ['ionic', 'starter.controllers', 'starter.directives',
     controller: 'UserCtrl'
   })
 
-  .state('tabs.addMedicine',{
-    url:'/addMedicine',
-    views:{
-      'medicine-tab':{
-        templateUrl:'templates/add_medicine.html',
-        controller:'ExampleController'
-      }
-    }
-  })
+  .state('tabs.searchMedicine',{
+     url:'/searchMedicine',
+     views:{
+       'medicine-tab':{
+         templateUrl:'templates/search_medicine.html',
+         controller:'ExampleController'
+       }
+     }
+   })
 
-  .state('tabs.medicineInfo',{
-    url:'/medicineInfo',
-    views:{
-      'medicine-tab':{
-        templateUrl:'templates/medicine_info.html'
-      }
-    }
-  })
+   .state('tabs.medicineInfo',{
+     url:'/medicineInfo/:id',
+     cache:true,
+     views:{
+       'medicine-tab':{
+         templateUrl:'templates/medicine_info.html',
+         controller:'InfoCtrl'
+       }
+     }
+   })
 
-  .state('tabs.medicine',{
-  	url:'/mymedicine',
-    views:{
-      'medicine-tab':{
-              templateUrl:'templates/my_medicine.html'
-            }
-      }
-  })
+   .state('tabs.addMedicine',{
+     url:'/addMedicine/:id',
+     views:{
+       'medicine-tab':{
+         templateUrl:'templates/add_medicine.html',
+         controller:'addMedCtrl'
+       }
+     }
+   })
+
+   .state('tabs.medicine',{
+   	url:'/mymedicine',
+     views:{
+       'medicine-tab':{
+         templateUrl:'templates/my_medicine.html',
+         controller:'myMedCtrl'
+         }
+       }
+   })
 
   .state('tabs.map', {
     url:'/map',
     views: {
         'home-tab':{
-            templateUrl:'templates/map.html',
+            templateUrl:'templates/map/map.html',
             controller:'MapCtrl'
         }
     }

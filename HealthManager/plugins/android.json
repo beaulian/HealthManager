@@ -16,14 +16,20 @@
         "phonegap-plugin-barcodescanner": {
             "PACKAGE_NAME": "com.ionicframework.starter"
         },
-        "cn.jpush.phonegap.JPushPlugin": {
-            "API_KEY": "a5aa7fea10e1466b7bf1357a",
-            "PACKAGE_NAME": "com.ionicframework.starter"
-        },
         "cordova-plugin-device": {
             "PACKAGE_NAME": "com.ionicframework.starter"
         },
         "de.appplant.cordova.plugin.local-notification": {
+            "PACKAGE_NAME": "com.ionicframework.starter"
+        },
+        "cordova-plugin-geolocation": {
+            "PACKAGE_NAME": "com.ionicframework.starter"
+        },
+        "com.qdc.plugins.baidu.location": {
+            "API_KEY": "dcKwtdXHawutnzQl6mgGmcCgMGnmmM72",
+            "PACKAGE_NAME": "com.ionicframework.starter"
+        },
+        "cordova-sqlite-storage": {
             "PACKAGE_NAME": "com.ionicframework.starter"
         }
     },

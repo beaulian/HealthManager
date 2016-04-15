@@ -21,15 +21,23 @@
                             "count": 1
                         },
                         {
-                            "xml": "<feature name=\"JPushPlugin\"><param name=\"android-package\" value=\"cn.jpush.phonegap.JPushPlugin\" /></feature>",
-                            "count": 1
-                        },
-                        {
                             "xml": "<feature name=\"Device\"><param name=\"android-package\" value=\"org.apache.cordova.device.Device\" /></feature>",
                             "count": 1
                         },
                         {
                             "xml": "<feature name=\"LocalNotification\"><param name=\"android-package\" value=\"de.appplant.cordova.plugin.localnotification.LocalNotification\" /></feature>",
+                            "count": 1
+                        },
+                        {
+                            "xml": "<feature name=\"Geolocation\"><param name=\"android-package\" value=\"org.apache.cordova.geolocation.Geolocation\" /></feature>",
+                            "count": 1
+                        },
+                        {
+                            "xml": "<feature name=\"BaiduLocation\"><param name=\"android-package\" value=\"com.qdc.plugins.baidu.BaiduLocation\" /></feature>",
+                            "count": 1
+                        },
+                        {
+                            "xml": "<feature name=\"SQLitePlugin\"><param name=\"android-package\" value=\"io.sqlc.SQLitePlugin\" /></feature>",
                             "count": 1
                         }
                     ]
@@ -40,6 +48,38 @@
                     "/*": [
                         {
                             "xml": "<uses-permission android:name=\"android.permission.ACCESS_NETWORK_STATE\" />",
+                            "count": 2
+                        },
+                        {
+                            "xml": "<uses-permission android:name=\"android.permission.ACCESS_COARSE_LOCATION\" />",
+                            "count": 2
+                        },
+                        {
+                            "xml": "<uses-permission android:name=\"android.permission.ACCESS_FINE_LOCATION\" />",
+                            "count": 2
+                        },
+                        {
+                            "xml": "<uses-permission android:name=\"android.permission.ACCESS_WIFI_STATE\" />",
+                            "count": 1
+                        },
+                        {
+                            "xml": "<uses-permission android:name=\"android.permission.CHANGE_WIFI_STATE\" />",
+                            "count": 1
+                        },
+                        {
+                            "xml": "<uses-permission android:name=\"android.permission.READ_PHONE_STATE\" />",
+                            "count": 1
+                        },
+                        {
+                            "xml": "<uses-permission android:name=\"android.permission.WRITE_EXTERNAL_STORAGE\" />",
+                            "count": 1
+                        },
+                        {
+                            "xml": "<uses-permission android:name=\"android.permission.INTERNET\" />",
+                            "count": 1
+                        },
+                        {
+                            "xml": "<uses-permission android:name=\"android.permission.MOUNT_UNMOUNT_FILESYSTEMS\" />",
                             "count": 1
                         }
                     ],
@@ -54,38 +94,6 @@
                         },
                         {
                             "xml": "<activity android:label=\"@string/share_name\" android:name=\"com.google.zxing.client.android.HelpActivity\"><intent-filter><action android:name=\"android.intent.action.VIEW\" /><category android:name=\"android.intent.category.DEFAULT\" /></intent-filter></activity>",
-                            "count": 1
-                        },
-                        {
-                            "xml": "<activity android:configChanges=\"orientation|keyboardHidden\" android:name=\"cn.jpush.android.ui.PushActivity\" android:theme=\"@android:style/Theme.Translucent.NoTitleBar\"><intent-filter><action android:name=\"cn.jpush.android.ui.PushActivity\" /><category android:name=\"android.intent.category.DEFAULT\" /><category android:name=\"com.ionicframework.starter\" /></intent-filter></activity>",
-                            "count": 1
-                        },
-                        {
-                            "xml": "<service android:enabled=\"true\" android:exported=\"false\" android:name=\"cn.jpush.android.service.DownloadService\"></service>",
-                            "count": 1
-                        },
-                        {
-                            "xml": "<service android:enabled=\"true\" android:exported=\"false\" android:name=\"cn.jpush.android.service.PushService\"><intent-filter><action android:name=\"cn.jpush.android.intent.REGISTER\" /><action android:name=\"cn.jpush.android.intent.REPORT\" /><action android:name=\"cn.jpush.android.intent.PushService\" /><action android:name=\"cn.jpush.android.intent.PUSH_TIME\" /></intent-filter></service>",
-                            "count": 1
-                        },
-                        {
-                            "xml": "<receiver android:enabled=\"true\" android:name=\"cn.jpush.android.service.PushReceiver\"><intent-filter android:priority=\"1000\"><action android:name=\"cn.jpush.android.intent.NOTIFICATION_RECEIVED_PROXY\" /><category android:name=\"com.ionicframework.starter\" /></intent-filter><intent-filter><action android:name=\"android.intent.action.USER_PRESENT\" /><action android:name=\"android.net.conn.CONNECTIVITY_CHANGE\" /></intent-filter><intent-filter><action android:name=\"android.intent.action.PACKAGE_ADDED\" /><action android:name=\"android.intent.action.PACKAGE_REMOVED\" /><data android:scheme=\"package\" /></intent-filter></receiver>",
-                            "count": 1
-                        },
-                        {
-                            "xml": "<receiver android:enabled=\"true\" android:name=\"cn.jpush.phonegap.MyReceiver\"><intent-filter android:priority=\"1000\"><action android:name=\"cn.jpush.android.intent.NOTIFICATION_RECEIVED_PROXY\" /><category android:name=\"com.ionicframework.starter\" /></intent-filter><intent-filter><action android:name=\"cn.jpush.android.intent.REGISTRATION\" /><action android:name=\"cn.jpush.android.intent.UNREGISTRATION\" /><action android:name=\"cn.jpush.android.intent.MESSAGE_RECEIVED\" /><action android:name=\"cn.jpush.android.intent.NOTIFICATION_RECEIVED\" /><action android:name=\"cn.jpush.android.intent.NOTIFICATION_OPENED\" /><action android:name=\"cn.jpush.android.intent.ACTION_RICHPUSH_CALLBACK\" /><category android:name=\"com.ionicframework.starter\" /></intent-filter></receiver>",
-                            "count": 1
-                        },
-                        {
-                            "xml": "<receiver android:name=\"cn.jpush.android.service.AlarmReceiver\" />",
-                            "count": 1
-                        },
-                        {
-                            "xml": "<meta-data android:name=\"JPUSH_CHANNEL\" android:value=\"developer-default\" />",
-                            "count": 1
-                        },
-                        {
-                            "xml": "<meta-data android:name=\"JPUSH_APPKEY\" android:value=\"a5aa7fea10e1466b7bf1357a\" />",
                             "count": 1
                         },
                         {
@@ -115,6 +123,14 @@
                         {
                             "xml": "<activity android:exported=\"false\" android:launchMode=\"singleInstance\" android:name=\"de.appplant.cordova.plugin.notification.ClickActivity\" android:theme=\"@android:style/Theme.NoDisplay\" />",
                             "count": 1
+                        },
+                        {
+                            "xml": "<service android:enabled=\"true\" android:name=\"com.baidu.location.f\" android:process=\":remote\" />",
+                            "count": 1
+                        },
+                        {
+                            "xml": "<meta-data android:name=\"com.baidu.lbsapi.API_KEY\" android:value=\"dcKwtdXHawutnzQl6mgGmcCgMGnmmM72\" />",
+                            "count": 1
                         }
                     ],
                     "/manifest": [
@@ -131,55 +147,7 @@
                             "count": 1
                         },
                         {
-                            "xml": "<uses-permission android:name=\"com.ionicframework.starter.permission.JPUSH_MESSAGE\" />",
-                            "count": 1
-                        },
-                        {
-                            "xml": "<uses-permission android:name=\"android.permission.RECEIVE_USER_PRESENT\" />",
-                            "count": 1
-                        },
-                        {
-                            "xml": "<uses-permission android:name=\"android.permission.INTERNET\" />",
-                            "count": 1
-                        },
-                        {
-                            "xml": "<uses-permission android:name=\"android.permission.WAKE_LOCK\" />",
-                            "count": 1
-                        },
-                        {
-                            "xml": "<uses-permission android:name=\"android.permission.READ_PHONE_STATE\" />",
-                            "count": 1
-                        },
-                        {
                             "xml": "<uses-permission android:name=\"android.permission.WRITE_EXTERNAL_STORAGE\" />",
-                            "count": 2
-                        },
-                        {
-                            "xml": "<uses-permission android:name=\"android.permission.READ_EXTERNAL_STORAGE\" />",
-                            "count": 1
-                        },
-                        {
-                            "xml": "<uses-permission android:name=\"android.permission.VIBRATE\" />",
-                            "count": 1
-                        },
-                        {
-                            "xml": "<uses-permission android:name=\"android.permission.MOUNT_UNMOUNT_FILESYSTEMS\" />",
-                            "count": 1
-                        },
-                        {
-                            "xml": "<uses-permission android:name=\"android.permission.ACCESS_NETWORK_STATE\" />",
-                            "count": 1
-                        },
-                        {
-                            "xml": "<uses-permission android:name=\"android.permission.SYSTEM_ALERT_WINDOW\" />",
-                            "count": 1
-                        },
-                        {
-                            "xml": "<uses-permission android:name=\"android.permission.WRITE_SETTINGS\" />",
-                            "count": 1
-                        },
-                        {
-                            "xml": "<permission android:name=\"com.ionicframework.starter.permission.JPUSH_MESSAGE\" android:protectionLevel=\"signature\" />",
                             "count": 1
                         },
                         {
@@ -683,10 +651,6 @@
         "phonegap-plugin-barcodescanner": {
             "PACKAGE_NAME": "com.ionicframework.starter"
         },
-        "cn.jpush.phonegap.JPushPlugin": {
-            "API_KEY": "a5aa7fea10e1466b7bf1357a",
-            "PACKAGE_NAME": "com.ionicframework.starter"
-        },
         "cordova-plugin-device": {
             "PACKAGE_NAME": "com.ionicframework.starter"
         },
@@ -694,6 +658,16 @@
             "PACKAGE_NAME": "com.ionicframework.starter"
         },
         "de.appplant.cordova.plugin.local-notification": {
+            "PACKAGE_NAME": "com.ionicframework.starter"
+        },
+        "cordova-plugin-geolocation": {
+            "PACKAGE_NAME": "com.ionicframework.starter"
+        },
+        "com.qdc.plugins.baidu.location": {
+            "API_KEY": "dcKwtdXHawutnzQl6mgGmcCgMGnmmM72",
+            "PACKAGE_NAME": "com.ionicframework.starter"
+        },
+        "cordova-sqlite-storage": {
             "PACKAGE_NAME": "com.ionicframework.starter"
         }
     },
@@ -727,13 +701,6 @@
             ]
         },
         {
-            "file": "plugins/cn.jpush.phonegap.JPushPlugin/www/JPushPlugin.js",
-            "id": "cn.jpush.phonegap.JPushPlugin.JPushPlugin",
-            "clobbers": [
-                "jPushPlugin"
-            ]
-        },
-        {
             "file": "plugins/cordova-plugin-device/www/device.js",
             "id": "cordova-plugin-device.device",
             "clobbers": [
@@ -763,15 +730,43 @@
                 "cordova.plugins.notification.local.core",
                 "plugin.notification.local.core"
             ]
+        },
+        {
+            "file": "plugins/cordova-plugin-geolocation/www/android/geolocation.js",
+            "id": "cordova-plugin-geolocation.geolocation",
+            "clobbers": [
+                "navigator.geolocation"
+            ]
+        },
+        {
+            "file": "plugins/cordova-plugin-geolocation/www/PositionError.js",
+            "id": "cordova-plugin-geolocation.PositionError",
+            "runs": true
+        },
+        {
+            "file": "plugins/com.qdc.plugins.baidu.location/www/baidu_location.js",
+            "id": "com.qdc.plugins.baidu.location.baidu_location",
+            "clobbers": [
+                "baidu_location"
+            ]
+        },
+        {
+            "file": "plugins/cordova-sqlite-storage/www/SQLitePlugin.js",
+            "id": "cordova-sqlite-storage.SQLitePlugin",
+            "clobbers": [
+                "SQLitePlugin"
+            ]
         }
     ],
     "plugin_metadata": {
         "cordova-plugin-network-information": "1.2.0",
         "cordova-plugin-whitelist": "1.2.1",
         "phonegap-plugin-barcodescanner": "4.1.0",
-        "cn.jpush.phonegap.JPushPlugin": "2.1.0",
         "cordova-plugin-device": "1.1.1",
         "cordova-plugin-app-event": "1.2.0",
-        "de.appplant.cordova.plugin.local-notification": "0.8.4"
+        "de.appplant.cordova.plugin.local-notification": "0.8.4",
+        "cordova-plugin-geolocation": "2.1.0",
+        "com.qdc.plugins.baidu.location": "1.0.0",
+        "cordova-sqlite-storage": "1.2.1-pre1"
     }
 }
