@@ -6,8 +6,9 @@
       <a  href="#/tab/searchMedicine" class="plus"><i class="icon ion-plus"></i></a>
     </ion-nav-buttons>
     <ion-content>
-      <p>
-        {{medicines}}
+      <ion-refresher pulling-text="下拉刷新" on-refresh="select()"></ion-refresher>
+      <p ng-if="status">
+        {{status}}
       </p>
       <div class="list card" ng-repeat="medicine in medicines | limitTo:10">
         <div class="item family-member">

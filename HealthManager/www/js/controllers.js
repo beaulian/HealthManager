@@ -284,24 +284,26 @@ angular.module('starter.controllers', ['ngCookies'])
 })
 
 
-.controller('InfoCtrl', function($scope, $http, $stateParams,$scope,$cordovaSQLite,$rootScope) {
+.controller('InfoCtrl', function($scope, $http, $stateParams,$cordovaSQLite,$rootScope,dbMed) {
 
 //testSqlite
 	$scope.insert = function() {
-	var query = "INSERT INTO medicine (name, thumbnail, feature, company ,usage ,taboo ,reaction ,place ,buy_time ,overdue_time ,long_term_use ,purchase_quantity ,residue_quantity) VALUES (?,?,?,?,?,?,?,?,?,?,?,?,?)";
-	$cordovaSQLite.execute($rootScope.db, query, [$scope.medicine["name"],"", $scope.medicine["feature"],$scope.medicine["company"],$scope.medicine["usage"],$scope.medicine["taboo"],"","","","",0,"",""]).then(function(res) {
-			alert('success');
-	}, function (err) {
-			alert('error');
-	});
+		var data=[$scope.medicine["name"],"", $scope.medicine["feature"],$scope.medicine["company"],$scope.medicine["usage"],$scope.medicine["taboo"],"","","","",0,"",""]
+		if(dbMed.insert(data)!=false){
+			alert('yes');
+		}else{
+			alert('no');
+		}
 	}
 
 	$scope.select = function() {
-		var query = "SELECT * FROM medicine";
-		$cordovaSQLite.execute($rootScope.db,query).then(function(res){
-			$scope.testsql=res.rows.item(0);
-		});
+		if(dbMed.select()){
+			alert('yes');
+		}else{
+			alert('no');
+		}
 	}
+
 	$scope.medicineList =new Array();
 	var id = $stateParams.id;
 	$http({
@@ -317,16 +319,21 @@ angular.module('starter.controllers', ['ngCookies'])
 	});
 })
 
-.controller('myMedCtrl',function($scope, $http, $stateParams,$scope,$cordovaSQLite,$rootScope){
+.controller('myMedCtrl',function($scope, $http, $stateParams,$scope,$cordovaSQLite,$rootScope,$timeout){
 	alert('begin');
 	$scope.select = function() {
 		var query = "SELECT * FROM medicine";
 		$cordovaSQLite.execute($rootScope.db,query).then(function(res){
-			$scope.medicines=new Array();
-			for(var i=0;i<res.rows.length;i++){
-				$scope.medicines[i]=res.rows.item(i);
+			if(res.rows.length==0)
+				$scope.status="暂未添加药品";
+			else {
+				$scope.status="";
+				$scope.medicines=new Array();
+				for(var i=0;i<res.rows.length;i++){
+					$scope.medicines[i]=res.rows.item(i);
+				}
 			}
-			alert('yes');
+			$scope.$broadcast('scroll.refreshComplete');
 		},function(err){
 			alert('no')
 		});
@@ -347,6 +354,11 @@ angular.module('starter.controllers', ['ngCookies'])
 			alert('获取药品信息失败！');
 		}
 	});
+
+	$scope.addSubmit=function(){
+
+	}
+
 })
 
 .controller("ExampleController", function($scope, $cordovaBarcodeScanner, $ionicPopup,$http,$rootScope,$cordovaNetwork,$ionicLoading) {

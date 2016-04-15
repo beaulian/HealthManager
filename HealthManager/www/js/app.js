@@ -8,6 +8,34 @@ var db = null;
 
 angular.module('starter', ['ionic', 'starter.controllers', 'starter.services', 'ngCookies', 'ngRoute','ngCordova'])
 
+.service('dbMed',function($cordovaSQLite,$rootScope){
+  this.select = function(limit,key,value){
+    if(limit){
+      var query = "SELECT * FROM medicine where "+key+" = "+value;
+    }
+    var query = "SELECT * FROM medicine";
+    ;
+    alert(query);
+    $cordovaSQLite.execute($rootScope.db,query).then(function(res){
+      var result = new Array();
+      for(var i=0;i<res.rows.length;i++){
+        result[i]=res.rows.item(i);
+      }
+      return result;
+    },function(err){
+      return false;
+  });};
+
+  this.insert = function(data){
+    var query = "INSERT INTO medicine (name, thumbnail, feature, company ,usage ,taboo ,reaction ,place ,buy_time ,overdue_time ,long_term_use ,purchase_quantity ,residue_quantity) VALUES (?,?,?,?,?,?,?,?,?,?,?,?,?)";
+  	$cordovaSQLite.execute($rootScope.db,query,data).then(function(res) {
+  			return true;
+  	}, function (err) {
+  			return false;
+  	});
+  }
+})
+
 .run(function($ionicPlatform, $rootScope, $cookieStore, $location, $http, $state, $window,$cordovaSQLite) {
   $rootScope.$on('$stateChangeStart', function(event, toState) {
       if (toState.name == "login" || toState.name == "register") {
