@@ -8,17 +8,38 @@ from ..models import User, Model, Medicine
 from ..decorators import (login_required, valid_id_required,
 										valid_uid_required)
 
+import json
 from bson import ObjectId
 from datetime import datetime
 from flask import request, jsonify, g
 
 
-@medicine.route("/medicine", methods=["POST"])
+@medicine.route("/medicines", methods=["POST"])
 # @login_required
+def post_medicines():
+	medicines = request.form.get("medicines", None)
+	if not medicines:
+		return healthmanager_error("2009")
+	medicines = eval(medicines)
+	_attrs = ["name", "feature", "company", "usage",
+				"taboo", "place", "buy_time", "overdue_time",
+				"purchase_quantity", "residue_quantity"
+			 ]
+	for medicine in medicines:
+		if Model.db.Medicine.find_one({"name": medicine["name"], "company": medicine["company"]}):
+			continue
+		_medicine = Medicine(
+			**dict([(_attr, medicine[_attr]) if _attr in medicine else (_attr, "") for _attr in _attrs])
+		)
+		_medicine.insert()
+	return jsonify({"status": "success"})
+
+
+@medicine.route("/medicine", methods=["POST"])
+@login_required
 def post_medicine():
 	uid               = request.args.get("uid")
 	name              = request.form.get("name", None)
-	thumbnail         = request.files.get("thumbnail", None)
 	feature           = request.form.get("feature",None)
 	company           = request.form.get("company", None)
 	usage             = request.form.get("usage", None)
@@ -30,6 +51,7 @@ def post_medicine():
 	long_term_use     = request.form.get("long_term_use", 0)
 	purchase_quantity = request.form.get("purchase_quantity", None)
 	residue_quantity  = request.form.get("residue_quantity", None)
+	# print dict(request.form)
 
 	for key in ["name", "feature", "company", "usage",
 				"taboo", "place", "buy_time", "overdue_time",
@@ -40,17 +62,9 @@ def post_medicine():
 	if Model.db.Medicine.find_one({"name": name, "company": company}):
 		return healthmanager_error("2017")
 
-	if thumbnail:
-		print thumbnail
-		if allow_image(thumbnail.filename):
-			thumbnail = save_img(thumbnail, 80, MEDICINE_THUMBNAIL_PATH)
-		else:
-			return healthmanager_error("2012")
-
 	medicine = Medicine(
 		uid = uid,
 		name = name,
-		thumbnail = thumbnail,
 		feature = feature,
 		company = company,
 		usage = usage,
@@ -73,7 +87,6 @@ def post_medicine():
 @valid_id_required("Medicine", "medicine_id")
 def put_medicine(medicine_id):
 	uid               = request.args.get("uid")
-	thumbnail         = request.files.get("thumbnail", None)
 	reaction          = request.form.get("reaction", None)
 	place             = request.form.get("place", None)
 	long_term_use     = request.form.get("long_term_use", None)
@@ -83,14 +96,6 @@ def put_medicine(medicine_id):
 								"_id": ObjectId(medicine_id)})
 	if not medicine:
 		return healthmanager_error("2099", info="you don't have such medicine")
-
-	if thumbnail:
-		if allow_image(thumbnail.filename):
-			delete_img(medicine["thumbnail"])
-			thumbnail = save_img(thumbnail, 80, MEDICINE_THUMBNAIL_PATH)
-			medicine["thumbnail"] = thumbnail
-		else:
-			return healthmanager_error("2012")
 
 	for key in ["reaction", "place", "long_term_use", "residue_quantity"]:
 		if eval(key):
@@ -112,7 +117,6 @@ def get_medicines():
 		temp_medicine = {
 			"_id": str(medicine["_id"]),
 			"name": medicine["name"],
-			"thumbnail": NETWORK_ADDRESS + medicine["thumbnail"],
 			"company": medicine["company"],
 			"uid": medicine["uid"]
 		}
@@ -158,8 +162,7 @@ def get_medicine(medicine_id):
 	medicine = Model.db.Medicine.find_one({"uid": uid,
 										"_id": ObjectId(medicine_id)})
 	del medicine["_id"]
-	medicine["thumbnail"] = NETWORK_ADDRESS + medicine["thumbnail"]
-	x
+
 	return jsonify({"status": "success", "medicine": medicine})
 
 
@@ -169,7 +172,6 @@ def get_medicine(medicine_id):
 def delete_medicine(medicine_id):
 	uid = request.args.get("uid")
 	medicine = Model.db.Medicine.find_one({"uid": uid, "_id": ObjectId(medicine_id)})
-	delete_img(medicine["thumbnail"])
 	Model.db.Medicine.remove(medicine)
 
 	return jsonify({"status": "success"})

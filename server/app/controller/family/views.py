@@ -1,4 +1,4 @@
-# -*- coding: utf-8 -*- 
+# -*- coding: utf-8 -*-
 
 from . import family
 from config import *
@@ -21,7 +21,7 @@ def create_family():
 	uid = request.args.get("uid")
 	if Model.db.Family.find_one({"create_uid": uid}):
 		return healthmanager_error("2015")
-	
+
 	relationship = request.form.get("relationship", None)
 	if not relationship:
 		return healthmanager_error("2009")
@@ -180,7 +180,7 @@ def delete_family_user(family_id, uid):
 	family = Model.db.Family.find_one({"create_uid": uid})
 	if family:
 		Model.db.Family.remove(family)
-		
+
 	return jsonify({"status": "success"})
 
 
@@ -207,7 +207,6 @@ def delete_family_myself(family_id):
 @valid_family_uid_required(user_required=False)
 def post_medicine(family_id, uid):
 	name              = request.form.get("name", None)
-	thumbnail         = request.files.get("thumbnail", None)
 	feature           = request.form.get("feature",None)
 	company           = request.form.get("company", None)
 	usage             = request.form.get("usage", None)
@@ -219,8 +218,8 @@ def post_medicine(family_id, uid):
 	long_term_use     = request.form.get("long_term_use", 0)
 	purchase_quantity = request.form.get("purchase_quantity", None)
 	residue_quantity  = request.form.get("residue_quantity", None)
-	
-	for key in ["name", "feature", "company", "usage", "thumbnail",
+
+	for key in ["name", "feature", "company", "usage",
 				"taboo", "place", "buy_time", "overdue_time",
 				"purchase_quantity", "residue_quantity"]:
 		if not eval(key):
@@ -229,15 +228,9 @@ def post_medicine(family_id, uid):
 	if Model.db.Medicine.find_one({"name": name, "company": company}):
 		return healthmanager_error("2017")
 
-	if allow_image(thumbnail.filename):
-		thumbnail = save_img(thumbnail, 80, MEDICINE_THUMBNAIL_PATH)
-	else:
-		return healthmanager_error("2012")
-
 	medicine = Medicine(
 		uid = uid,
 		name = name,
-		thumbnail = thumbnail,
 		feature = feature,
 		company = company,
 		usage = usage,
@@ -260,24 +253,23 @@ def post_medicine(family_id, uid):
 @valid_id_required("Family", "family_id")
 @valid_family_uid_required(user_required=False)
 def put_medicine(family_id, uid, medicine_id):
-	thumbnail         = request.files.get("thumbnail", None)
 	reaction          = request.form.get("reaction", None)
 	place             = request.form.get("place", None)
 	long_term_use     = request.form.get("long_term_use", None)
 	residue_quantity  = request.form.get("residue_quantity", None)
 
-	medicine = Model.db.Medicine.find_one({"uid": uid, 
+	medicine = Model.db.Medicine.find_one({"uid": uid,
 								"_id": ObjectId(medicine_id)})
 	if not medicine:
 		return healthmanager_error("2099", info="you no such medicine")
 
-	if thumbnail:
-		if allow_image(thumbnail.filename):
-			delete_img(medicine["thumbnail"])
-			thumbnail = save_img(thumbnail, 80, MEDICINE_THUMBNAIL_PATH)
-			medicine["thumbnail"] = thumbnail
-		else:
-			return healthmanager_error("2012")
+	# if thumbnail:
+	# 	if allow_image(thumbnail.filename):
+	# 		delete_img(medicine["thumbnail"])
+	# 		thumbnail = save_img(thumbnail, 80, MEDICINE_THUMBNAIL_PATH)
+	# 		medicine["thumbnail"] = thumbnail
+	# 	else:
+	# 		return healthmanager_error("2012")
 
 	for key in ["reaction", "place", "long_term_use", "residue_quantity"]:
 		if eval(key):
@@ -298,7 +290,7 @@ def get_medicines(family_id):
 	page_num = request.args.get("page_num", 1)
 	keyword  = request.args.get("keyword", None)
 	search_condition = {"$or": [
-								{key: {"$regex": keyword, "$options": "i"}} 
+								{key: {"$regex": keyword, "$options": "i"}}
 								for key in ["name", "company", "place", "usage"]
 							   ]
 					   } if keyword else {}
@@ -306,7 +298,7 @@ def get_medicines(family_id):
 					 .skip((int(page_num)-1) * MAX_MEDICINE_NUM_PER_PAGE) \
 					 .limit(MAX_MEDICINE_NUM_PER_PAGE)
 
-	max_page = ( medicine_list.count() + MAX_MEDICINE_NUM_PER_PAGE - 1 ) / MAX_MEDICINE_NUM_PER_PAGE 
+	max_page = ( medicine_list.count() + MAX_MEDICINE_NUM_PER_PAGE - 1 ) / MAX_MEDICINE_NUM_PER_PAGE
 	max_page = 1 if max_page == 0 else max_page
 	if int(page_num) > max_page:
 		return healthmanager_error("2013")
@@ -316,12 +308,11 @@ def get_medicines(family_id):
 		temp_medicine = {
 			"_id": str(medicine["_id"]),
 			"name": medicine["name"],
-			"thumbnail": NETWORK_ADDRESS + medicine["thumbnail"],
 			"company": medicine["company"]
 		}
 		medicines.append(temp_medicine)
-	
-	return jsonify({"status": "success", "medicines": medicines, 
+
+	return jsonify({"status": "success", "medicines": medicines,
 						"curr_page": page_num, "max_page": max_page})
 
 
@@ -335,7 +326,7 @@ def get_user_medicines(family_id, uid):
 					 .skip((int(page_num)-1) * MAX_MEDICINE_NUM_PER_PAGE) \
 					 .limit(MAX_MEDICINE_NUM_PER_PAGE)
 
-	max_page = ( medicine_list.count() + MAX_MEDICINE_NUM_PER_PAGE - 1 ) / MAX_MEDICINE_NUM_PER_PAGE 
+	max_page = ( medicine_list.count() + MAX_MEDICINE_NUM_PER_PAGE - 1 ) / MAX_MEDICINE_NUM_PER_PAGE
 	max_page = 1 if max_page == 0 else max_page
 	if int(page_num) > max_page:
 		return healthmanager_error("2013")
@@ -345,12 +336,11 @@ def get_user_medicines(family_id, uid):
 		temp_medicine = {
 			"_id": str(medicine["_id"]),
 			"name": medicine["name"],
-			"thumbnail": NETWORK_ADDRESS + medicine["thumbnail"],
 			"company": medicine["company"]
 		}
 		medicines.append(temp_medicine)
-	
-	return jsonify({"status": "success", "medicines": medicines, 
+
+	return jsonify({"status": "success", "medicines": medicines,
 						"curr_page": page_num, "max_page": max_page})
 
 
@@ -361,7 +351,6 @@ def get_user_medicines(family_id, uid):
 @valid_id_required("Medicine", "medicine_id")
 def delete_medicine(family_id, uid, medicine_id):
 	medicine = Model.db.Medicine.find_one({"uid": uid, "_id": ObjectId(medicine_id)})
-	delete_img(medicine["thumbnail"])
 	Model.db.Medicine.remove(medicine)
 
 	return jsonify({"status": "success"})
