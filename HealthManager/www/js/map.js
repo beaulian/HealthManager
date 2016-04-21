@@ -79,7 +79,7 @@ angular.module("starter.map", ['ionic'])
               map.addControl(new GeolocationControl());
               map.addControl(new BMap.NavigationControl());  //添加默认缩放平移控件
               map.addControl(new BMap.ScaleControl());       // 添加默认比例尺控件
-              map.addControl(new BMap.MapTypeControl({mapTypes: [BMAP_NORMAL_MAP,BMAP_HYBRID_MAP]}));     //2D图，卫星图
+              //map.addControl(new BMap.MapTypeControl({mapTypes: [BMAP_NORMAL_MAP,BMAP_HYBRID_MAP]}));     //2D图，卫星图
 
               //创建标注
               var marker = new BMap.Marker(point);

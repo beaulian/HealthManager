@@ -14,7 +14,7 @@ from flask import request, jsonify, g
 
 
 @medicine.route("/medicine", methods=["POST"])
-@login_required
+# @login_required
 def post_medicine():
 	uid               = request.args.get("uid")
 	name              = request.form.get("name", None)
@@ -31,7 +31,7 @@ def post_medicine():
 	purchase_quantity = request.form.get("purchase_quantity", None)
 	residue_quantity  = request.form.get("residue_quantity", None)
 
-	for key in ["name", "feature", "company", "usage", "thumbnail",
+	for key in ["name", "feature", "company", "usage",
 				"taboo", "place", "buy_time", "overdue_time",
 				"purchase_quantity", "residue_quantity"]:
 		if not eval(key):
@@ -40,10 +40,12 @@ def post_medicine():
 	if Model.db.Medicine.find_one({"name": name, "company": company}):
 		return healthmanager_error("2017")
 
-	if allow_image(thumbnail.filename):
-		thumbnail = save_img(thumbnail, 80, MEDICINE_THUMBNAIL_PATH)
-	else:
-		return healthmanager_error("2012")
+	if thumbnail:
+		print thumbnail
+		if allow_image(thumbnail.filename):
+			thumbnail = save_img(thumbnail, 80, MEDICINE_THUMBNAIL_PATH)
+		else:
+			return healthmanager_error("2012")
 
 	medicine = Medicine(
 		uid = uid,

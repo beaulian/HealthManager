@@ -30,7 +30,7 @@ def allow_image(filename):
 def save_img(img_file, img_width, img_dir):
     import os
     import hashlib
-    from PIL import Image
+    import Image
     from config import basedir
 
     im = Image.open(img_file)

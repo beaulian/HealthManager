@@ -138,12 +138,12 @@ angular.module('starter.controllers', ['ngCookies'])
 	      	$scope.logged_in = $window.localStorage.getItem("logged-in");
 			var uid = $window.localStorage.getItem("uid");
 			var token = $window.localStorage.getItem("token");
-		  	$http({
-				"method": "GET",
-				"url": "http://222.198.155.138:5000/user/self" + "?uid=" + uid + "&token=" + token
-			}).success(function(data) {
-				$scope.user = data.user;
-			});
+//		  	$http({
+//				"method": "GET",
+//				"url": "http://222.198.155.138:5000/user/self" + "?uid=" + uid + "&token=" + token
+//			}).success(function(data) {
+//				$scope.user = data.user;
+//			});
 	      }
   	});
 
