@@ -17,29 +17,26 @@
 	  </label>
 	  <label class="item item-input item-floating-label">
 	    <span class="input-label">购买日期</span>
-	    <input type="text" placeholder="购买日期" ng-model="buy_time">
+	    <input type="text" placeholder="购买日期" ng-model="medicine.buy_time">
 	  </label>
 	  <label class="item item-input item-floating-label">
 	    <span class="input-label">过期时间</span>
-	    <input type="text" placeholder="过期时间" ng-model="overdue_time">
+	    <input type="text" placeholder="过期时间" ng-model="medicine.overdue_time">
 	  </label>
 		<label class="item item-input item-floating-label">
 	    <span class="input-label">是否长期服用</span>
 	    <input type="text" placeholder="是否长期服用" ng-model="medicine.long_term_use">
 	  </label>
-		<label class="toggle">
-	   <input type="checkbox">
-	   <div class="track">
-	     <div class="handle"></div>
-	   </div>
-		</label>
 		<label class="item item-input item-floating-label">
 	    <span class="input-label">购买数量</span>
 	    <input type="text" placeholder="购买数量" ng-model="medicine.purchase_quantity">
 	  </label>
 	</div>
-	<button class="button button-full button-positive" ng-click="">
+	<button class="button button-full button-positive" ng-click="addSubmit()">
 	  添加药品
 	</button>
+	<p>
+		{{medicine}}
+	</p>
  </ion-content>
 </ion-view>

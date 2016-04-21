@@ -10,9 +10,12 @@ angular.module('starter', ['ionic', 'starter.controllers', 'starter.services', '
 .service('dbMed',function($cordovaSQLite,$rootScope){
   this.select = function(limit,key,value){
     if(limit){
-      var query = "SELECT * FROM medicine where "+key+" = "+value;
+      var query = "SELECT * FROM medicine WHERE "+key+"='"+value+"'";
     }
-    var query = "SELECT * FROM medicine";
+  else {
+      var query = "SELECT * FROM medicine";
+  }
+  console.log('query',query);
     $cordovaSQLite.execute($rootScope.db,query).then(function(res){
       for(var i=0;i<res.rows.length;i++){
         $rootScope.selectResult[i]=res.rows.item(i);
@@ -22,9 +25,29 @@ angular.module('starter', ['ionic', 'starter.controllers', 'starter.services', '
       return false;
   });};
 
+  this.delete = function(condition){
+    var query="DELETE FROM medicine WHERE "+condition;
+    console.log('query',query);
+    $cordovaSQLite.execute($rootScope.db,query).then(function(res){
+      console.log('success',res);
+      return true;
+    },function(err){
+      console.log('error',err);
+      return false;
+    })
+  }
+
   this.insert = function(data){
-    var query = "INSERT INTO medicine (name, thumbnail, feature, company ,usage ,taboo ,reaction ,place ,buy_time ,overdue_time ,long_term_use ,purchase_quantity ,residue_quantity) VALUES (?,?,?,?,?,?,?,?,?,?,?,?,?)";
-  	$cordovaSQLite.execute($rootScope.db,query,data).then(function(res) {
+    var name=["id","name","thumbnail", "feature", "company" ,"usage" ,"taboo" ,"reaction" ,"place" ,"buy_time" ,"overdue_time" ,"long_term_use" ,"purchase_quantity" ,"residue_quantity"]
+    var values=new Array;
+    var j=0;
+    for (i in name){
+      values[j]=data[name[j]];
+      j++;
+    }
+    var query = "INSERT INTO medicine (id,name, thumbnail, feature, company ,usage ,taboo ,reaction ,place ,buy_time ,overdue_time ,long_term_use ,purchase_quantity ,residue_quantity) VALUES (?,?,?,?,?,?,?,?,?,?,?,?,?,?)";
+  	$cordovaSQLite.execute($rootScope.db,query,values).then(function(res) {
+      console.log('res',res);
   			return true;
   	}, function (err) {
   			return false;
@@ -75,7 +98,7 @@ angular.module('starter', ['ionic', 'starter.controllers', 'starter.services', '
     //sqlite测试
     $rootScope.selectResult = new Array();
     $rootScope.db = $cordovaSQLite.openDB({name: 'my.db', location: 'default'});
-    $cordovaSQLite.execute($rootScope.db, "CREATE TABLE IF NOT EXISTS medicine (name text, thumbnail text, feature text,company text,usage text,taboo text,reaction text,place text,buy_time text,overdue_time text,long_term_use INTEGER,purchase_quantity text,residue_quantity text)");
+    $cordovaSQLite.execute($rootScope.db, "CREATE TABLE IF NOT EXISTS medicine (id text,name text, thumbnail text, feature text,company text,usage text,taboo text,reaction text,place text,buy_time text,overdue_time text,long_term_use INTEGER,purchase_quantity text,residue_quantity text)");
  //启动极光推送服务
 
     window.plugins.jPushPlugin.init();
