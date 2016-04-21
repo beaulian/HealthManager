@@ -27,7 +27,7 @@ class MedicinesPipeline(object):
         self.client.close()
 
     def process_item(self, item, spider):
-        if spider.name != "medicine":
+        if spider.name != "medicine" and spider.name != "medicineadd":
             return item
 
         for key, value in item.iteritems():
@@ -35,8 +35,7 @@ class MedicinesPipeline(object):
                 item[key] = value[0].strip("\r\n\t")
             else:
                 item[key] = value[0]
-            
+
         self.db[self.collection_name].insert(dict(item))
 
         return item
-
