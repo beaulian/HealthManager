@@ -15,7 +15,7 @@ from flask import request, jsonify, g
 
 
 @medicine.route("/medicines", methods=["POST"])
-# @login_required
+@login_required
 def post_medicines():
 	medicines = request.form.get("medicines", None)
 	if not medicines:
@@ -28,6 +28,8 @@ def post_medicines():
 	for medicine in medicines:
 		if Model.db.Medicine.find_one({"name": medicine["name"], "company": medicine["company"]}):
 			continue
+		medicine["uid"] = request.args.get("uid")
+		_attrs.append("uid")
 		_medicine = Medicine(
 			**dict([(_attr, medicine[_attr]) if _attr in medicine else (_attr, "") for _attr in _attrs])
 		)
