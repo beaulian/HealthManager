@@ -33,10 +33,6 @@
                             "count": 1
                         },
                         {
-                            "xml": "<feature name=\"BaiduLocation\"><param name=\"android-package\" value=\"com.qdc.plugins.baidu.BaiduLocation\" /></feature>",
-                            "count": 1
-                        },
-                        {
                             "xml": "<feature name=\"SQLitePlugin\"><param name=\"android-package\" value=\"io.sqlc.SQLitePlugin\" /></feature>",
                             "count": 1
                         }
@@ -48,38 +44,14 @@
                     "/*": [
                         {
                             "xml": "<uses-permission android:name=\"android.permission.ACCESS_NETWORK_STATE\" />",
-                            "count": 2
+                            "count": 1
                         },
                         {
                             "xml": "<uses-permission android:name=\"android.permission.ACCESS_COARSE_LOCATION\" />",
-                            "count": 2
+                            "count": 1
                         },
                         {
                             "xml": "<uses-permission android:name=\"android.permission.ACCESS_FINE_LOCATION\" />",
-                            "count": 2
-                        },
-                        {
-                            "xml": "<uses-permission android:name=\"android.permission.ACCESS_WIFI_STATE\" />",
-                            "count": 1
-                        },
-                        {
-                            "xml": "<uses-permission android:name=\"android.permission.CHANGE_WIFI_STATE\" />",
-                            "count": 1
-                        },
-                        {
-                            "xml": "<uses-permission android:name=\"android.permission.READ_PHONE_STATE\" />",
-                            "count": 1
-                        },
-                        {
-                            "xml": "<uses-permission android:name=\"android.permission.WRITE_EXTERNAL_STORAGE\" />",
-                            "count": 1
-                        },
-                        {
-                            "xml": "<uses-permission android:name=\"android.permission.INTERNET\" />",
-                            "count": 1
-                        },
-                        {
-                            "xml": "<uses-permission android:name=\"android.permission.MOUNT_UNMOUNT_FILESYSTEMS\" />",
                             "count": 1
                         }
                     ],
@@ -122,14 +94,6 @@
                         },
                         {
                             "xml": "<activity android:exported=\"false\" android:launchMode=\"singleInstance\" android:name=\"de.appplant.cordova.plugin.notification.ClickActivity\" android:theme=\"@android:style/Theme.NoDisplay\" />",
-                            "count": 1
-                        },
-                        {
-                            "xml": "<service android:enabled=\"true\" android:name=\"com.baidu.location.f\" android:process=\":remote\" />",
-                            "count": 1
-                        },
-                        {
-                            "xml": "<meta-data android:name=\"com.baidu.lbsapi.API_KEY\" android:value=\"dcKwtdXHawutnzQl6mgGmcCgMGnmmM72\" />",
                             "count": 1
                         }
                     ],
@@ -663,10 +627,6 @@
         "cordova-plugin-geolocation": {
             "PACKAGE_NAME": "com.ionicframework.starter"
         },
-        "com.qdc.plugins.baidu.location": {
-            "API_KEY": "dcKwtdXHawutnzQl6mgGmcCgMGnmmM72",
-            "PACKAGE_NAME": "com.ionicframework.starter"
-        },
         "cordova-sqlite-storage": {
             "PACKAGE_NAME": "com.ionicframework.starter"
         }
@@ -744,13 +704,6 @@
             "runs": true
         },
         {
-            "file": "plugins/com.qdc.plugins.baidu.location/www/baidu_location.js",
-            "id": "com.qdc.plugins.baidu.location.baidu_location",
-            "clobbers": [
-                "baidu_location"
-            ]
-        },
-        {
             "file": "plugins/cordova-sqlite-storage/www/SQLitePlugin.js",
             "id": "cordova-sqlite-storage.SQLitePlugin",
             "clobbers": [
@@ -766,7 +719,6 @@
         "cordova-plugin-app-event": "1.2.0",
         "de.appplant.cordova.plugin.local-notification": "0.8.4",
         "cordova-plugin-geolocation": "2.1.0",
-        "com.qdc.plugins.baidu.location": "1.0.0",
         "cordova-sqlite-storage": "1.2.1-pre1"
     }
 }

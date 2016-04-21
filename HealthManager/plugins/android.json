@@ -25,10 +25,6 @@
         "cordova-plugin-geolocation": {
             "PACKAGE_NAME": "com.ionicframework.starter"
         },
-        "com.qdc.plugins.baidu.location": {
-            "API_KEY": "dcKwtdXHawutnzQl6mgGmcCgMGnmmM72",
-            "PACKAGE_NAME": "com.ionicframework.starter"
-        },
         "cordova-sqlite-storage": {
             "PACKAGE_NAME": "com.ionicframework.starter"
         }

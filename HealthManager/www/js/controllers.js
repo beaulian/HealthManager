@@ -283,7 +283,7 @@ angular.module('starter.controllers', ['ngCookies'])
 	  $scope.emailNotification = 'Subscribed';
 })
 
-.controller('InfoCtrl', function($scope, $http, $stateParams,$cordovaSQLite,$rootScope,dbMed) {
+.controller('InfoCtrl', function($scope, $http, $stateParams,$cordovaSQLite,$rootScope,dbMed,$ionicHistory) {
 
 //testSqlite
 	$scope.insert = function() {
@@ -303,44 +303,48 @@ angular.module('starter.controllers', ['ngCookies'])
 		}
 	}
 
-	$scope.medicineList =new Array();
-	var id = $stateParams.id;
-	$http({
-		method: "GET",
-		url: "http://222.198.155.138:5000/medicine/lilac/"+id,
-	}).success(function(data) {
-		if(data.status=="success"){
-			$scope.medicine=data.medicine;
+	$scope.delete = function(){
+		if(dbMed.delete("id='"+$scope.medicine.id+"'")){
+			alert('删除成功!');
+			$ionicHistory.goBack();
 		}
 		else{
-			alert('获取药品信息失败！');
+			alert('删除失败！');
 		}
-	});
-})
-
-.controller('myMedCtrl',function($scope, $http, $stateParams,$scope,$cordovaSQLite,$rootScope,$timeout){
-	alert('begin');
-	$scope.select = function() {
-		var query = "SELECT * FROM medicine";
-		$cordovaSQLite.execute($rootScope.db,query).then(function(res){
-			if(res.rows.length==0)
-				$scope.status="暂未添加药品";
-			else {
-				$scope.status="";
-				$scope.medicines=new Array();
-				for(var i=0;i<res.rows.length;i++){
-					$scope.medicines[i]=res.rows.item(i);
-				}
-			}
-			$scope.$broadcast('scroll.refreshComplete');
-		},function(err){
-			alert('no')
-		});
 	}
-	$scope.select();
+
+	var id = $stateParams.id;
+	dbMed.select(true,"id",id);
+	if($rootScope.selectResult.length!=0){
+		$scope.medicine=$rootScope.selectResult[0];
+		console.log('med',$scope.medicine);
+		alert('s yes');
+	}
+	else {
+		console.log('er',$rootScope.selectResult);
+		alert('s no')
+	}
 })
 
-.controller('addMedCtrl',function($rootScope,$http,$scope,$stateParams){
+.controller('myMedCtrl',function($scope, $http, $stateParams,$scope,$cordovaSQLite,$rootScope,$timeout,dbMed){
+	dbMed.select();
+	alert($rootScope.selectResult.length);
+	$scope.select = function() {
+		if(dbMed.select()!=false){
+			if($rootScope.selectResult.length==0){
+				$scope.status="暂未添加药品";
+			}else{
+				$scope.status="";
+				$scope.medicines=$rootScope.selectResult;
+				$scope.$broadcast('scroll.refreshComplete');
+			}
+		}else{
+			alert('no');
+		}
+	}
+})
+
+.controller('addMedCtrl',function($rootScope,$http,$scope,$stateParams,$window,$cordovaSQLite,dbMed,$ionicHistory){
 	var id=$stateParams.id;
 	$http({
 		method: "GET",
@@ -355,7 +359,36 @@ angular.module('starter.controllers', ['ngCookies'])
 	});
 
 	$scope.addSubmit=function(){
-
+		mdata={};
+		for(i in $scope.medicine){
+				mdata[i]=$scope.medicine[i];
+		}
+		var uid = $window.localStorage.getItem("uid");
+		var token = $window.localStorage.getItem("token");
+		mdata.thumbnail="";
+		mdata.residue_quantity=1;
+		mdata.reaction="";
+		// var idata=new Array();
+		// var j=0;
+		// for(i in mdata){
+		// 	idata[j]=mdata[]
+		// }
+		if(dbMed.insert(mdata)!=false){
+			alert('添加成功');
+			$ionicHistory.goBack();
+		}else{
+			alert('添加失败');
+		}
+		// $http({
+		// 	method:"POST",
+		// 	url:"http://222.198.155.138:5000/medicine"+ "?uid=" + uid + "&token=" + token,
+		// 	data:mdata
+		// }).success(function(res){
+		// 	alert('添加成功');
+		// 	$ionicHistory.goBack();
+		// }).error(function(){
+		// 	alert('添加失败');
+		// });
 	}
 
 })
@@ -384,6 +417,7 @@ angular.module('starter.controllers', ['ngCookies'])
 				}
 			}).error(function(data){
 				alert('查询失败！');
+				$ionicLoading.hide();
 			});
 	}
 

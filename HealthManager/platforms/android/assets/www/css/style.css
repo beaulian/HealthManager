@@ -130,3 +130,14 @@
 .family-member h3 {
 	font-size: 1.2em;
 }
+
+#container{
+  height: 100%;
+  width: 100%;
+}
+
+.AMapArea{
+  height: 100%!important;
+  margin: 0px;
+  padding: 0px;
+}

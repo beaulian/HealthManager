@@ -55,8 +55,10 @@ angular.module('starter', ['ionic',
 
     }
 
-    $rootScope.db = $cordovaSQLite.openDB({name: 'my.db', location: 'default'});
-    $cordovaSQLite.execute($rootScope.db, "CREATE TABLE IF NOT EXISTS medicine (name text, thumbnail text, feature text,company text,usage text,taboo text,reaction text,place text,buy_time text,overdue_time text,long_term_use INTEGER,purchase_quantity text,residue_quantity text)");
+   //sqlite测试
+   $rootScope.selectResult = new Array();
+   $rootScope.db = $cordovaSQLite.openDB({name: 'my.db', location: 'default'});
+   $cordovaSQLite.execute($rootScope.db, "CREATE TABLE IF NOT EXISTS medicine (id text,name text, thumbnail text, feature text,company text,usage text,taboo text,reaction text,place text,buy_time text,overdue_time text,long_term_use INTEGER,purchase_quantity text,residue_quantity text)");
 
  //启动极光推送服务
 

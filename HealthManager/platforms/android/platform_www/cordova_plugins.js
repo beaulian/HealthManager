@@ -71,13 +71,6 @@ module.exports = [
         "runs": true
     },
     {
-        "file": "plugins/com.qdc.plugins.baidu.location/www/baidu_location.js",
-        "id": "com.qdc.plugins.baidu.location.baidu_location",
-        "clobbers": [
-            "baidu_location"
-        ]
-    },
-    {
         "file": "plugins/cordova-sqlite-storage/www/SQLitePlugin.js",
         "id": "cordova-sqlite-storage.SQLitePlugin",
         "clobbers": [
@@ -95,7 +88,6 @@ module.exports.metadata =
     "cordova-plugin-app-event": "1.2.0",
     "de.appplant.cordova.plugin.local-notification": "0.8.4",
     "cordova-plugin-geolocation": "2.1.0",
-    "com.qdc.plugins.baidu.location": "1.0.0",
     "cordova-sqlite-storage": "1.2.1-pre1"
 };
 // BOTTOM OF METADATA

@@ -57,17 +57,6 @@
         "is_top_level": true,
         "variables": {}
     },
-    "com.qdc.plugins.baidu.location": {
-        "source": {
-            "type": "git",
-            "url": "https://github.com/mrwutong/cordova-qdc-baidu-location",
-            "subdir": "."
-        },
-        "is_top_level": true,
-        "variables": {
-            "API_KEY": "dcKwtdXHawutnzQl6mgGmcCgMGnmmM72"
-        }
-    },
     "cordova-sqlite-storage": {
         "source": {
             "type": "git",
