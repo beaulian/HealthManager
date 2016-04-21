@@ -15,14 +15,7 @@
     "shelljs": "^0.3.0"
   },
   "cordovaPlugins": [
-    "cordova-plugin-whitelist",
-    {
-      "variables": {
-        "API_KEY": "dcKwtdXHawutnzQl6mgGmcCgMGnmmM72"
-      },
-      "locator": "https://github.com/mrwutong/cordova-qdc-baidu-location",
-      "id": "cn.jpush.phonegap.JPushPlugin"
-    }
+    "cordova-plugin-whitelist"
   ],
   "cordovaPlatforms": [
     "android"
