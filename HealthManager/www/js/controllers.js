@@ -118,34 +118,34 @@ angular.module('starter.controllers', ['ngCookies'])
 	// $scope.logged_in = $cookieStore.get("logged-in");
 	// var uid = $cookieStore.get("uid");
 	// var token = $cookieStore.get("token");
-	$rootScope.$on('$stateChangeSuccess',
-	    function(event, toState, toParams, fromState, fromParams) {
-	      if ((fromState.name == "login" && toState.name == "tabs.home") || (fromState.name == "register" && toState.name == "tabs.home")) {
-
-        	// console.log(User.get("uid"));
-         	$scope.logged_in = User.get("logged-in");
-			var uid = User.get("uid");
-			var token = User.get("token");
-			$http({
-				"method": "GET",
-				"url": "http://222.198.155.138:5000/user/self" + "?uid=" + uid + "&token=" + token
-			}).success(function(data) {
-				$scope.user = data.user;
-			});
-
-	      }
-	      else {
-	      	$scope.logged_in = $window.localStorage.getItem("logged-in");
-			var uid = $window.localStorage.getItem("uid");
-			var token = $window.localStorage.getItem("token");
-		  	$http({
-				"method": "GET",
-				"url": "http://222.198.155.138:5000/user/self" + "?uid=" + uid + "&token=" + token
-			}).success(function(data) {
-				$scope.user = data.user;
-			});
-	      }
-  	});
+//	$rootScope.$on('$stateChangeSuccess',
+//	    function(event, toState, toParams, fromState, fromParams) {
+//	      if ((fromState.name == "login" && toState.name == "tabs.home") || (fromState.name == "register" && toState.name == "tabs.home")) {
+//
+//        	// console.log(User.get("uid"));
+//         	$scope.logged_in = User.get("logged-in");
+//			var uid = User.get("uid");
+//			var token = User.get("token");
+//			$http({
+//				"method": "GET",
+//				"url": "http://222.198.155.138:5000/user/self" + "?uid=" + uid + "&token=" + token
+//			}).success(function(data) {
+//				$scope.user = data.user;
+//			});
+//
+//	      }
+//	      else {
+//	      	$scope.logged_in = $window.localStorage.getItem("logged-in");
+//			var uid = $window.localStorage.getItem("uid");
+//			var token = $window.localStorage.getItem("token");
+//		  	$http({
+//				"method": "GET",
+//				"url": "http://222.198.155.138:5000/user/self" + "?uid=" + uid + "&token=" + token
+//			}).success(function(data) {
+//				$scope.user = data.user;
+//			});
+//	      }
+//  	});
 
 	// console.log($scope.user.head_image);
 })

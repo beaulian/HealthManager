@@ -36,6 +36,48 @@ angular.module('starter.services', [])
 //   }
 // })
 
+.factory('Pusher', function ($cordovaDialogs, $window) {
+  var pusher = null;
+
+  return {
+    onReceiveMessage: function (event) {
+      if(pusher){
+        $cordovaDialogs.alert(pusher.receiveMessage.message);
+      }
+    },
+    onOpenNotification: function (event) {
+      var alert = null;
+      if(pusher && pusher.openNotification.alert){
+        alert = pusher.openNotification.alert;
+      }else{
+        alert = event.aps.alert;
+      }
+      $cordovaDialogs.alert(alert);
+    },
+    onReceiveNotification: function (event) {
+      $cordovaDialogs.alert(event);
+    },
+    getRegistradionID: function () {
+      return $window.localStorage.getItem('jPushID', null);
+    },
+    init: function () {
+      if (window.plugins && window.plugins.jPushPlugin) {
+        pusher = window.plugins.jPushPlugin;
+        // 初始化
+        pusher.init();
+        // 获取注册ID
+        pusher.getRegistrationID(function (id) {
+          $window.localStorage.setItem('jPushID', id);
+        });
+        // 设置
+        plugins.jPushPlugin.setDebugMode(true);
+//        plugins.jPushPlugin.openNotificationInAndroidCallback = notificationCallback;
+//        plugins.jPushPlugin.receiveNotificationIniOSCallback = notificationCallback;
+      }
+    }
+  };
+})
+
 .factory('User', function($http) {
     var user = {
         "logged-in": undefined,
@@ -50,27 +92,6 @@ angular.module('starter.services', [])
         get: function(key) {
             return user[key];
         }
-   //      Register: function(postdata) {
-   //          return $http({
-   //              method: "POST",
-   //              url: "http://127.0.0.1:5000/user/register",
-   //              data: $.param(postdata),
-   //              headers: {'Content-Type': 'application/x-www-form-urlencoded'}
-   //          });
-   //      },
-
-   //      logIn: function(postdata) {
-   //          return $http({
-			// 	method: "POST",
-			// 	url: "http://127.0.0.1:5000/user/login",
-			// 	data: $.param(postdata),
-   //              headers: {'Content-Type': 'application/x-www-form-urlencoded'}
-			// });
-   //      },
-
-   //      logOut: function() {
-
-   //      }
 
     };
 });

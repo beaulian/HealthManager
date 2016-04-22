@@ -55,7 +55,7 @@ angular.module('starter', ['ionic', 'starter.controllers', 'starter.services', '
   }
 })
 
-.run(function($ionicPlatform, $rootScope, $cookieStore, $location, $http, $state, $window,$cordovaSQLite) {
+.run(function($ionicPlatform, $rootScope, $cookieStore, $location, $http, $state, $window,$cordovaSQLite, Pusher) {
   $rootScope.$on('$stateChangeStart', function(event, toState) {
       if (toState.name == "login" || toState.name == "register") {
           return;
@@ -101,11 +101,8 @@ angular.module('starter', ['ionic', 'starter.controllers', 'starter.services', '
     $cordovaSQLite.execute($rootScope.db, "CREATE TABLE IF NOT EXISTS medicine (id text,name text, thumbnail text, feature text,company text,usage text,taboo text,reaction text,place text,buy_time text,overdue_time text,long_term_use INTEGER,purchase_quantity text,residue_quantity text)");
  //启动极光推送服务
 
-    window.plugins.jPushPlugin.init();
-
- //调试模式
-
-    window.plugins.jPushPlugin.setDebugMode(true);
+    Pusher.init();
+    console.log(Pusher.getRegistradionID());
 
 
     // Hide the accessory bar by default (remove this to show the accessory bar above the keyboard
@@ -256,20 +253,6 @@ angular.module('starter', ['ionic', 'starter.controllers', 'starter.services', '
         controller:'myMedCtrl'
         }
       }
-  })
-
-  .state('tabs.map', {
-    url:'/map',
-    views: {
-        'home-tab':{
-<<<<<<< HEAD
-            templateUrl:'templates/map.html',
-=======
-            templateUrl:'templates/map/map.html',
->>>>>>> origin/front_one
-            controller:'MapCtrl'
-        }
-    }
   });
 
   $urlRouterProvider.otherwise('/tab/home');
