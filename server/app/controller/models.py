@@ -6,13 +6,13 @@ import string
 import hashlib
 
 from errors import *
-from config import * 
+from config import *
 from bson import ObjectId
 from flask import jsonify
 from pymongo import MongoClient
 from passlib.hash import md5_crypt
 from pymongo.errors import InvalidId
-from itsdangerous import (TimestampSigner, 
+from itsdangerous import (TimestampSigner,
                             SignatureExpired)
 
 
@@ -80,7 +80,7 @@ class User(Model):
         pwd = cls.db.Pwd.find_one({"$or": [{"username": uid},{"email": uid}]})
         s = TimestampSigner(pwd["password_hash"]+STATIC_SECRET_CODE)
         return s.sign(hashlib.md5(uid).hexdigest())
-    
+
     @classmethod
     def verify_token(cls, token_to_check, uid):
         # user = cls.db.User.find_one({"$or": [{"username": uid},{"email": uid}]})
@@ -122,7 +122,7 @@ class User(Model):
         if family_user and family_user["permission"] >= 2:
             return True
         return False
-        
+
 
     @classmethod
     def verify_user(cls, uid, password):
@@ -147,7 +147,7 @@ class User(Model):
 
 class Pwd(Model):
     "Pwd model"
-    pass 
+    pass
 
 class Collection(Model):
     pass
@@ -165,6 +165,9 @@ class FamilyUserNot(Model):
     pass
 
 class Medicine(Model):
+    pass
+
+class Jpush(Model):
     pass
 
 

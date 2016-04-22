@@ -1,4 +1,4 @@
-# -*- coding: UTF-8 -*- 
+# -*- coding: UTF-8 -*-
 
 import config
 from flask import Flask
@@ -37,5 +37,8 @@ def create_app():
 
     from .controller.user import user as user_blueprint
     app.register_blueprint(user_blueprint)
+
+    from .controller.jpush import jpush as jpush_blueprint
+    app.register_blueprint(jpush_blueprint)
 
     return app
