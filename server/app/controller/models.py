@@ -44,7 +44,8 @@ class Model(object):
         return element
 
     def insert(self):
-        self.db[self.__class__.__name__].insert(self.__dict__)
+        _id = self.db[self.__class__.__name__].insert(self.__dict__)
+        return str(_id)
 
     @classmethod
     def verify_id(cls, dbname, _id):
@@ -109,6 +110,21 @@ class User(Model):
     	return False
 
     @classmethod
+    def verify_creater(cls, uid):
+        family_user = cls.db.FamilyUser.find_one({"uid": uid})
+        if family_user and family_user["permission"] == 4:
+            return True
+        return False
+
+    @classmethod
+    def verify_admin(cls, uid):
+        family_user = cls.db.FamilyUser.find_one({"uid": uid})
+        if family_user and family_user["permission"] >= 2:
+            return True
+        return False
+        
+
+    @classmethod
     def verify_user(cls, uid, password):
     	user = cls.db.User.find_one({"$or": [{"username": uid},{"email": uid}]})
         pwd = cls.db.Pwd.find_one({"$or": [{"username": uid},{"email": uid}]})
@@ -132,6 +148,25 @@ class User(Model):
 class Pwd(Model):
     "Pwd model"
     pass 
+
+class Collection(Model):
+    pass
+
+class Comment(Model):
+    pass
+
+class Family(Model):
+    pass
+
+class FamilyUser(Model):
+    pass
+
+class FamilyUserNot(Model):
+    pass
+
+class Medicine(Model):
+    pass
+
 
 
 if __name__ == '__main__':

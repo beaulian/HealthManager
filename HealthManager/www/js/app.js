@@ -4,15 +4,63 @@
 // 'starter' is the name of this angular module example (also set in a <body> attribute in index.html)
 // the 2nd parameter is an array of 'requires'
 var LoginStatus = false;
-
+var db = null;
 angular.module('starter', ['ionic', 'starter.controllers', 'starter.services', 'ngCookies', 'ngRoute','ngCordova'])
 
-.run(function($ionicPlatform, $rootScope, $cookieStore, $location, $http, $state, $window) {
+.service('dbMed',function($cordovaSQLite,$rootScope){
+  this.select = function(limit,key,value){
+    if(limit){
+      var query = "SELECT * FROM medicine WHERE "+key+"='"+value+"'";
+    }
+  else {
+      var query = "SELECT * FROM medicine";
+  }
+  console.log('query',query);
+    $cordovaSQLite.execute($rootScope.db,query).then(function(res){
+      for(var i=0;i<res.rows.length;i++){
+        $rootScope.selectResult[i]=res.rows.item(i);
+      }
+      return true;
+    },function(err){
+      return false;
+  });};
+
+  this.delete = function(condition){
+    var query="DELETE FROM medicine WHERE "+condition;
+    console.log('query',query);
+    $cordovaSQLite.execute($rootScope.db,query).then(function(res){
+      console.log('success',res);
+      return true;
+    },function(err){
+      console.log('error',err);
+      return false;
+    })
+  }
+
+  this.insert = function(data){
+    var name=["id","name","thumbnail", "feature", "company" ,"usage" ,"taboo" ,"reaction" ,"place" ,"buy_time" ,"overdue_time" ,"long_term_use" ,"purchase_quantity" ,"residue_quantity"]
+    var values=new Array;
+    var j=0;
+    for (i in name){
+      values[j]=data[name[j]];
+      j++;
+    }
+    var query = "INSERT INTO medicine (id,name, thumbnail, feature, company ,usage ,taboo ,reaction ,place ,buy_time ,overdue_time ,long_term_use ,purchase_quantity ,residue_quantity) VALUES (?,?,?,?,?,?,?,?,?,?,?,?,?,?)";
+  	$cordovaSQLite.execute($rootScope.db,query,values).then(function(res) {
+      console.log('res',res);
+  			return true;
+  	}, function (err) {
+  			return false;
+  	});
+  }
+})
+
+.run(function($ionicPlatform, $rootScope, $cookieStore, $location, $http, $state, $window,$cordovaSQLite) {
   $rootScope.$on('$stateChangeStart', function(event, toState) {
       if (toState.name == "login" || toState.name == "register") {
           return;
       }
-      if ($window.localStorage.getItem("logged-in")) {
+      if (!$window.localStorage.getItem("logged-in")) {
         event.preventDefault();// 取消默认跳转行为
         $state.go("login");
       }
@@ -47,6 +95,10 @@ angular.module('starter', ['ionic', 'starter.controllers', 'starter.services', '
 
     }
 
+    //sqlite测试
+    $rootScope.selectResult = new Array();
+    $rootScope.db = $cordovaSQLite.openDB({name: 'my.db', location: 'default'});
+    $cordovaSQLite.execute($rootScope.db, "CREATE TABLE IF NOT EXISTS medicine (id text,name text, thumbnail text, feature text,company text,usage text,taboo text,reaction text,place text,buy_time text,overdue_time text,long_term_use INTEGER,purchase_quantity text,residue_quantity text)");
  //启动极光推送服务
 
     window.plugins.jPushPlugin.init();
@@ -165,21 +217,33 @@ angular.module('starter', ['ionic', 'starter.controllers', 'starter.services', '
     controller: 'UserCtrl'
   })
 
-  .state('tabs.addMedicine',{
-    url:'/addMedicine',
+  .state('tabs.searchMedicine',{
+    url:'/searchMedicine',
     views:{
       'medicine-tab':{
-        templateUrl:'templates/add_medicine.html',
+        templateUrl:'templates/search_medicine.html',
         controller:'ExampleController'
       }
     }
   })
 
   .state('tabs.medicineInfo',{
-    url:'/medicineInfo',
+    url:'/medicineInfo/:id',
+    cache:true,
     views:{
       'medicine-tab':{
-        templateUrl:'templates/medicine_info.html'
+        templateUrl:'templates/medicine_info.html',
+        controller:'InfoCtrl'
+      }
+    }
+  })
+
+  .state('tabs.addMedicine',{
+    url:'/addMedicine/:id',
+    views:{
+      'medicine-tab':{
+        templateUrl:'templates/add_medicine.html',
+        controller:'addMedCtrl'
       }
     }
   })
@@ -188,8 +252,9 @@ angular.module('starter', ['ionic', 'starter.controllers', 'starter.services', '
   	url:'/mymedicine',
     views:{
       'medicine-tab':{
-              templateUrl:'templates/my_medicine.html'
-            }
+        templateUrl:'templates/my_medicine.html',
+        controller:'myMedCtrl'
+        }
       }
   })
 
@@ -197,7 +262,11 @@ angular.module('starter', ['ionic', 'starter.controllers', 'starter.services', '
     url:'/map',
     views: {
         'home-tab':{
+<<<<<<< HEAD
             templateUrl:'templates/map.html',
+=======
+            templateUrl:'templates/map/map.html',
+>>>>>>> origin/front_one
             controller:'MapCtrl'
         }
     }

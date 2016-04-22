@@ -1,0 +1,45 @@
+<ion-view  title="搜索药品" align-title="center">
+  <ion-nav-buttons>
+    <!-- <a  ng-click="scanBarcode()" class="plus" style="height:25px;width:25px;"><i class="icon ion-ios-barcode-outline"></i></a> -->
+    <button class="button button-clear icon ion-ios-barcode-outline plus-button" ng-click="scanBarcode()">
+    </button>
+  </ion-nav-buttons>
+  <ion-content>
+      <div class="list">
+    <div class="bar bar-header item-input-inset">
+      <label class="item-input-wrapper">
+        <i class="icon ion-ios-search placeholder-icon"></i>
+        <input type="search" placeholder="搜索" id="msea">
+      </label>
+      <button class="button button-clear " ng-click="mSearch()">
+        搜索
+      </button>
+</div>
+
+        <div class="list card" ng-repeat="medicine in medicines | limitTo:10">
+          <div class="item family-member">
+            <div class="row">
+              <div class="col col-60">
+                <em>{{medicine.name}}</em>
+              </div>
+              <div class="col">
+                <p>2016.10.4</p>
+              </div>
+            </div>
+            <div class="row">
+              <div class="col col-90">
+                <p><i class="icon ion-clipboard" style="color:#33CD5F;"></i> {{medicine.feature}} </p>
+                <p><i class="icon ion-at" style="color:#836FFF;"></i> 一号抽屉</p>
+                <p>
+                  {{medicine.company}}
+                </p>
+              </div>
+              <div class="col">
+                <a href="#/tab/medicineInfo/{{medicine.id}}"><i class="icon ion-ios-arrow-right" style="position:absolute;right:15px;font-size:20px;"></i></a>
+              </div>
+            </div>
+          </div>
+        </div>
+    </div>
+  </ion-content>
+</ion-view>

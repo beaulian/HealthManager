@@ -4,10 +4,37 @@ angular.module('starter.services', [])
     var auth = {
         isLogged: false
     }
- 
+
     return auth;
 })
 
+//
+// .factory('dbMed',function($cordovaSQLite,$rootScope,$http){
+//   var dbMed = {};
+//   dbMed.select = function(limit,key,value){
+//     if(limit)
+//       var query = "SELECT * FROM medicine where "+key+" = "+value;
+//     var query = "SELECT * FROM medicine";
+//     ;
+//     $cordovaSQLite.execute($rootScope.db,query).then(function(res){
+//       var result = new Array();
+//       for(var i=0;i<res.rows.length;i++){
+//         result[i]=res.rows.item(i);
+//       }
+//       return result;
+//     },function(err){
+//       return false;
+//   });};
+//
+//   dbMed.insert = function(data){
+//     var query = "INSERT INTO medicine (name, thumbnail, feature, company ,usage ,taboo ,reaction ,place ,buy_time ,overdue_time ,long_term_use ,purchase_quantity ,residue_quantity) VALUES (?,?,?,?,?,?,?,?,?,?,?,?,?)";
+//   	$cordovaSQLite.execute($rootScope.db,query,data).then(function(res) {
+//   			return true;
+//   	}, function (err) {
+//   			return false;
+//   	});
+//   }
+// })
 
 .factory('User', function($http) {
     var user = {
@@ -40,9 +67,9 @@ angular.module('starter.services', [])
    //              headers: {'Content-Type': 'application/x-www-form-urlencoded'}
 			// });
    //      },
- 
+
    //      logOut: function() {
- 
+
    //      }
 
     };

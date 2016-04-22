@@ -93,6 +93,13 @@
 	right: 20px;
 }
 
+.plus-button {
+	text-decoration: none;
+	color: white;
+	position: fixed;
+	right: 20px;
+}
+
 .polist {
 	overflow: hidden;
 	height: 80px;
@@ -115,7 +122,7 @@
 }
 
 .family-member {
-	border-top: 5px solid #4e8ef7 !important;
+	border-top: 5px solid #33CD5F !important;
 	/*height: 100px !important;*/
 	padding: 7px !important;
 }

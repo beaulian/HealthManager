@@ -284,49 +284,189 @@ angular.module('starter.controllers', ['ngCookies'])
 })
 
 
-.controller("ExampleController", function($scope, $cordovaBarcodeScanner, $ionicPopup,$http,$rootScope,$cordovaNetwork) {
+.controller('InfoCtrl', function($scope, $http, $stateParams,$cordovaSQLite,$rootScope,dbMed,$ionicHistory) {
 
-		$scope.medicine={
-			"name":"",
-			"thumbnail":"",
-			"feature":"",
-			"company":"",
-			"usage":"",
-			"taboo":"",
-			"reaction":"",
-			"place":"",
-			"buy_time":"",
-			"overdue_time":"",
-			"long_term_use":0,
-			"purchase_quantity":1,
-			"residue_quantity":""
+//testSqlite
+	$scope.insert = function() {
+		var data=[$scope.medicine["name"],"", $scope.medicine["feature"],$scope.medicine["company"],$scope.medicine["usage"],$scope.medicine["taboo"],"","","","",0,"",""]
+		if(dbMed.insert(data)!=false){
+			alert('yes');
+		}else{
+			alert('no');
 		}
+	}
+
+	$scope.select = function() {
+		if(dbMed.select()){
+			alert('yes');
+		}else{
+			alert('no');
+		}
+	}
+
+	$scope.delete = function(){
+		if(dbMed.delete("id='"+$scope.medicine.id+"'")){
+			alert('删除成功!');
+			$ionicHistory.goBack();
+		}
+		else{
+			alert('删除失败！');
+		}
+	}
+
+	var id = $stateParams.id;
+	dbMed.select(true,"id",id);
+	if($rootScope.selectResult.length!=0){
+		$scope.medicine=$rootScope.selectResult[0];
+		console.log('med',$scope.medicine);
+		alert('s yes');
+	}
+	else {
+		console.log('er',$rootScope.selectResult);
+		alert('s no')
+	}
+})
+
+.controller('myMedCtrl',function($scope, $http, $stateParams,$scope,$cordovaSQLite,$rootScope,$timeout,dbMed){
+	dbMed.select();
+	alert($rootScope.selectResult.length);
+	$scope.select = function() {
+		if(dbMed.select()!=false){
+			if($rootScope.selectResult.length==0){
+				$scope.status="暂未添加药品";
+			}else{
+				$scope.status="";
+				$scope.medicines=$rootScope.selectResult;
+				$scope.$broadcast('scroll.refreshComplete');
+			}
+		}else{
+			alert('no');
+		}
+	}
+})
+
+.controller('addMedCtrl',function($rootScope,$http,$scope,$stateParams,$window,$cordovaSQLite,dbMed,$ionicHistory){
+	var id=$stateParams.id;
+	$http({
+		method: "GET",
+		url: "http://222.198.155.138:5000/medicine/lilac/"+id,
+	}).success(function(data) {
+		if(data.status=="success"){
+			$scope.medicine=data.medicine;
+		}
+		else{
+			alert('获取药品信息失败！');
+		}
+	});
+
+	$scope.addSubmit=function(){
+		mdata={};
+		for(i in $scope.medicine){
+				mdata[i]=$scope.medicine[i];
+		}
+		var uid = $window.localStorage.getItem("uid");
+		var token = $window.localStorage.getItem("token");
+		mdata.thumbnail="";
+		mdata.residue_quantity=1;
+		mdata.reaction="";
+		// var idata=new Array();
+		// var j=0;
+		// for(i in mdata){
+		// 	idata[j]=mdata[]
+		// }
+		if(dbMed.insert(mdata)!=false){
+			alert('添加成功');
+			$ionicHistory.goBack();
+		}else{
+			alert('添加失败');
+		}
+		// $http({
+		// 	method:"POST",
+		// 	url:"http://222.198.155.138:5000/medicine"+ "?uid=" + uid + "&token=" + token,
+		// 	data:mdata
+		// }).success(function(res){
+		// 	alert('添加成功');
+		// 	$ionicHistory.goBack();
+		// }).error(function(){
+		// 	alert('添加失败');
+		// });
+	}
+
+})
+
+.controller("ExampleController", function($scope, $cordovaBarcodeScanner, $ionicPopup,$http,$rootScope,$cordovaNetwork,$ionicLoading) {
+
+		// $scope.medicines=[];
+
+		$scope.mSearch = function(){
+			$ionicLoading.show({
+				content: 'Loading',
+			    animation: 'fade-in',
+			    maxWidth: 200,
+			    showDelay: 0,
+			    noBackdrop: true
+			});
+			$http({
+				method: "GET",
+				url: "http://222.198.155.138:5000/medicine/lilac?type=medicine&keyword="+$('#msea').val()
+			}).success(function(data) {
+				$ionicLoading.hide();
+				if(!data.medicines){
+					alert('药品未收录！');}
+				else {
+					$scope.medicines=data.medicines;
+				}
+			}).error(function(data){
+				alert('查询失败！');
+			});
+	}
 
 	$scope.scanBarcode = function(){
 		$cordovaBarcodeScanner.scan()
 		.then(function(imageData)
 		{
+			$ionicLoading.show({
+				content: 'Loading',
+			    animation: 'fade-in',
+			    maxWidth: 200,
+			    showDelay: 0,
+			    noBackdrop: true
+			});
 		$.ajax({
 			 url: 'http://www.tngou.net/api/drug/code?',
 			 type: "GET",
 			 data: {'code':imageData.text},
 			 dataType: 'jsonp',
 			 jsonp:'callback',
-			 success: function(msg){
-			 	if(msg.status){
-			 		$scope.medicine['company']=msg['factory'];
-			 	}
-			 	else{
-			 		$scope.info="抱歉,数据不存在:(";
-			 		$scope.isf=typeof(msg);
-			 	}
+			 success: function(data){
+				 if(!data.status){
+					 $ionicLoading.hide();
+					 alert('药品信息未收录！');
+				 }
+				 else {
+				 	$http({
+						method:"GET",
+						url:"http://222.198.155.138:5000/medicine/lilac?type=medicine&keyword="+data.name
+					}).success(function(){
+						if(!data.medicines){
+		 				 $ionicLoading.hide();
+							alert('药品未收录！');}
+						else {
+		 				 $ionicLoading.hide();
+						 $scope.medicines=data.medicines;
+						}
+					}).error(function(){
+						alert('查询失败！');
+					})
+				 }
 			 },
-			 error:function(msg){
-			 	$scope.info="error";
-			 	$scope.isf=typeof(msg);
+			 error:function(data){
+			 	alert('查询失败！');
 			 }
-			 	});
-	});}
+	 	});
+	});
+
+}
 
 
 
