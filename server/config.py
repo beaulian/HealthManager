@@ -7,6 +7,8 @@ def get_netloc():
 		return "127.0.0.1:5000"
 	elif platform.uname()[1] == "pub-PowerEdge-R820":
 		return "222.198.155.138:5000"
+	elif platform.uname()[1] == "iZ23mgr2xnxZ":
+		return "121.40.70.103:5000"
 
 basedir = os.path.abspath(os.path.dirname(__file__))
 
