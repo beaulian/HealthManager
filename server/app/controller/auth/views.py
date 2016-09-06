@@ -42,7 +42,7 @@ def register():
 			email = email,
 			password_hash = User.encrypt(password)
 	)
-	send_email.delay("验证邮箱", [email], EMAIL_HTML.format(
+	send_email("验证邮箱", [email], EMAIL_HTML.format(
 											username=username, 
 											netloc=NETLOC_NAME,
 											verifycode=user["verify_code"]))

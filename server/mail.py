@@ -2,17 +2,13 @@
 
 import smtplib
 from config import *
-from celery import Celery
 from email.mime.text import MIMEText
 
 import sys
 reload(sys)
 sys.setdefaultencoding("utf-8")
 
-celery = Celery('healthmanager', broker='redis://localhost:6379/4')
 
-
-@celery.task
 def send_email(fuction, mail_receiver_list, content):
     msg = MIMEText(content,_subtype="html",_charset="utf-8")
     msg["Subject"] = fuction
