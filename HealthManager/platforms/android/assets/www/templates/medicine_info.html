@@ -1,0 +1,36 @@
+<ion-view  title="药品信息" align-title="center">
+	<ion-nav-buttons>
+		<a  href="#/tab/addMedicine/{{medicine.id}}" class="plus"><i class="icon ion-plus"></i></a>
+	</ion-nav-buttons>
+	<ion-content>
+		<div>
+			<button type="button" name="insert" ng-click="insert()">insert</button>
+			<button type="button" name="select" ng-click="select()">select</button>
+			<button type="button" name="delete" ng-click="delete()">delete</button>
+
+			<p>
+				{{testsql}}
+			</p>
+			<h3>药品名称：</h3>
+			<p>
+				{{medicine.name}}
+			</p>
+			<h4>生产公司：</h4>
+			<p>
+				{{medicine.company}}
+			</p>
+			<h4>功能主治：</h4>
+			<p>
+				{{medicine.feature}}
+			</p>
+			<h4>用量用法：</h4>
+			<p>
+				{{medicine.usage}}
+			</p>
+			<h4>禁忌：</h4>
+			<p>
+				{{medicine.taboo}}
+			</p>
+	 </div>
+ </ion-content>
+</ion-view>

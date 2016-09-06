@@ -1,11 +1,20 @@
-# -*- coding: utf-8 -*- 
+# -*- coding: utf-8 -*-  = "/sta"
 
-import re, os
+import re, os, platform
+
+def get_netloc():
+	if platform.uname()[1] == "Ubuntu":
+		return "127.0.0.1:5000"
+	elif platform.uname()[1] == "pub-PowerEdge-R820":
+		return "222.198.155.138:5000"
 
 basedir = os.path.abspath(os.path.dirname(__file__))
 
 APP_NAME = "家庭健康助手"
-NETLOC_NAME = "127.0.0.1:5000"
+NETWORK_ADDRESS = "http://" + get_netloc()
+NETLOC_NAME = get_netloc()
+
+# print NETLOC_NAME
 
 SECRET_KEY = os.urandom(24)
 STATIC_SECRET_CODE = "hard to guess"
@@ -20,7 +29,13 @@ MAIL_HOST = "smtp.163.com"
 MAIL_SENDER = "gjw870402916@163.com"
 MAIL_PASSWORD = "08151997bc"
 
+MAX_MEDICINE_NUM_PER_PAGE = 8
+
 DEFAULT_IMAGE_PATH = "/static/img/user/default.jpg"
+# DEFAULT_FAMILY_IMAGE_PATH = "/static/img/family/default.jpg"
+HEAD_IMAGE_PATH = "/static/img/user/"
+MEDICINE_THUMBNAIL_PATH = "/static/img/medicine/"
+
 CHECK_EMAIL_REGEX = re.compile(r'[a-zA-Z0-9][-_.a-zA-Z0-9]*@[-_.a-zA-Z0-9]+((\.[-_a-zA-Z0-9]){2,5}){1,2}')
 
 EMAIL_HTML = u"""<p>{username}, 您好</p>

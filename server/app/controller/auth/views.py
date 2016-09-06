@@ -48,7 +48,7 @@ def register():
 											verifycode=user["verify_code"]))
 	user.insert()
 	pwd.insert()
-	user["head_image"] = "http://" + NETLOC_NAME + user["head_image"]
+	user["head_image"] = NETWORK_ADDRESS + user["head_image"]
 	user["token"] = User.generate_token(username)
 	return jsonify({"status": "success", "user": user.to_json()})
 
